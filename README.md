@@ -52,7 +52,8 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 - **Apps grandes y rectangulares** con el color de cada marca, en **una sola fila** con tus 6 favoritas. Abajo se
   asoma el resto y **↓ hace scroll** hasta todas tus apps.
 - **Modo claro, oscuro o automático** (claro de día y oscuro de noche, con el amanecer y el atardecer de tu
-  ciudad), desde el botón de tema de arriba. Al lado, el **engranaje** va directo a todos los ajustes de la TV.
+  ciudad), desde el botón de tema de arriba. Al lado, el **engranaje** abre el **panel rápido de LGlow**: modo de imagen y de sonido,
+  apagado automático, tema, entradas (TV, HDMI) y un acceso a todos los ajustes de la TV, sin submenús.
 - **Oculta las apps que no usas** (navegador, tienda, música…) sin desinstalarlas.
 - **Más memoria libre:** la barra vieja deja de ocupar RAM y LG ya no precarga Netflix, YouTube ni Prime en
   segundo plano. En la TV de prueba, la RAM disponible en reposo pasó de **~106 MB a ~160–250 MB** y el swap

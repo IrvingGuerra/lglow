@@ -3,10 +3,10 @@ import QtGraphicalEffects 1.0
 
 // [fullhome-custom] Apps estilo Free My TV, con tiles grandes 5:3. Dos modos:
 //   - "pinned" (home): una fila con las apps fijadas (las primeras 6 en el orden de LG).
-//     ↓ desde ella baja a todas las apps (señal openAll).
-//   - "all" (parte de abajo del home): todas las apps (4 filas visibles, se desliza si hay
-//     más) y el lápiz al final para reordenar. Atrás, o ↑ desde la primera fila, regresa
-//     (señal closeAll).
+//     ↓ desde ella baja al resto (señal openAll con la columna).
+//   - "all" (debajo de la fila, en la misma tarjeta): el resto de las apps, sin repetir las
+//     fijadas (4 filas visibles, se desliza si hay más), y el lápiz al final para reordenar.
+//     Atrás, o ↑ desde la primera fila, regresa (señal closeAll con la columna).
 // Usa el mismo modelo y la misma forma de lanzar apps que la fila original de LG (que
 // sigue cargada, oculta, y se muestra en el modo edición).
 FocusScope {
@@ -26,12 +26,14 @@ FocusScope {
     readonly property int pinnedCount: columns
     readonly property int pinnedShown: Math.min(lpModel.count, pinnedCount)
 
-    signal openAll()
-    signal closeAll()
+    signal openAll(int column)
+    signal closeAll(int column)
     // Lápiz: abre el modo edición de LG (reordenar = elegir cuáles van fijadas)
     property var editEntry: ({ "id": "edit", "launchPointId": "edit", "tileType": "edit", "title": "" })
 
-    readonly property int cellCount: isAll ? lpModel.count + 1 : pinnedShown
+    // En "all" se saltan las fijadas, que ya están en la fila de arriba
+    readonly property int offset: isAll ? pinnedShown : 0
+    readonly property int cellCount: isAll ? Math.max(0, lpModel.count - pinnedShown) + 1 : pinnedShown
     readonly property int rows: Math.ceil(cellCount / columns)
     property int visibleRows: isAll ? 4 : 1
     property int firstRow: 0
@@ -52,11 +54,14 @@ FocusScope {
     }
 
     function entryAt(i) {
-        return i < lpModel.count ? lpModel.get(i).entry : editEntry;
+        var j = i + offset;
+        return j < lpModel.count ? lpModel.get(j).entry : editEntry;
     }
 
-    function focusLast() {
-        grid.currentIndex = grid.count - 1;
+    // Al cambiar entre la fila fijada y el resto se conserva la columna
+    function focusColumn(c) {
+        root.firstRow = 0;
+        grid.currentIndex = Math.max(0, Math.min(c, grid.count - 1));
     }
 
     function reset() {
@@ -81,9 +86,9 @@ FocusScope {
             // El modo edición de LG se dibuja en el home: primero cerrar la pantalla "Apps"
             // (que va encima de todo) para que no quede oculto debajo
             if (root.isAll)
-                root.closeAll();
+                root.closeAll(0);
         } else {
-            uiController.userLogger.appLaunched(obj.id, "launcher", i, systemProperties.home_type);
+            uiController.userLogger.appLaunched(obj.id, "launcher", i + offset, systemProperties.home_type);
         }
         interfaces.launchPoints.doLaunch(obj);
     }
@@ -186,7 +191,7 @@ FocusScope {
                 } else if (root.isAll) {
                     event.accepted = true; // en "todas" no baja más
                 } else {
-                    root.openAll(); // ↓ desde la fila del home abre la pantalla Apps
+                    root.openAll(i % c); // ↓ desde la fila del home baja al resto
                     event.accepted = true;
                 }
                 break;
@@ -195,7 +200,7 @@ FocusScope {
                     currentIndex = i - c;
                     event.accepted = true;
                 } else if (root.isAll) {
-                    root.closeAll();
+                    root.closeAll(i % c);
                     event.accepted = true;
                 } else {
                     event.accepted = false; // sube a "Para ti" o a los íconos de arriba
@@ -213,7 +218,7 @@ FocusScope {
         // cerráramos al presionar, el soltar llegaría a LG y haría un segundo "atrás".
         Keys.onReleased: {
             if (root.isAll && root.isBackKey(event.key)) {
-                root.closeAll();
+                root.closeAll(currentIndex % root.columns);
                 event.accepted = true;
             }
         }

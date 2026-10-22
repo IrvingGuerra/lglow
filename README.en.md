@@ -34,7 +34,8 @@ Step-by-step guides in English: [docs/en/](docs/en/01-root.md). Commands and fil
 - **Big rectangular app tiles** in each brand's color, **one row** of 6 pinned apps. The rest peeks out below,
   and **↓ scrolls down** to all your apps.
 - **Light, dark or automatic theme** (light by day, dark by night, following your city's sunrise and sunset),
-  from the theme button at the top. Next to it, the **gear** goes straight to all of the TV's settings.
+  from the theme button at the top. Next to it, the **gear** opens **LGlow's quick panel**: picture and sound mode,
+  sleep timer, theme, inputs (TV, HDMI) and a shortcut to all of the TV's settings, no submenus.
 - **Hide apps** you don't use, without uninstalling them.
 - **More free memory:** the old launcher bar stops running and LG stops preloading Netflix/YouTube/Prime.
   On the test TV, free RAM at idle went from ~106 MB to ~160–250 MB and swap in use from ~265 MB to ~30 MB.

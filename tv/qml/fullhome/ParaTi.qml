@@ -36,7 +36,7 @@ FocusScope {
     property int pickGap: styleSheet.getRValue(30)
     // Uno ancho (imagen de fondo) y dos pósters 2:3, todos de la misma altura, que
     // ocupan exactamente el ancho de la fila de apps
-    property int pickHeight: styleSheet.getRValue(390) // deja lugar para que se asome el resto de las apps
+    property int pickHeight: styleSheet.getRValue(460)
     property int posterWidth: Math.round(pickHeight * 2 / 3)
     property int wideWidth: width - 2 * posterWidth - 2 * pickGap
     readonly property bool canFocus: picks.length > 0 || !!config.tmdbKey

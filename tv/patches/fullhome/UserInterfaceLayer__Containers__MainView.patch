@@ -1,17 +1,47 @@
 --- a/qml/UserInterfaceLayer/Containers/MainView.qml
 +++ b/qml/UserInterfaceLayer/Containers/MainView.qml
-@@ -27,6 +27,22 @@
+@@ -27,6 +27,52 @@
      property alias editMenu: editMenuLoader.item
      property alias settingPopup: settingPopup
      property alias appListArea: appListArea
 +    property alias paraTi: paraTi // [fullhome-custom]
-+    // [fullhome-custom] la fila de apps va abajo, dejando lugar para que se asome el resto
-+    property real appListHomeY: shelfListContainer.height - appListArea.height - styleSheet.getRValue(156)
-+    // [fullhome-custom] scroll hacia el resto de las apps: 0 = home, 1 = apps. Todo el
-+    // contenido sube junto y la parte de abajo (allApps) entra; el fondo se queda quieto.
-+    property real appsScroll: allApps.open ? 1 : 0
++    // [fullhome-custom] la fila de apps va abajo; debajo, en la misma tarjeta, se asoma el resto
++    property real appsPeek: styleSheet.getRValue(64)
++    property real appListHomeY: shelfListContainer.height - appListArea.height - appGrid.gap - appsPeek
++    // [fullhome-custom] scroll al resto de las apps: 0 = home, 1 = apps. Todo sube junto hasta
++    // que la tarjeta queda arriba, con la fila fijada; el fondo se queda quieto.
++    property bool appsOpen: false
++    property real appsScroll: appsOpen ? 1 : 0
 +    Behavior on appsScroll { NumberAnimation { duration: 450; easing.type: Easing.OutCubic } }
-+    readonly property real appsShift: appsScroll * allApps.restY
++    readonly property real appsShift: appsScroll * Math.max(0, appListHomeY - styleSheet.getRValue(72))
++
++    function openApps(column) {
++        // El compositor solo le pasa Atrás al home si su ventana lo declara (el binario ya lo
++        // declara; aquí solo nos aseguramos)
++        rootWindow.setWindowProperty("_WEBOS_ACCESS_POLICY_KEYS_BACK", "true");
++        appsOpen = true;
++        restGrid.focusColumn(column);
++        restGrid.forceActiveFocus();
++    }
++
++    function closeApps(column) {
++        if (!appsOpen)
++            return;
++        appsOpen = false;
++        appGrid.focusColumn(column);
++        appListArea.forceActiveFocus();
++    }
++
++    // Si se abre una app (desde el home o con un botón del control), regresa arriba
++    Connections {
++        target: uiController
++        onHomeShownChanged: if (!uiController.homeShown) root.appsOpen = false
++    }
++
++    Connections {
++        target: systemProperties
++        onIsAppForegroundChanged: if (!systemProperties.isAppForeground) root.appsOpen = false
++    }
 +
 +    // [fullhome-custom] ↓ desde los íconos de arriba: a las pestañas de "Para ti" si hay
 +    function focusBelowTop() {
@@ -23,19 +53,18 @@
      property bool isHalfMode: false
      property alias editMenuLoaderStatus: editMenuLoader.status
      property bool showFooterButton: root.state === "main" && ((topArea.model.count + shelfList.model.count) > 2)
-@@ -193,13 +209,13 @@
+@@ -193,13 +239,13 @@
  
                      objectName: "topDefaultAppsBg"
  
 -                    anchors.top: parent.top
 -                    anchors.left: parent.left
 -                    fillMode: Image.PreserveAspectFit
--                    sourceSize: Qt.size(width, height)
--                    source: systemProperties.isRTLLocale ? systemProperties.getImageUrl("banner_image_02_rtl.png") :systemProperties.getImageUrl("banner_image_02.png")
 +                    // [fullhome-custom] fondo propio a pantalla completa
 +                    anchors.fill: parent
 +                    fillMode: Image.PreserveAspectCrop
-+                    sourceSize: Qt.size(width, height)
+                     sourceSize: Qt.size(width, height)
+-                    source: systemProperties.isRTLLocale ? systemProperties.getImageUrl("banner_image_02_rtl.png") :systemProperties.getImageUrl("banner_image_02.png")
 +                    source: lglowTema.fondo // [fullhome-custom] claro u oscuro según el tema
                      cache: false
 -                    opacity: (systemProperties.isCheckAdvertisement || !systemProperties.homePromotionOn || !systemProperties.networkConnected) ? 1 : 0.7
@@ -43,7 +72,7 @@
                      visible: (!systemProperties.isTopShelfGuide && systemProperties.isNoAdvertisement && !uiController.isEditMode) === true && uiController.isFullHome && (shelfListContainer.state === "app" || interfaces.application.isDefaultShelfList)
  
                  }
-@@ -242,7 +258,7 @@
+@@ -242,7 +288,7 @@
                          script: {
                              topArea.contentY = 0;
                              topArea.opacity = 1;
@@ -52,7 +81,7 @@
                              shelfList.y = Qt.binding(function(){return shelfList.shelfListY;})
                              if (shelfList.clickedGoToTopButton) {
                                  topArea.currentIndex = 0;
-@@ -332,7 +348,7 @@
+@@ -332,7 +378,7 @@
                          script: {
                              topArea.contentY = 0;
                              topArea.opacity = 1;
@@ -61,7 +90,7 @@
                              shelfList.y = Qt.binding(function(){return shelfList.shelfListY;})
                              appListLoader.scale = 1;
                              appListArea.focus = true;
-@@ -369,6 +385,8 @@
+@@ -369,6 +415,8 @@
              height: (topArea.count === 1 && !interfaces.application.isDefaultShelfList) ? contentHeight + styleSheet.getRValue(65) : contentHeight + styleSheet.getRValue(30)
              anchors.top: parent.top
              anchors.topMargin: styleSheet.getRValue(22)
@@ -70,7 +99,7 @@
              anchors.horizontalCenter: parent.horizontalCenter
  
              contentY: 0
-@@ -682,6 +700,7 @@
+@@ -682,6 +730,7 @@
                              topAreaDelegateLoader.item.reset();
                          }
                          if (appListLoader.item && appListLoader.item.reset) appListLoader.item.reset();
@@ -78,7 +107,7 @@
                      }
  
                      onAllShelfListUpdate: {
-@@ -731,8 +750,34 @@
+@@ -731,6 +780,35 @@
                      }
                  }
              }
@@ -93,11 +122,12 @@
 +            z: 1
 +            visible: !uiController.isEditMode && shelfListContainer.state === "app"
 +            transform: Translate { y: -root.appsShift }
++            opacity: 1 - root.appsScroll // al bajar a las apps se desvanece
 +
 +            onExitUp: lglowBarra.forceActiveFocus()
 +            onExitDown: appListArea.forceActiveFocus()
-         }
- 
++        }
++
 +        // [fullhome-custom] botones de arriba: tema y engranaje
 +        LglowBarra {
 +            id: lglowBarra
@@ -106,14 +136,14 @@
 +            z: 2
 +            visible: paraTi.visible
 +            transform: Translate { y: -root.appsShift }
++            opacity: 1 - root.appsScroll
 +            onExitDown: root.focusBelowTop()
 +            onAbrirTema: lglowMenu.abrir()
-+        }
-+
-         Item {
++            onAbrirAjustes: lglowPanel.abrir()
+         }
  
-             id: appListArea
-@@ -740,10 +785,11 @@
+         Item {
+@@ -740,10 +818,11 @@
              objectName: "appListArea"
  
              width: parent.width
@@ -127,7 +157,7 @@
  
              visible: uiController.isEditMode && editMenu.state === "appEditPage" || !uiController.isEditMode
              enabled: visible
-@@ -756,20 +802,28 @@
+@@ -756,20 +835,28 @@
  
              Keys.onUpPressed: {
                  systemProperties.lastKeyEvent = event.key;
@@ -159,10 +189,12 @@
                      if(systemProperties.isTopShelfGuide) {
                          shelfListContainer.state = "topShelfGuide";
                      } else {
-@@ -785,6 +839,41 @@
+@@ -783,8 +870,81 @@
+                 NumberAnimation {
+                     duration: 200
                  }
-             }
- 
++            }
++
 +            // [fullhome-custom] cuadrícula de apps grande (2 filas) en lugar de la fila de LG
 +            AppGrid {
 +                id: appGrid
@@ -171,11 +203,48 @@
 +                z: 1
 +                visible: !uiController.isEditMode
 +                enabled: visible
-+                suspended: allApps.open
-+                onOpenAll: allApps.show()
++                suspended: root.appsOpen
++                onOpenAll: root.openApps(column)
 +            }
 +
-+            // [fullhome-custom] repisa "de vidrio" detrás de la fila de apps, con sombra
++            // [fullhome-custom] el resto de las apps, debajo de la fila y en la misma tarjeta
++            AppGrid {
++                id: restGrid
++                mode: "all"
++                anchors.horizontalCenter: parent.horizontalCenter
++                anchors.top: appGrid.bottom
++                anchors.topMargin: appGrid.gap
++                z: 1
++                visible: !uiController.isEditMode
++                enabled: visible
++                onCloseAll: root.closeApps(column)
++            }
++
++            Text {
++                anchors.left: restGrid.left
++                anchors.top: restGrid.bottom
++                anchors.topMargin: styleSheet.getRValue(48)
++                z: 1
++                visible: restGrid.visible
++                opacity: root.appsScroll
++                text: restGrid.lpModel.count + " apps  ·  ↑ o Atrás para regresar  ·  ✎ para reordenar"
++                color: lglowTema.textoSuave
++                font.family: fontManager.smart_Regular.family
++                font.pixelSize: styleSheet.getRValue(26)
++            }
++
++            // Con el home arriba, un clic en lo que se asoma baja al resto. También absorbe el
++            // hover, para que los tiles asomados no le roben el foco a la fila.
++            MouseArea {
++                anchors.fill: restGrid
++                z: 2
++                enabled: !root.appsOpen && restGrid.visible
++                hoverEnabled: true
++                onClicked: root.openApps(0)
++            }
++
++            // [fullhome-custom] repisa "de vidrio" detrás de todas las apps, con sombra. Llega
++            // más allá del borde de abajo: en el home solo se ven sus esquinas de arriba.
 +            RectangularGlow {
 +                anchors.fill: appShelf
 +                anchors.topMargin: styleSheet.getRValue(14)
@@ -184,13 +253,14 @@
 +                cornerRadius: appShelf.radius + glowRadius
 +                color: lglowTema.sombra
 +                visible: appShelf.visible
-+            }
-+
+             }
+ 
 +            Rectangle {
 +                id: appShelf
-+                anchors.centerIn: parent
++                anchors.horizontalCenter: parent.horizontalCenter
++                y: -styleSheet.getRValue(32)
 +                width: parent.width - styleSheet.getRValue(48)
-+                height: parent.height + styleSheet.getRValue(64)
++                height: Math.max(restGrid.y + restGrid.height + styleSheet.getRValue(160), shelfListContainer.height)
 +                radius: styleSheet.getRValue(48)
 +                color: lglowTema.repisa
 +                border.color: lglowTema.repisaBorde
@@ -201,7 +271,7 @@
              Loader {
  
                  id: appListLoader
-@@ -802,7 +891,8 @@
+@@ -802,7 +962,8 @@
  
                  anchors.fill: parent
                  source: entry ? entry.component : ""
@@ -211,7 +281,7 @@
                  visible: root.isHalfMode ? true : topArea.topShelfLoaded
  
                  transformOrigin: Item.Left
-@@ -1777,7 +1867,7 @@
+@@ -1777,7 +1938,7 @@
  
      function wheelScroll(delta) {
          if(delta < 0) {
@@ -220,7 +290,7 @@
                  shelfListContainer.processingWheel = true;
                  shelfListContainer.state = "list";
  
-@@ -2107,7 +2197,7 @@
+@@ -2107,7 +2268,7 @@
                  ScriptAction {
                      script: {
                          if(shelfListContainer.state === "app" || shelfListContainer.state === "topShelfGuide") {
@@ -229,7 +299,7 @@
                          } else {
                              shelfListContainer.state = "app";
                          }
-@@ -2485,5 +2575,33 @@
+@@ -2485,5 +2646,27 @@
  
          interfaces.application.createAlert(params);
          appListArea.forceActiveFocus();
@@ -249,17 +319,11 @@
 +        onCerrado: lglowBarra.forceActiveFocus()
      }
 +
-+    // [fullhome-custom] parte de abajo del home: todas las apps (se asoma y sube con el scroll)
-+    AllAppsPage {
-+        id: allApps
-+        width: parent.width
-+        height: parent.height
-+        z: 1000
-+        progress: root.appsScroll
-+        visible: open || (!uiController.isEditMode && shelfListContainer.state === "app")
-+        onClosed: {
-+            appGrid.focusLast();
-+            appListArea.forceActiveFocus();
-+        }
++    // [fullhome-custom] panel rápido de LGlow (imagen, sonido, apagado, tema, entradas)
++    LglowPanel {
++        id: lglowPanel
++        anchors.fill: parent
++        z: 2100
++        onCerrado: lglowBarra.forceActiveFocus()
 +    }
  }

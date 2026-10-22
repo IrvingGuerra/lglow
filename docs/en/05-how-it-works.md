@@ -60,7 +60,7 @@ SAM finds no image, launches the home from scratch and reads the mounted QML. Th
 | `Containers/MainView.qml` | Background per theme; app row at the bottom (`appListHomeY`); "Para ti" (For you); scroll down to all apps (`appsScroll`); LGlow's buttons and menu (LG's icon row is hidden); focus chain. |
 | `GlobalStyle.qml`, `LaunchPoint.qml`, `AppTile.qml`, `TopGlobalAction.qml` | Borderless 5:3 tiles, dark top icons. |
 | **New:** `AppGrid.qml`, `ParaTi.qml`, `AllAppsPage.qml` | The app row (`pinned` and `all` modes), the header with trending content and the bottom part with all apps. |
-| **New:** `LglowTema.qml`, `LglowBarra.qml`, `LglowMenu.qml` | The theme (light, dark or automatic, saved with LocalStorage), the top buttons (theme and gear) and the theme menu. |
+| **New:** `LglowTema.qml`, `LglowBarra.qml`, `LglowMenu.qml`, `LglowPanel.qml` | The theme (light, dark or automatic, saved with LocalStorage), the top buttons (theme and gear), the theme menu and the quick panel (picture and sound via `settingsservice/setSystemSettings`, sleep timer via `tv.time/setSleepTimeInfo`, inputs via `eim/getAllInputStatus`). |
 
 LG's original row (`MainRibbon`) stays loaded, invisible, because a lot of the home's code depends on it.
 In edit mode (pencil), LG's row is shown.

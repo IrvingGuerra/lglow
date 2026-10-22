@@ -60,7 +60,7 @@ SAM no encuentra imagen, lanza el home en limpio y lee el QML montado. Tampoco e
 | `Containers/MainView.qml` | Fondo según el tema; fila de apps abajo (`appListHomeY`); "Para ti"; scroll a todas las apps (`appsScroll`); botones y menú de LGlow (la fila de íconos de LG queda oculta); cadena de foco. |
 | `GlobalStyle.qml`, `LaunchPoint.qml`, `AppTile.qml`, `TopGlobalAction.qml` | Tiles 5:3 sin borde, íconos de arriba oscuros. |
 | **Nuevos:** `AppGrid.qml`, `ParaTi.qml`, `AllAppsPage.qml` | La fila de apps (modos `pinned` y `all`), el encabezado con tendencias y la parte de abajo con todas las apps. |
-| **Nuevos:** `LglowTema.qml`, `LglowBarra.qml`, `LglowMenu.qml` | El tema (claro, oscuro o automático, guardado con LocalStorage), los botones de arriba (tema y engranaje) y el menú de tema. |
+| **Nuevos:** `LglowTema.qml`, `LglowBarra.qml`, `LglowMenu.qml`, `LglowPanel.qml` | El tema (claro, oscuro o automático, guardado con LocalStorage), los botones de arriba (tema y engranaje), el menú de tema y el panel rápido (imagen y sonido con `settingsservice/setSystemSettings`, apagado con `tv.time/setSleepTimeInfo`, entradas con `eim/getAllInputStatus`). |
 
 La fila original de LG (`MainRibbon`) sigue cargada, invisible, porque mucho código del home depende de ella.
 En el modo edición (lápiz) se muestra la de LG.

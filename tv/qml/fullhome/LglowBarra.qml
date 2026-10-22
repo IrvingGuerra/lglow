@@ -2,25 +2,17 @@ import QtQuick 2.6
 import QtGraphicalEffects 1.0
 
 // [fullhome-custom] Botones de arriba de LGlow, grandes para el puntero: el tema (abre el menú
-// de LGlow) y el engranaje (va directo a la configuración completa de la TV, sin el panel
-// rápido de la izquierda). Reemplaza a la fila de íconos de LG.
+// de tema) y el engranaje (abre el panel rápido de LGlow). Reemplaza a la fila de íconos de LG.
 FocusScope {
 
     id: root
 
     property int actual: 1              // 0 = tema, 1 = engranaje
     property int lado: styleSheet.getRValue(84)
-    // El símbolo del engranaje sale de la fila de LG, que usa la fuente de dingbats
-    readonly property string engrane: {
-        var lista = systemProperties.topGlobalActions || [];
-        for (var i = 0; i < lista.length; i++)
-            if (lista[i].type === "settings")
-                return lista[i].buttonText;
-        return "";
-    }
 
     signal exitDown()
     signal abrirTema()
+    signal abrirAjustes()
 
     width: fila.width
     height: lado
@@ -29,7 +21,7 @@ FocusScope {
         if (i === 0)
             root.abrirTema();
         else
-            interfaces.application.launchApp("com.palm.app.settings", "", {});
+            root.abrirAjustes();
     }
 
     Keys.onPressed: {
@@ -121,14 +113,41 @@ FocusScope {
                     }
                 }
 
-                // Engranaje: el mismo símbolo que usa LG
-                Text {
+                // Engranaje dibujado (el de la fuente de LG no queda centrado)
+                Canvas {
+                    id: engrane
+                    property color tinta: boton.sel ? lglowTema.pastilla : lglowTema.icono
                     anchors.centerIn: parent
+                    width: Math.round(root.lado * 0.46)
+                    height: width
                     visible: index === 1
-                    text: root.engrane
-                    color: boton.sel ? lglowTema.pastilla : lglowTema.icono
-                    font.family: fontManager.sandstone_Dingbat.family
-                    font.pixelSize: Math.round(root.lado * 0.5)
+                    onTintaChanged: requestPaint()
+                    onPaint: {
+                        var ctx = getContext("2d");
+                        var c = width / 2, rOut = width * 0.5, rIn = width * 0.37, n = 8;
+                        ctx.reset();
+                        ctx.fillStyle = tinta;
+                        ctx.beginPath();
+                        for (var k = 0; k < n; k++) {
+                            var a = k * 2 * Math.PI / n, t = Math.PI / n;
+                            var pts = [[rIn, a - t * 0.62], [rOut, a - t * 0.42], [rOut, a + t * 0.42], [rIn, a + t * 0.62]];
+                            for (var p = 0; p < pts.length; p++) {
+                                var x = c + pts[p][0] * Math.cos(pts[p][1]), y = c + pts[p][0] * Math.sin(pts[p][1]);
+                                if (k === 0 && p === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                            }
+                        }
+                        ctx.closePath();
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(c, c, rIn, 0, 2 * Math.PI);
+                        ctx.fill();
+                        // Hueco del centro
+                        ctx.globalCompositeOperation = "destination-out";
+                        ctx.beginPath();
+                        ctx.arc(c, c, width * 0.17, 0, 2 * Math.PI);
+                        ctx.fill();
+                        ctx.globalCompositeOperation = "source-over";
+                    }
                 }
 
                 MouseArea {
