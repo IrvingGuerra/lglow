@@ -23,7 +23,11 @@ Step-by-step guides in English: [docs/en/](docs/en/01-root.md). Commands and fil
 
 | Movies / Shows tabs | All apps (scroll down) |
 | --- | --- |
-| ![Movies tab with a title selected](docs/img/despues-titulo.jpg) | ![All apps screen](docs/img/despues-apps.jpg) |
+| ![Movies tab with a title selected](docs/img/despues-titulo.jpg) | ![All apps, after scrolling down from the app row](docs/img/despues-apps.jpg) |
+
+| Dark theme | Quick panel (gear button) |
+| --- | --- |
+| ![The home in dark mode](docs/img/despues-oscuro.jpg) | ![LGlow's quick settings panel](docs/img/despues-panel.jpg) |
 
 ## What you get
 

@@ -22,12 +22,17 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 | Antes (home de LG) | Después |
 | --- | --- |
 | ![Home original de LG con banner y recomendaciones patrocinadas](docs/img/antes-home.jpg) | ![Home renovado: Para ti, clima y una fila de apps](docs/img/despues-home.jpg) |
-| Banner de LG, "Ir a Apps", fila de contenido promocionado, íconos chicos y todas las apps de sistema. | "Para ti" con lo que está en tendencia **en tus apps**, fecha, hora y clima, y tus 5 apps fijadas. |
+| Banner de LG, "Ir a Apps", fila de contenido promocionado, íconos chicos y todas las apps de sistema. | "Para ti" con lo que está en tendencia **en tus apps**, fecha, hora y clima, y tus 6 apps fijadas. |
 
 | Películas / Series | Todas las apps |
 | --- | --- |
-| ![Pestaña Películas con un título seleccionado](docs/img/despues-titulo.jpg) | ![Pantalla Apps con todas las apps](docs/img/despues-apps.jpg) |
+| ![Pestaña Películas con un título seleccionado](docs/img/despues-titulo.jpg) | ![Todas las apps, después de bajar desde la fila](docs/img/despues-apps.jpg) |
 | Pestañas **Explorar · Películas · Series**. OK en un título abre la app donde está. | Abajo de tu fila se asoma el resto: **↓ hace scroll** a todas tus apps. Atrás regresa. |
+
+| Tema oscuro | Panel rápido (engranaje) |
+| --- | --- |
+| ![El home en modo oscuro](docs/img/despues-oscuro.jpg) | ![Panel de ajustes rápidos de LGlow](docs/img/despues-panel.jpg) |
+| Claro, oscuro o **automático** con el amanecer y el atardecer de tu ciudad. | Modos de imagen y sonido, apagado automático, tema y entradas. También con el botón de engranaje del control. |
 
 <details>
 <summary>Más capturas: la barra vieja, los tiles y la pantalla de carga</summary>
@@ -36,9 +41,9 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 | --- | --- |
 | ![Barra de apps original](docs/img/antes-barra.jpg) | ![Tiles rectangulares por app](docs/img/tiles.jpg) |
 
-| Pantalla de carga genérica de LG | La nueva |
+| Pantalla de carga genérica de LG | La nueva, con el tile de cada app |
 | --- | --- |
-| ![Pantalla de carga gris con cubos](docs/img/antes-carga.jpg) | ![Pantalla de carga clara con tres puntos](docs/img/despues-carga.jpg) |
+| ![Pantalla de carga gris con cubos](docs/img/antes-carga.jpg) | ![Pantalla de carga de Netflix con su tile y tres puntos](docs/img/despues-carga.jpg) |
 
 </details>
 

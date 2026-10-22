@@ -101,10 +101,15 @@ T = [
     ('<b>Movies &amp; Shows tabs.</b> Pick a title and it opens in the app that has it.', '<b>Pestañas Películas y Series.</b> Elige un título y se abre en la app donde está.'),
     ('src="img/despues-apps.jpg" width="1920" height="1080" alt="All apps, after scrolling down from the app row"', 'src="../img/despues-apps.jpg" width="1920" height="1080" alt="Todas las apps, después de bajar desde la fila"'),
     ('<b>All your apps, one scroll away.</b> Press ↓ from the app row. Back takes you home.', '<b>Todas tus apps, a un scroll.</b> Presiona ↓ desde la fila de apps. Atrás te regresa al home.'),
+    ('src="img/despues-oscuro.jpg" width="1920" height="1080" alt="The LGlow home in dark mode"', 'src="../img/despues-oscuro.jpg" width="1920" height="1080" alt="El home de LGlow en modo oscuro"'),
+    ("<b>Light, dark or automatic.</b> Auto follows your city's real sunrise and sunset.", '<b>Claro, oscuro o automático.</b> El automático sigue el amanecer y el atardecer reales de tu ciudad.'),
+    ('src="img/despues-panel.jpg" width="1920" height="1080" alt="LGlow\'s quick settings panel over the home"', 'src="../img/despues-panel.jpg" width="1920" height="1080" alt="El panel de ajustes rápidos de LGlow sobre el home"'),
+    ("<b>Quick settings, redone.</b> The remote's gear button opens LGlow's panel: picture and sound modes, sleep timer, theme and inputs.",
+     '<b>Ajustes rápidos, renovados.</b> El botón de engranaje del control abre el panel de LGlow: modos de imagen y sonido, apagado automático, tema y entradas.'),
     ('src="img/tiles.jpg" width="1320" height="636" alt="Rectangular tiles generated from each app\'s icon"', 'src="../img/tiles.jpg" width="1320" height="636" alt="Tiles rectangulares generados a partir del ícono de cada app"'),
-    ("<b>Tiles made from your TV.</b> Generated from each app's own icon and color.", '<b>Tiles hechos con tu TV.</b> Se generan con el ícono y el color de cada app.'),
-    ('src="img/despues-carga.jpg" width="1280" height="720" alt="A light loading screen with three dots"', 'src="../img/despues-carga.jpg" width="1280" height="720" alt="Una pantalla de carga clara con tres puntos"'),
-    ("<b>A calmer loading screen.</b> Light and minimal instead of LG's grey cubes.", '<b>Una pantalla de carga más tranquila.</b> Clara y minimalista, en vez de los cubos grises de LG.'),
+    ("<b>Tiles made from your TV.</b> Generated from each app's own icon and color, in high resolution.", '<b>Tiles hechos con tu TV.</b> Se generan con el ícono y el color de cada app, en alta resolución.'),
+    ('src="img/despues-carga.jpg" width="1920" height="1080" alt="Netflix loading screen: its tile over a soft sunrise glow, with three dots"', 'src="../img/despues-carga.jpg" width="1920" height="1080" alt="Pantalla de carga de Netflix: su tile sobre un brillo suave de amanecer, con tres puntos"'),
+    ("<b>A loading screen for each app.</b> Netflix, Prime Video and YouTube get their own tile instead of LG's grey cubes.", '<b>Una pantalla de carga para cada app.</b> Netflix, Prime Video y YouTube muestran su propio tile en vez de los cubos grises de LG.'),
 
     # Comparación
     ('<h2>An app on top, or the TV itself?</h2>', '<h2>¿Una app encima o la TV misma?</h2>'),
