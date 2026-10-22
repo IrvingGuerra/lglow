@@ -6,7 +6,7 @@ Para quien quiera entenderlo, adaptarlo a otro modelo o contribuir.
 
 | App | Qué es |
 | --- | --- |
-| `com.webos.app.fullhome` | El home que sale con la tecla Home desde la actualización de 2025: banner, filas y apps cuadradas. `defaultApps.home` apunta a esta. |
+| `com.webos.app.fullhome` | El home de pantalla completa que sale con la tecla Home desde la actualización de diciembre de 2023 (firmware 05.40.09): banner, filas y apps cuadradas. `defaultApps.home` apunta a esta. |
 | `com.webos.app.home` | La barra clásica de webOS 4.5 con mosaicos inclinados. Sigue cargada en memoria aunque casi no se usa. |
 
 Los dos están hechos en **QML** (texto plano), en `/usr/palm/applications/<app>/qml`, dentro de una partición

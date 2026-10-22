@@ -2,7 +2,7 @@
 
 # LGlow
 
-**Your old LG TV needs a glow up.** A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x,
+**Your old LG TV needs a glow up.** A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.5,
 built on top of the stock one.
 
 [Website](https://irvingguerra.github.io/lglow/) · [Español](README.md) · [Before and after](#before-and-after) · [vs Free My TV](#what-about-free-my-tv) · [Compatibility](#compatibility) · [Install](#install)
@@ -51,7 +51,7 @@ The detailed guides are in Spanish (`docs/`). Commands and file paths are the sa
 | Root | Not needed | Required (faultmanager + Homebrew Channel) |
 | Developer Mode | Must be renewed every ~40 days or the app is removed | Not used. It also disables the trap that wipes root |
 | Beyond the home | — | Hides system apps, turns off preloads and ads, frees RAM, blocks the updates that remove root |
-| TVs | webOS 3+, Google TV, Samsung | LG webOS 4.x (tested on a 2019 model) |
+| TVs | webOS 3+, Google TV, Samsung | LG webOS 4.5, 2019 models |
 
 In short: **Free My TV is an app you open on top of your TV; LGlow changes the TV at the root.** If your TV is
 already rooted (or you're willing to root it), LGlow actually gets rid of LG's home.
@@ -59,13 +59,45 @@ already rooted (or you're willing to root it), LGlow actually gets rid of LG's h
 ## Compatibility
 
 - **Tested on:** LG 43LM5770PUA (2019), webOS 4.10.2 (Rockhopper 4.10.2-29), firmware 05.40.97.
-- **Should work on:** other 2019 LGs on webOS 4.5 with the 2025 home (`com.webos.app.fullhome`). The installer
+- **Should work on:** the whole 2019 lineup (webOS 4.5) with the **full-screen home** (`com.webos.app.fullhome`)
+  that LG rolled out in December 2023 with firmware **05.40.09**: B9 and UM/SM/LM LCDs first, then C9 and E9.
+  The test TV is a "webOS TV Lite" model; higher-end models may ship slightly different files. The installer
   **checks the md5 of every file it patches** and stops without changing anything if they don't match.
 - **Requires:** root via [faultmanager-autoroot](https://github.com/throwaway96/faultmanager-autoroot) +
   [Homebrew Channel](https://github.com/webosbrew/webos-homebrew-channel), and SSH root access.
-- **Not for** webOS 5+. For webOS 10, see [mareklarek/webos10-homescreen-customization](https://github.com/mareklarek/webos10-homescreen-customization).
+- **Not for:** 2018 (webOS 4.0), which is rootable but never got the full-screen home, and 2025 (webOS 10),
+  whose home is Flutter: see [mareklarek/webos10-homescreen-customization](https://github.com/mareklarek/webos10-homescreen-customization).
+- **Portable:** 2020–2024 (webOS 5 to 9) also have a QML home, so the technique carries over with new patches,
+  but the latest firmware on those TVs blocks the root exploit.
+
+What matters isn't the year but how the home is built: LGlow patches the QML home of webOS 4.5.
 
 ## Install
+
+### With your AI
+
+If you'd rather have an AI (ChatGPT, Claude, Gemini…) guide you, fill in your TV's details and paste this:
+
+```text
+I want to install LGlow (https://github.com/IrvingGuerra/lglow) on my LG TV. Be my step-by-step guide.
+
+My TV:
+- Model: [e.g. 43LM5770PUA, on the sticker or in Settings → General → About this TV]
+- webOS TV version: [e.g. 4.10.2]
+- Software version: [e.g. 05.40.97]
+- My computer: [macOS / Windows / Linux]
+
+How to help me:
+1. Read the repo's README and the guides in docs/ first (they're in Spanish, translate them for me). Use them as the source of truth, not your memory.
+2. Check compatibility before anything else. LGlow is made for 2019 LG TVs on webOS 4.5 with the full-screen home (com.webos.app.fullhome, firmware 05.40.09 or newer). Tell me honestly if my TV fits, and have me check root status on https://cani.rootmy.tv.
+3. Walk me through the guides in order: 01 root, 02 Developer Mode trap, 03 SSH and update blocking, 04 install, 06 optional cleanup. One step at a time: wait for me to confirm or paste the output before moving on.
+4. Explain what each command does before I run it, and warn me clearly before anything risky.
+5. Never suggest writing to LG's read-only partitions, never tell me to open, reinstall or update LG's Developer Mode app, and don't update the TV's firmware.
+6. If the installer says the files don't match my firmware, don't force it: help me port the patches following docs/05-como-funciona.md ("Regenerar los parches para otro firmware").
+7. If something goes wrong, the way back is ./instalar.sh <TV IP> --quitar and a reboot (docs/07-problemas-y-desinstalar.md).
+```
+
+### Already rooted with SSH
 
 ```bash
 git clone https://github.com/IrvingGuerra/lglow && cd lglow

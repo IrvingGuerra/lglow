@@ -104,6 +104,8 @@ p code, dd code, .note code { background: var(--card); border: 1px solid var(--l
 }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; letter-spacing: -0.02em; text-decoration: none; }
 .links { display: flex; gap: 22px; margin-left: auto; }
+.lang { padding: 8px 10px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; text-decoration: none; color: var(--ink-2); }
+.lang:hover { color: var(--ink); background: var(--card); }
 .links a { text-decoration: none; color: var(--ink-2); font-size: 15px; font-weight: 500; }
 .links a:hover { color: var(--ink); }
 
@@ -125,6 +127,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
 .hero { text-align: center; padding: 96px 0 40px; }
 .kicker { margin: 0 0 14px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 h1 { margin: 0 auto; max-width: 13ch; font-size: clamp(44px, 8.4vw, 96px); line-height: 1.02; letter-spacing: -0.045em; font-weight: 800; text-wrap: balance; }
+html[lang="es"] h1 { max-width: 17ch; }
 h2 { margin: 0; font-size: clamp(32px, 5vw, 54px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 800; text-wrap: balance; }
 h3 { margin: 0 0 6px; font-size: 19px; letter-spacing: -0.01em; }
 .glow { background: var(--glow); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -212,7 +215,25 @@ th.hl { color: #ff4f8b; }
 .code code { font-size: 14.5px; line-height: 1.75; }
 .note { text-align: center; color: var(--ink-2); margin-top: 22px; }
 
+/* AI prompt */
+.ai { display: grid; grid-template-columns: 1fr 1.5fr; gap: 32px; align-items: start; margin-top: 64px; padding: 32px; background: var(--card); border: 1px solid var(--stroke); border-radius: 28px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
+.ai h3 { font-size: 26px; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; }
+.ai-copy p:not(.kicker) { margin: 0; color: var(--ink-2); }
+.code-prompt { margin-top: 0; }
+.code-prompt pre { max-height: 360px; overflow: auto; }
+.code-prompt code { white-space: pre-wrap; font-size: 13.5px; line-height: 1.65; }
+
 /* Compatibility */
+.years { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+.year { padding: 24px; background: var(--card); border: 1px solid var(--stroke); border-radius: 22px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
+.year.yes { border: 2px solid #ff4f8b; box-shadow: var(--shadow-big); }
+.year h3 { margin: 14px 0 0; font-size: 30px; letter-spacing: -0.03em; }
+.year .os { margin: 0 0 10px; font-weight: 600; color: var(--muted); font-size: 15px; }
+.year p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.badge.ok { background: rgba(52, 199, 89, 0.16); color: #1f9d48; }
+.badge.port { background: rgba(255, 159, 10, 0.18); color: #c46f00; }
+.badge.no { background: var(--line); color: var(--muted); }
 .compat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 0; }
 .compat div { padding: 24px 26px; background: var(--card); border: 1px solid var(--stroke); border-radius: 22px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
 .compat dt { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 6px; }
@@ -244,6 +265,8 @@ th.hl { color: #ff4f8b; }
 }
 
 @media (max-width: 1000px) {
+  .years { grid-template-columns: repeat(2, 1fr); }
+  .ai { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .grid { grid-template-columns: repeat(2, 1fr); }
@@ -258,7 +281,10 @@ th.hl { color: #ff4f8b; }
   .tv-screen { padding: 5px; border-radius: 14px; }
   .tv-screen img { border-radius: 9px; }
   .section { padding-top: 88px; }
-  .grid, .shots, .compat, .steps { grid-template-columns: 1fr; }
+  .grid, .shots, .compat, .steps, .years { grid-template-columns: 1fr; }
+  .ai { padding: 22px; margin-top: 48px; }
+  .nav .lang { margin-left: auto; }
+  .nav .lang + .btn-sm { margin-left: 0; }
   .stat b { font-size: 32px; }
   .ba { border-radius: 14px; }
   .ba-tag { top: 10px; padding: 4px 10px; font-size: 11px; }

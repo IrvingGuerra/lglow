@@ -3,16 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>document.documentElement.classList.add("js")</script>
+  <script>
+    document.documentElement.classList.add("js");
+    // Spanish browsers get the Spanish page; the EN/ES switch wins.
+    (function () {
+      var lang;
+      try { lang = localStorage.getItem("lang"); } catch (e) {}
+      if (!lang && /^es\b/i.test(navigator.language || "")) location.replace("es/" + location.hash);
+    })();
+  </script>
   <title>LGlow — your old LG TV needs a glow up</title>
-  <meta name="description" content="A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x. Trending picks from your own apps, the weather at a glance, big app tiles and more free memory. Open source, one command to undo.">
+  <meta name="description" content="A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.5. Trending picks from your own apps, the weather at a glance, big app tiles and more free memory. Open source, one command to undo.">
   <link rel="canonical" href="https://irvingguerra.github.io/lglow/">
+  <link rel="alternate" hreflang="en" href="https://irvingguerra.github.io/lglow/">
+  <link rel="alternate" hreflang="es" href="https://irvingguerra.github.io/lglow/es/">
+  <link rel="alternate" hreflang="x-default" href="https://irvingguerra.github.io/lglow/">
   <meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://irvingguerra.github.io/lglow/">
   <meta property="og:title" content="LGlow — your old LG TV needs a glow up">
-  <meta property="og:description" content="A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x. Open source, one command to undo.">
+  <meta property="og:description" content="A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.5. Open source, one command to undo.">
   <meta property="og:image" content="https://irvingguerra.github.io/lglow/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -38,6 +49,7 @@
       <a href="#install">Install</a>
       <a href="#faq">FAQ</a>
     </nav>
+    <a class="lang" href="es/" hreflang="es" lang="es" data-lang="es" aria-label="Leer en español">ES</a>
     <a class="btn btn-dark btn-sm" href="https://github.com/IrvingGuerra/lglow" rel="noopener">
       <svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       <span>GitHub</span>
@@ -46,7 +58,7 @@
 
   <main id="top">
     <section class="hero">
-      <p class="kicker" data-reveal>Open source · LG webOS 4.x · 2019 TVs</p>
+      <p class="kicker" data-reveal>Open source · LG webOS 4.5 · 2019 TVs</p>
       <h1 data-reveal>Your old LG needs a <span class="glow">glow&nbsp;up.</span></h1>
       <p class="lede" data-reveal>A clean, fast, ad-free home screen built on top of the stock one. Trending picks from your own apps, the weather at a glance, big app tiles, and more free memory. One command to undo.</p>
       <div class="cta" data-reveal>
@@ -165,7 +177,7 @@
             <tr><th>Root</th><td data-label="Free My TV">Not needed</td><td class="hl" data-label="LGlow">Required</td></tr>
             <tr><th>Developer Mode</th><td data-label="Free My TV">Renew every ~40 days or the app is removed</td><td class="hl" data-label="LGlow">Not used, and its root-wiping trap is disabled</td></tr>
             <tr><th>Beyond the home</th><td data-label="Free My TV">—</td><td class="hl" data-label="LGlow">Hides system apps, stops preloads and ads, frees RAM, blocks updates that remove root</td></tr>
-            <tr><th>TVs</th><td data-label="Free My TV">webOS 3+, Google TV, Samsung</td><td class="hl" data-label="LGlow">LG webOS 4.x (tested on a 2019 model)</td></tr>
+            <tr><th>TVs</th><td data-label="Free My TV">webOS 3+, Google TV, Samsung</td><td class="hl" data-label="LGlow">LG webOS 4.5, 2019 models</td></tr>
           </tbody>
         </table>
       </div>
@@ -185,25 +197,57 @@
         <li data-reveal><span class="n">5</span><div><h3>Clean up &amp; free memory</h3><p>Optional. Turns off ads and preloads.</p><a href="https://github.com/IrvingGuerra/lglow/blob/main/docs/06-limpieza-y-memoria.md" rel="noopener">Guide →</a></div></li>
       </ol>
       <div class="code" data-reveal>
-        <div class="code-bar"><span>Already rooted with SSH?</span><button class="copy" type="button">Copy</button></div>
+        <div class="code-bar"><span>Already rooted with SSH?</span><button class="copy" type="button" data-strip>Copy</button></div>
 <pre><code>git clone https://github.com/IrvingGuerra/lglow &amp;&amp; cd lglow
 ./instalar.sh 192.168.1.50                # your TV's IP
 ssh root@192.168.1.50 vi /var/lib/webosbrew/fullhomecustom/config.json
 python3 tools/make-tiles.py 192.168.1.50  # tiles from your app icons</code></pre>
       </div>
       <p class="note" data-reveal>Undo everything: <code>./instalar.sh 192.168.1.50 --quitar</code> and reboot the TV.</p>
+
+      <div class="ai" data-reveal>
+        <div class="ai-copy">
+          <p class="kicker">Prefer a guide?</p>
+          <h3>Let your AI walk you through it.</h3>
+          <p>Paste this prompt into ChatGPT, Claude, Gemini or any assistant that can read the web. Fill in your TV's details first: it reads the repo, checks if your TV fits and guides you one step at a time.</p>
+        </div>
+        <div class="code code-prompt">
+          <div class="code-bar"><span>Prompt for your AI</span><button class="copy" type="button">Copy</button></div>
+<pre><code>I want to install LGlow (https://github.com/IrvingGuerra/lglow) on my LG TV. Be my step-by-step guide.
+
+My TV:
+- Model: [e.g. 43LM5770PUA, on the sticker or in Settings → General → About this TV]
+- webOS TV version: [e.g. 4.10.2]
+- Software version: [e.g. 05.40.97]
+- My computer: [macOS / Windows / Linux]
+
+How to help me:
+1. Read the repo's README and the guides in docs/ first (they're in Spanish, translate them for me). Use them as the source of truth, not your memory.
+2. Check compatibility before anything else. LGlow is made for 2019 LG TVs on webOS 4.5 with the full-screen home (com.webos.app.fullhome, firmware 05.40.09 or newer). Tell me honestly if my TV fits, and have me check root status on https://cani.rootmy.tv.
+3. Walk me through the guides in order: 01 root, 02 Developer Mode trap, 03 SSH and update blocking, 04 install, 06 optional cleanup. One step at a time: wait for me to confirm or paste the output before moving on.
+4. Explain what each command does before I run it, and warn me clearly before anything risky.
+5. Never suggest writing to LG's read-only partitions, never tell me to open, reinstall or update LG's Developer Mode app, and don't update the TV's firmware.
+6. If the installer says the files don't match my firmware, don't force it: help me port the patches following docs/05-como-funciona.md ("Regenerar los parches para otro firmware").
+7. If something goes wrong, the way back is ./instalar.sh &lt;TV IP&gt; --quitar and a reboot (docs/07-problemas-y-desinstalar.md).</code></pre>
+        </div>
+      </div>
     </section>
 
     <section class="section" id="compat">
       <div class="head" data-reveal>
         <p class="kicker">Compatibility</p>
         <h2>Made for the 2019 LGs.</h2>
+        <p>What matters isn't the year on the box but how the TV's home is built. LGlow patches the QML home of webOS 4.5, so it fits the whole 2019 lineup with the full-screen home.</p>
+      </div>
+      <div class="years">
+        <div class="year" data-reveal><span class="badge no">Not supported</span><h3>2018</h3><p class="os">webOS 4.0</p><p>Rootable, but it never got the full-screen home LGlow is built on.</p></div>
+        <div class="year yes" data-reveal><span class="badge ok">Supported</span><h3>2019</h3><p class="os">webOS 4.5</p><p>With the full-screen home LG rolled out in December 2023 (firmware 05.40.09+): B9 and UM/SM/LM LCDs first, then C9 and E9.</p></div>
+        <div class="year" data-reveal><span class="badge port">Portable</span><h3>2020–2024</h3><p class="os">webOS 5 to 9</p><p>Also a QML home, so the technique carries over with new patches. But the latest firmware blocks the root exploit.</p></div>
+        <div class="year" data-reveal><span class="badge no">Not supported</span><h3>2025</h3><p class="os">webOS 10</p><p>The home was rewritten in Flutter. See <a href="https://github.com/mareklarek/webos10-homescreen-customization" rel="noopener">webos10-homescreen-customization</a>.</p></div>
       </div>
       <dl class="compat" data-reveal>
-        <div><dt>Tested on</dt><dd>LG 43LM5770PUA (2019), webOS 4.10.2, firmware 05.40.97</dd></div>
-        <div><dt>Should work on</dt><dd>Other 2019 LGs on webOS 4.5 with the 2025 home. The installer checks every file it patches and changes nothing if they don't match.</dd></div>
-        <div><dt>Requires</dt><dd>Root (<a href="https://github.com/throwaway96/faultmanager-autoroot" rel="noopener">faultmanager-autoroot</a> + <a href="https://github.com/webosbrew/webos-homebrew-channel" rel="noopener">Homebrew Channel</a>), SSH and a free <a href="https://www.themoviedb.org/settings/api" rel="noopener">TMDB</a> key for "For you".</dd></div>
-        <div><dt>Not for</dt><dd>webOS 5 or newer. On webOS 10, see <a href="https://github.com/mareklarek/webos10-homescreen-customization" rel="noopener">webos10-homescreen-customization</a>.</dd></div>
+        <div><dt>Tested on</dt><dd>LG 43LM5770PUA (2019, "webOS TV Lite"), webOS 4.10.2, firmware 05.40.97. Higher-end 2019 models may ship slightly different files: the installer checks every file it patches and changes nothing if yours differ, and the patches can be regenerated.</dd></div>
+        <div><dt>Requires</dt><dd>Root (<a href="https://github.com/throwaway96/faultmanager-autoroot" rel="noopener">faultmanager-autoroot</a> + <a href="https://github.com/webosbrew/webos-homebrew-channel" rel="noopener">Homebrew Channel</a>), SSH and a free <a href="https://www.themoviedb.org/settings/api" rel="noopener">TMDB</a> key for "For you". Check your firmware on <a href="https://cani.rootmy.tv" rel="noopener">CanI.RootMy.TV</a>.</dd></div>
       </dl>
     </section>
 

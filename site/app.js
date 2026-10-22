@@ -24,16 +24,25 @@
     set();
   });
 
-  // Copy the install commands without the trailing comments.
-  var copy = document.querySelector(".copy");
-  if (copy) {
-    copy.addEventListener("click", function () {
-      var text = document.querySelector(".code code").textContent
-        .split("\n").map(function (l) { return l.replace(/\s+#.*$/, ""); }).join("\n");
+  // Copy buttons: commands drop their trailing comments, the AI prompt goes as is.
+  document.querySelectorAll(".copy").forEach(function (btn) {
+    var label = btn.textContent;
+    btn.addEventListener("click", function () {
+      var text = btn.closest(".code").querySelector("code").textContent;
+      if (btn.hasAttribute("data-strip")) {
+        text = text.split("\n").map(function (l) { return l.replace(/\s+#.*$/, ""); }).join("\n");
+      }
       navigator.clipboard.writeText(text).then(function () {
-        copy.textContent = "Copied";
-        setTimeout(function () { copy.textContent = "Copy"; }, 1600);
+        btn.textContent = btn.getAttribute("data-done") || "Copied";
+        setTimeout(function () { btn.textContent = label; }, 1600);
       });
     });
-  }
+  });
+
+  // Remember the language the visitor picked.
+  document.querySelectorAll("[data-lang]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      try { localStorage.setItem("lang", a.getAttribute("data-lang")); } catch (e) {}
+    });
+  });
 })();

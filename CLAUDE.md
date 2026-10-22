@@ -31,6 +31,12 @@ https://irvingguerra.github.io/lglow/ en cada push a `main` que toque `site/` o 
 de `docs/img` a `img/`. Para probarla en local, armar esa misma carpeta (site + `img/`) y servirla con
 `python3 -m http.server`.
 
+**Dos idiomas:** la fuente es `site/index.html` (inglés). `site/es/index.html` (español) **no se edita a mano**: se
+genera con `python3 tools/sitio-es.py`, que traduce texto por texto y se detiene si algún texto en inglés cambió
+(entonces hay que actualizar su traducción en el script). Los navegadores en español se redirigen a `/es/`; el
+botón EN/ES guarda la elección en `localStorage`. Las imágenes para compartir (`og.jpg`, `og-es.jpg`) salen de
+`python3 tools/og.py`. El prompt para IA vive en la web y en los dos README: si cambia, cambiarlo en los cuatro.
+
 ## Publicar
 
 Publicado en github.com/IrvingGuerra/lglow (público). Como es público, revisar que ningún cambio meta datos
