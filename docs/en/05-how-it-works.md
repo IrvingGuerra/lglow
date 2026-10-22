@@ -97,6 +97,13 @@ apps: SAM mounts their image (`data/images/<app>/data.img`) as an overlay on the
 open after power-on, and that overlay would hide the mount. So the script mounts the image and the overlay first,
 the same way SAM does; when the app opens, SAM finds them in `/proc/mounts` and doesn't mount them again.
 
+The remote's Movies button reaches the compositor as `WebOS.Key_webOS_USP` (in the log, `NL_RCU_CONTROL_USE`
+with `key_code` 1083). LG treats it as a server-driven shortcut (`handleCPHotkeys` in `appLaunch.js`): depending on
+the country it opens Rakuten or a "movie" search. With `"botonMovies"` in `config.json`, the installer applies
+`tv/patches/keyfilters/appLaunch.patch` to a copy, writes the app id into it (the compositor doesn't read
+`config.json`), and `compositor.sh` mounts it before restarting the compositor. Only with the `appLaunch.js` of the
+tested firmware (md5).
+
 ## Debugging tools
 
 - `tv/key.js` (on the TV, `/var/lib/webosbrew/tools/key.js`): simulates the remote by writing events to

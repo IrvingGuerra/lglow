@@ -97,6 +97,12 @@ SAM monta su imagen (`data/images/<app>/data.img`) como overlay sobre su carpeta
 después de encender, y ese overlay taparía el montaje. Por eso el script monta antes la imagen y el overlay igual
 que SAM, que al abrir la app los ve en `/proc/mounts` y no los repite.
 
+El botón Movies del control llega al compositor como `WebOS.Key_webOS_USP` (en el log, `NL_RCU_CONTROL_USE`
+con `key_code` 1083). LG lo trata como acceso directo de su servidor (`handleCPHotkeys` en `appLaunch.js`): según el
+país abre Rakuten o la búsqueda con "movie". Con `"botonMovies"` en `config.json`, el instalador aplica
+`tv/patches/keyfilters/appLaunch.patch` a una copia, le escribe el id de la app (el compositor no lee `config.json`)
+y `compositor.sh` la monta antes de reiniciar el compositor. Solo con el `appLaunch.js` del firmware probado (md5).
+
 ## Herramientas para depurar
 
 - `tv/key.js` (en la TV, `/var/lib/webosbrew/tools/key.js`): simula el control escribiendo eventos en

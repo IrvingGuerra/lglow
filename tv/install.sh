@@ -87,6 +87,25 @@ cp "$HERE/splash/default_app_splash.png" "$BAR/splash/default_app_splash.png"
 mkdir -p "$FULL/quicksettings"
 cp "$HERE/quicksettings/QuickSettings.qml" "$FULL/quicksettings/QuickSettings.qml"
 
+# Teclas del compositor: el botón Movies puede abrir una app ("botonMovies" en config.json). Solo con
+# el appLaunch.js del firmware probado; con otro, el botón se queda como lo dejó LG
+KF=/usr/lib/qt5/qml/KeyFilters
+umount "$KF/appLaunch.js" 2>/dev/null || true
+mkdir -p "$FULL/keyfilters"
+if (cd $KF && md5sum -c "$HERE/patches/keyfilters/originales.md5" >/dev/null 2>&1); then
+    cp "$KF/appLaunch.js" "$FULL/keyfilters/appLaunch.js"
+    (cd "$FULL/keyfilters" && patch -p1 -i "$HERE/patches/keyfilters/appLaunch.patch" >/dev/null) \
+        || die "no se pudo aplicar appLaunch.patch"
+    # El id de la app va escrito en el archivo (el compositor no puede leer config.json); solo letras,
+    # números, punto, guion y guion bajo
+    MOVIES=$(sed -n 's/.*"botonMovies" *: *"\([A-Za-z0-9._-]*\)".*/\1/p' "$FULL/config.json" | head -1)
+    sed -i "s|^var lglowBotonMovies = \"\";|var lglowBotonMovies = \"$MOVIES\";|" "$FULL/keyfilters/appLaunch.js"
+    [ -n "$MOVIES" ] && say "botón Movies → $MOVIES"
+else
+    say "las teclas del compositor son de otro firmware: el botón Movies se queda como lo dejó LG"
+    rm -f "$FULL/keyfilters/appLaunch.js"
+fi
+
 say "instalando scripts de arranque"
 cp "$HERE/apply.sh" "$BAR/apply.sh"
 cp "$HERE/sin-precarga.sh" "$BASE/tools/sin-precarga.sh"

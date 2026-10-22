@@ -47,7 +47,8 @@ Edita en la TV `/var/lib/webosbrew/fullhomecustom/config.json`:
     "language": "es-MX",
     "latitude": 19.4326,
     "longitude": -99.1332,
-    "city": "Ciudad de México"
+    "city": "Ciudad de México",
+    "botonMovies": ""
 }
 ```
 
@@ -55,6 +56,9 @@ Edita en la TV `/var/lib/webosbrew/fullhomecustom/config.json`:
   home funciona igual, pero solo muestra fecha, hora y clima.
 - **region:** tu país en dos letras. Decide en qué apps está cada título.
 - **latitude / longitude / city:** para el clima. Busca tus coordenadas en cualquier mapa.
+- **botonMovies** (opcional): el id de la app que abre el botón Movies del control (el que LG manda a Rakuten o a
+  buscar "movie"), por ejemplo `"youtube.leanback.v4"`. Vacío, el botón se queda como lo dejó LG. Este se aplica al
+  volver a correr el instalador.
 
 Para que tome los cambios, presiona Home dos veces o reinicia la TV.
 

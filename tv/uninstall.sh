@@ -22,7 +22,8 @@ for app in com.webos.app.fullhome com.webos.app.home; do
 done
 for f in /usr/lib/qt5/qml/SystemUIAssets/images/*/default_app_splash.png \
          /usr/lib/qt5/qml/YSM/images/default_app_splash.png \
-         /usr/lib/qt5/qml/QuickSettings/QuickSettings.qml; do
+         /usr/lib/qt5/qml/QuickSettings/QuickSettings.qml \
+         /usr/lib/qt5/qml/KeyFilters/appLaunch.js; do
     umount "$f" 2>/dev/null
 done
 # Pantallas de carga de las apps (montadas por splash-apps.sh)

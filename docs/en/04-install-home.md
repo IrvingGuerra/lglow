@@ -47,7 +47,8 @@ On the TV, edit `/var/lib/webosbrew/fullhomecustom/config.json`:
     "language": "es-MX",
     "latitude": 19.4326,
     "longitude": -99.1332,
-    "city": "Ciudad de México"
+    "city": "Ciudad de México",
+    "botonMovies": ""
 }
 ```
 
@@ -55,6 +56,9 @@ On the TV, edit `/var/lib/webosbrew/fullhomecustom/config.json`:
   home still works, but it only shows the date, time and weather.
 - **region:** your two-letter country code. It decides which apps each title is available in.
 - **latitude / longitude / city:** for the weather. Look up your coordinates on any map.
+- **botonMovies** (optional): the id of the app the remote's Movies button opens (LG sends it to Rakuten or to a
+  "movie" search), for example `"youtube.leanback.v4"`. Left empty, the button stays as LG set it. This one takes
+  effect when you run the installer again.
 
 To pick up the changes, press Home twice or restart the TV.
 

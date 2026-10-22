@@ -1,8 +1,8 @@
 #!/bin/sh
-# compositor: el panel rápido de LGlow en el botón de engranaje del control, y la pantalla de
-# carga nueva desde el primer momento.
+# compositor: el panel rápido de LGlow en el botón de engranaje del control, el botón Movies que
+# abre una app ("botonMovies" en config.json) y la pantalla de carga nueva desde el primer momento.
 # El compositor de webOS (surface-manager) guarda en memoria, desde que enciende la TV, el panel
-# de ajustes rápidos de LG y la pantalla de carga genérica de las apps. Montar los nuestros
+# de ajustes rápidos de LG, lo que hace cada tecla y la pantalla de carga genérica de las apps. Montar los nuestros
 # encima no basta: hay que reiniciar el compositor una vez para que los vuelva a leer. Esto se
 # ve como un parpadeo de un par de segundos, así que solo se hace cuando en pantalla está el
 # home, una entrada HDMI o la TV en vivo (nunca a media película en una app). Si en media hora
@@ -14,6 +14,8 @@
 BASE=/var/lib/webosbrew
 QS_NUEVO=$BASE/fullhomecustom/quicksettings/QuickSettings.qml
 QS=/usr/lib/qt5/qml/QuickSettings/QuickSettings.qml
+TECLAS_NUEVO=$BASE/fullhomecustom/keyfilters/appLaunch.js
+TECLAS=/usr/lib/qt5/qml/KeyFilters/appLaunch.js
 LOG=/tmp/lglow-compositor.log
 
 [ -e $BASE/homecustom/DESACTIVADO ] && exit 0
@@ -38,6 +40,10 @@ buen_momento() {
     if [ -f "$QS_NUEVO" ] && [ -f "$QS" ]; then
         umount "$QS" 2>/dev/null
         mount --bind "$QS_NUEVO" "$QS" && echo "panel montado" >> $LOG
+    fi
+    if [ -f "$TECLAS_NUEVO" ] && [ -f "$TECLAS" ]; then
+        umount "$TECLAS" 2>/dev/null
+        mount --bind "$TECLAS_NUEVO" "$TECLAS" && echo "teclas montadas" >> $LOG
     fi
 
     i=0

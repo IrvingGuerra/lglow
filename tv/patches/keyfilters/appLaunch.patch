@@ -1,0 +1,28 @@
+--- a/appLaunch.js
++++ b/appLaunch.js
+@@ -209,6 +209,10 @@
+ var uiMenuLang;
+ var alexaSupportedLanguages;
+ var isSubscribeSettingsForHotkey;
++
++// [LGlow] Botón Movies del control (Key_webOS_USP; LG lo manda a Rakuten o a buscar "movie"): si el
++// config.json de LGlow trae "botonMovies" con el id de una app, abre esa app. Lo escribe install.sh.
++var lglowBotonMovies = "";
+ 
+ function init() {
+     supportSuperMHL = false;
+@@ -1325,6 +1329,14 @@
+     var param = {};
+     var moviesParamStr;
+     var powerOnReason;
++
++    // [LGlow] Antes que el hotkey de LG (que depende de su servidor y le pasa la búsqueda "movie")
++    if (key === WebOS.Key_webOS_USP && lglowBotonMovies) {
++        if (pressed && access.keyAction.launchApp && (!bootManager.bootFirstUse || systemPropertyService.powerOnlyMode)
++                && !(fullscreenView.activeFocus && fullscreenView.appId === lglowBotonMovies))
++            applicationManager.launch(lglowBotonMovies, "{}");
++        return KeyPolicy.Accepted;
++    }
+ 
+     if (!supportMicomDB) {
+     // Architectural design to get CP appId is not discussed yet,
