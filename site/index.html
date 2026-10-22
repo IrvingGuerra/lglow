@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>document.documentElement.classList.add("js")</script>
+  <title>LGlow — your old LG TV needs a glow up</title>
+  <meta name="description" content="A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x. Trending picks from your own apps, the weather at a glance, big app tiles and more free memory. Open source, one command to undo.">
+  <link rel="canonical" href="https://irvingguerra.github.io/lglow/">
+  <meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://irvingguerra.github.io/lglow/">
+  <meta property="og:title" content="LGlow — your old LG TV needs a glow up">
+  <meta property="og:description" content="A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x. Open source, one command to undo.">
+  <meta property="og:image" content="https://irvingguerra.github.io/lglow/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://irvingguerra.github.io/lglow/og.jpg">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="aura" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="LGlow, back to top">
+      <img src="favicon.svg" alt="" width="28" height="28">
+      <span>LGlow</span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#compare">Before &amp; after</a>
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-dark btn-sm" href="https://github.com/IrvingGuerra/lglow" rel="noopener">
+      <svg class="gh" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>GitHub</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="kicker" data-reveal>Open source · LG webOS 4.x · 2019 TVs</p>
+      <h1 data-reveal>Your old LG needs a <span class="glow">glow&nbsp;up.</span></h1>
+      <p class="lede" data-reveal>A clean, fast, ad-free home screen built on top of the stock one. Trending picks from your own apps, the weather at a glance, big app tiles, and more free memory. One command to undo.</p>
+      <div class="cta" data-reveal>
+        <a class="btn btn-dark" href="https://github.com/IrvingGuerra/lglow" rel="noopener">Get it on GitHub <span aria-hidden="true">→</span></a>
+        <a class="btn btn-glass" href="#compare">See before &amp; after</a>
+      </div>
+      <figure class="tv" data-reveal>
+        <div class="tv-glow" aria-hidden="true"></div>
+        <div class="tv-screen">
+          <img src="img/despues-home.jpg" width="1920" height="1080" alt="The LGlow home: a For you row with three trending titles, date, time and weather, and one row of big app tiles">
+        </div>
+        <div class="tv-stand" aria-hidden="true"></div>
+        <figcaption>Real screenshot from a 2019 LG 43LM5770PUA.</figcaption>
+      </figure>
+    </section>
+
+    <section class="stats" aria-label="Results on the test TV">
+      <div class="stat" data-reveal><b>0</b><span>LG ads on the home screen</span></div>
+      <div class="stat" data-reveal><b>~2×</b><span>free RAM at idle<br><small>~106 MB → ~160–250 MB</small></span></div>
+      <div class="stat" data-reveal><b>−90%</b><span>swap in use<br><small>~265 MB → ~30 MB</small></span></div>
+      <div class="stat" data-reveal><b>1</b><span>command to undo it all</span></div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="head" data-reveal>
+        <p class="kicker">Before &amp; after</p>
+        <h2>Same TV. A whole new home.</h2>
+        <p>Drag the handle. Out go the LG banner, the sponsored rows and the wall of system apps. In comes what's trending in <em>your</em> apps.</p>
+      </div>
+      <div class="ba" data-reveal style="--pos: 50%">
+        <img class="ba-after" src="img/despues-home.jpg" width="1920" height="1080" alt="After: the LGlow home" loading="lazy">
+        <div class="ba-before"><img src="img/antes-home.jpg" width="1280" height="720" alt="Before: the stock LG home with a banner and sponsored content" loading="lazy"></div>
+        <span class="ba-tag ba-tag-l">Before</span>
+        <span class="ba-tag ba-tag-r">After</span>
+        <span class="ba-line" aria-hidden="true"><span class="ba-knob"></span></span>
+        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after">
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="head" data-reveal>
+        <p class="kicker">What you get</p>
+        <h2>Lighter, cleaner, actually yours.</h2>
+      </div>
+      <div class="grid">
+        <article class="card" data-reveal>
+          <span class="ico i-sun"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20" /></svg></span>
+          <h3>No LG ads</h3>
+          <p>No banner, no sponsored content rows, no screensaver ads, no ad cookie.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ico i-sky"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6L20 9.5l-4 4 1 5.7-5-2.8-5 2.8 1-5.7-4-4 5.4-.9z" /></svg></span>
+          <h3>For you</h3>
+          <p>Three trending titles every hour, <b>only from apps you have</b>. Explore, Movies and Shows tabs. OK opens the app that has it.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ico i-mint"><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 000-8 6 6 0 00-11.6 1.5A3.3 3.3 0 007 18z" /></svg></span>
+          <h3>Weather, date &amp; time</h3>
+          <p>For your city, at a glance. Powered by Open-Meteo, no key needed.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ico i-sun"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="8" height="10" rx="2" /><rect x="13" y="7" width="8" height="10" rx="2" /></svg></span>
+          <h3>Big app tiles</h3>
+          <p>One row of your 5 favorite apps in each brand's color. The rest live on their own Apps screen.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ico i-sky"><svg viewBox="0 0 24 24"><path d="M4 16l4-6 4 4 4-7 4 9" /><path d="M3 20h18" /></svg></span>
+          <h3>More free memory</h3>
+          <p>The old launcher bar stops running and LG stops preloading Netflix, YouTube and Prime behind your back.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ico i-mint"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></svg></span>
+          <h3>Root protection</h3>
+          <p>Disables a Developer Mode trap that <b>wipes Homebrew Channel and root</b> on the next reboot.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="head" data-reveal>
+        <p class="kicker">A closer look</p>
+        <h2>Every screen, refreshed.</h2>
+      </div>
+      <div class="shots">
+        <figure class="shot" data-reveal>
+          <img src="img/despues-titulo.jpg" width="1920" height="1080" alt="Movies tab with a title selected" loading="lazy">
+          <figcaption><b>Movies &amp; Shows tabs.</b> Pick a title and it opens in the app that has it.</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <img src="img/despues-apps.jpg" width="1920" height="1080" alt="The Apps screen with every installed app as a large tile" loading="lazy">
+          <figcaption><b>The Apps screen.</b> Press ↓ from the app row. Back takes you home.</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <img src="img/tiles.jpg" width="1320" height="636" alt="Rectangular tiles generated from each app's icon" loading="lazy">
+          <figcaption><b>Tiles made from your TV.</b> Generated from each app's own icon and color.</figcaption>
+        </figure>
+        <figure class="shot" data-reveal>
+          <img src="img/despues-carga.jpg" width="1280" height="720" alt="A light loading screen with three dots" loading="lazy">
+          <figcaption><b>A calmer loading screen.</b> Light and minimal instead of LG's grey cubes.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="vs">
+      <div class="head" data-reveal>
+        <p class="kicker">LGlow vs Free My TV</p>
+        <h2>An app on top, or the TV itself?</h2>
+        <p><a href="https://github.com/simbasjungles/free-my-tv" rel="noopener">Free My TV</a> inspired LGlow's design, and it's a great pick <b>if you don't want to root</b>. LGlow goes deeper.</p>
+      </div>
+      <div class="table-wrap" data-reveal>
+        <table>
+          <thead><tr><th></th><th>Free My TV on LG</th><th class="hl">LGlow</th></tr></thead>
+          <tbody>
+            <tr><th>What it is</th><td data-label="Free My TV">Another app (a launcher), installed through Developer Mode</td><td class="hl" data-label="LGlow">Replaces the system's own home, the one the Home button opens</td></tr>
+            <tr><th>LG's home</th><td data-label="Free My TV">Stays, ads included. Opens with a number key</td><td class="hl" data-label="LGlow">Gone. Home opens the new one directly</td></tr>
+            <tr><th>Root</th><td data-label="Free My TV">Not needed</td><td class="hl" data-label="LGlow">Required</td></tr>
+            <tr><th>Developer Mode</th><td data-label="Free My TV">Renew every ~40 days or the app is removed</td><td class="hl" data-label="LGlow">Not used, and its root-wiping trap is disabled</td></tr>
+            <tr><th>Beyond the home</th><td data-label="Free My TV">—</td><td class="hl" data-label="LGlow">Hides system apps, stops preloads and ads, frees RAM, blocks updates that remove root</td></tr>
+            <tr><th>TVs</th><td data-label="Free My TV">webOS 3+, Google TV, Samsung</td><td class="hl" data-label="LGlow">LG webOS 4.x (tested on a 2019 model)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="head" data-reveal>
+        <p class="kicker">Install</p>
+        <h2>Five steps. One command for the home.</h2>
+        <p>The step-by-step guides are in Spanish, but commands and paths are the same in any language.</p>
+      </div>
+      <ol class="steps">
+        <li data-reveal><span class="n">1</span><div><h3>Root the TV</h3><p>faultmanager-autoroot + Homebrew Channel.</p><a href="https://github.com/IrvingGuerra/lglow/blob/main/docs/01-rootear.md" rel="noopener">Guide →</a></div></li>
+        <li data-reveal><span class="n">2</span><div><h3>Disarm the Developer Mode trap</h3><p>Required if LG's Developer Mode app is still installed.</p><a href="https://github.com/IrvingGuerra/lglow/blob/main/docs/02-trampa-developer-mode.md" rel="noopener">Guide →</a></div></li>
+        <li data-reveal><span class="n">3</span><div><h3>SSH &amp; block updates</h3><p>So an LG update can't take root away.</p><a href="https://github.com/IrvingGuerra/lglow/blob/main/docs/03-acceso-y-actualizaciones.md" rel="noopener">Guide →</a></div></li>
+        <li data-reveal><span class="n">4</span><div><h3>Install the new home</h3><p>One command from your computer.</p><a href="https://github.com/IrvingGuerra/lglow/blob/main/docs/04-instalar-home.md" rel="noopener">Guide →</a></div></li>
+        <li data-reveal><span class="n">5</span><div><h3>Clean up &amp; free memory</h3><p>Optional. Turns off ads and preloads.</p><a href="https://github.com/IrvingGuerra/lglow/blob/main/docs/06-limpieza-y-memoria.md" rel="noopener">Guide →</a></div></li>
+      </ol>
+      <div class="code" data-reveal>
+        <div class="code-bar"><span>Already rooted with SSH?</span><button class="copy" type="button">Copy</button></div>
+<pre><code>git clone https://github.com/IrvingGuerra/lglow &amp;&amp; cd lglow
+./instalar.sh 192.168.1.50                # your TV's IP
+ssh root@192.168.1.50 vi /var/lib/webosbrew/fullhomecustom/config.json
+python3 tools/make-tiles.py 192.168.1.50  # tiles from your app icons</code></pre>
+      </div>
+      <p class="note" data-reveal>Undo everything: <code>./instalar.sh 192.168.1.50 --quitar</code> and reboot the TV.</p>
+    </section>
+
+    <section class="section" id="compat">
+      <div class="head" data-reveal>
+        <p class="kicker">Compatibility</p>
+        <h2>Made for the 2019 LGs.</h2>
+      </div>
+      <dl class="compat" data-reveal>
+        <div><dt>Tested on</dt><dd>LG 43LM5770PUA (2019), webOS 4.10.2, firmware 05.40.97</dd></div>
+        <div><dt>Should work on</dt><dd>Other 2019 LGs on webOS 4.5 with the 2025 home. The installer checks every file it patches and changes nothing if they don't match.</dd></div>
+        <div><dt>Requires</dt><dd>Root (<a href="https://github.com/throwaway96/faultmanager-autoroot" rel="noopener">faultmanager-autoroot</a> + <a href="https://github.com/webosbrew/webos-homebrew-channel" rel="noopener">Homebrew Channel</a>), SSH and a free <a href="https://www.themoviedb.org/settings/api" rel="noopener">TMDB</a> key for "For you".</dd></div>
+        <div><dt>Not for</dt><dd>webOS 5 or newer. On webOS 10, see <a href="https://github.com/mareklarek/webos10-homescreen-customization" rel="noopener">webos10-homescreen-customization</a>.</dd></div>
+      </dl>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="head" data-reveal>
+        <p class="kicker">FAQ</p>
+        <h2>Good questions.</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details>
+          <summary>Can this brick my TV?</summary>
+          <p>LGlow never writes to LG's read-only partitions: the new home is mounted on top of the stock one at boot. Rooting is a separate step with its own risks, so read the guide first. Use at your own risk.</p>
+        </details>
+        <details>
+          <summary>How do I undo it?</summary>
+          <p>Run <code>./instalar.sh &lt;TV IP&gt; --quitar</code> and reboot. The stock home comes back exactly as it was.</p>
+        </details>
+        <details>
+          <summary>Why do I see LG's home for the first ~45 seconds?</summary>
+          <p>On webOS 4 nothing can run before root starts, about 42 seconds after a full power-on. With Quick Start+ on, the TV suspends instead of shutting down, so the new home stays between uses.</p>
+        </details>
+        <details>
+          <summary>Is the TV interface in English?</summary>
+          <p>Not yet: the on-screen text is in Spanish and "For you" ships with Mexico's streaming providers. You can change the provider ids for your country in <code>config.json</code>.</p>
+        </details>
+        <details>
+          <summary>Does it include LG's code?</summary>
+          <p>No. The repo only ships patches and new components. The installer copies the stock home from your own TV and patches it there.</p>
+        </details>
+        <details>
+          <summary>Will it make apps open faster?</summary>
+          <p>A little. You get more free memory and less swapping, but streaming apps are heavy web apps and the TV has 674 MB of RAM.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="final" data-reveal>
+      <h2>Give it a <span class="glow">glow up.</span></h2>
+      <p>Free and open source, MIT licensed.</p>
+      <a class="btn btn-dark" href="https://github.com/IrvingGuerra/lglow" rel="noopener">Get LGlow on GitHub <span aria-hidden="true">→</span></a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Built on the work of <a href="https://github.com/throwaway96/faultmanager-autoroot" rel="noopener">faultmanager-autoroot</a>, <a href="https://www.webosbrew.org" rel="noopener">webosbrew</a>, <a href="https://github.com/mareklarek/webos10-homescreen-customization" rel="noopener">webos10-homescreen-customization</a> and <a href="https://github.com/simbasjungles/free-my-tv" rel="noopener">Free My TV</a>. Data from <a href="https://www.themoviedb.org" rel="noopener">TMDB</a> (not endorsed or certified by TMDB) and <a href="https://open-meteo.com" rel="noopener">Open-Meteo</a>.</p>
+    <p>Not affiliated with LG. LG, webOS and app names and logos belong to their owners. Made by <a href="https://irvingguerra.github.io" rel="noopener">Irving Guerra</a>.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
