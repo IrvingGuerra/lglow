@@ -125,7 +125,7 @@ T = [
     # Instalar
     ('<p class="kicker">Install</p>', '<p class="kicker">Instalar</p>'),
     ('<h2>Five steps. One command for the home.</h2>', '<h2>Cinco pasos. Un comando para el home.</h2>'),
-    ('<p>The step-by-step guides are in Spanish, but commands and paths are the same in any language.</p>', '<p>Cada paso tiene su guía detallada en el repo.</p>'),
+    ('<p>Each step has its own detailed guide in the repo.</p>', '<p>Cada paso tiene su guía detallada en el repo.</p>'),
     ('<h3>Root the TV</h3>', '<h3>Rootear la TV</h3>'),
     ('<h3>Disarm the Developer Mode trap</h3><p>Required if LG\'s Developer Mode app is still installed.</p>',
      '<h3>Desactivar la trampa de Developer Mode</h3><p>Obligatorio si la app Developer Mode de LG sigue instalada.</p>'),
@@ -133,6 +133,11 @@ T = [
     ('<h3>Install the new home</h3><p>One command from your computer.</p>', '<h3>Instalar el home nuevo</h3><p>Un comando desde tu computadora.</p>'),
     ('<h3>Clean up &amp; free memory</h3><p>Optional. Turns off ads and preloads.</p>', '<h3>Limpieza y memoria</h3><p>Opcional. Apaga publicidad y precargas.</p>'),
     ('Guide →', 'Guía →'),
+    ('blob/main/docs/en/01-root.md', 'blob/main/docs/01-rootear.md'),
+    ('blob/main/docs/en/02-developer-mode-trap.md', 'blob/main/docs/02-trampa-developer-mode.md'),
+    ('blob/main/docs/en/03-access-and-updates.md', 'blob/main/docs/03-acceso-y-actualizaciones.md'),
+    ('blob/main/docs/en/04-install-home.md', 'blob/main/docs/04-instalar-home.md'),
+    ('blob/main/docs/en/06-cleanup-and-memory.md', 'blob/main/docs/06-limpieza-y-memoria.md'),
     ('<span>Already rooted with SSH?</span><button class="copy" type="button" data-strip>Copy</button>',
      '<span>¿Ya tienes root y SSH?</span><button class="copy" type="button" data-strip data-done="Copiado">Copiar</button>'),
     ("# your TV's IP", '# la IP de tu TV'),
@@ -152,13 +157,13 @@ My TV:
 - My computer: [macOS / Windows / Linux]
 
 How to help me:
-1. Read the repo's README and the guides in docs/ first (they're in Spanish, translate them for me). Use them as the source of truth, not your memory.
+1. Read the repo's README.en.md and the English guides in docs/en/ first. Use them as the source of truth, not your memory.
 2. Check compatibility before anything else. LGlow is made for 2019 LG TVs on webOS 4.5 with the full-screen home (com.webos.app.fullhome, firmware 05.40.09 or newer). Tell me honestly if my TV fits, and have me check root status on https://cani.rootmy.tv.
 3. Walk me through the guides in order: 01 root, 02 Developer Mode trap, 03 SSH and update blocking, 04 install, 06 optional cleanup. One step at a time: wait for me to confirm or paste the output before moving on.
 4. Explain what each command does before I run it, and warn me clearly before anything risky.
 5. Never suggest writing to LG's read-only partitions, never tell me to open, reinstall or update LG's Developer Mode app, and don't update the TV's firmware.
-6. If the installer says the files don't match my firmware, don't force it: help me port the patches following docs/05-como-funciona.md ("Regenerar los parches para otro firmware").
-7. If something goes wrong, the way back is ./instalar.sh &lt;TV IP&gt; --quitar and a reboot (docs/07-problemas-y-desinstalar.md).''',
+6. If the installer says the files don't match my firmware, don't force it: help me port the patches following docs/en/05-how-it-works.md ("Regenerating the patches for another firmware").
+7. If something goes wrong, the way back is ./instalar.sh &lt;TV IP&gt; --quitar and a reboot (docs/en/07-troubleshooting-and-uninstall.md).''',
      '''Quiero instalar LGlow (https://github.com/IrvingGuerra/lglow) en mi TV LG. Sé mi guía paso a paso.
 
 Mi TV:
@@ -239,7 +244,7 @@ for en, es in T:
     if en not in html:
         faltan.append(en[:80])
         continue
-    html = html.replace(en, es, 1 if en not in ("Guide →",) else -1)
+    html = html.replace(en, es, -1 if en == "Guide →" else 1)
 
 if faltan:
     print("Estos textos ya no están en site/index.html; actualiza la traducción:", file=sys.stderr)

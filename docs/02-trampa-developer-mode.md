@@ -1,5 +1,7 @@
 # 2. La trampa de Developer Mode (lo que borra el root)
 
+[English](en/02-developer-mode-trap.md)
+
 **Si tu TV rooteada todavía tiene la app Developer Mode de LG instalada, lee esto antes de reiniciarla.**
 
 Nos pasó varias veces: tras un reinicio, el SSH del puerto 9922 daba *Connection refused*, y Homebrew Channel

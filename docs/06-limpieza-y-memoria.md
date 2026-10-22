@@ -1,5 +1,7 @@
 # 6. Limpieza y memoria
 
+[English](en/06-cleanup-and-memory.md)
+
 La TV de prueba tiene **674 MB de RAM**, y el sistema solo ya usa ~490 MB en reposo. Cada megabyte cuenta.
 
 ## Lo que hace el home renovado por sí solo

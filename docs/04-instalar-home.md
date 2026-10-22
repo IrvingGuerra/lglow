@@ -1,5 +1,7 @@
 # 4. Instalar el home renovado
 
+[English](en/04-install-home.md)
+
 Requisitos: TV rooteada (pasos 1 a 3), SSH root a la TV y, en tu computadora, `git`, `ssh` y Python 3 con
 Pillow (`pip install pillow`, solo para generar los tiles).
 

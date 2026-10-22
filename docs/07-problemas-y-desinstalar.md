@@ -1,5 +1,7 @@
 # 7. Problemas comunes y cómo desinstalar
 
+[English](en/07-troubleshooting-and-uninstall.md)
+
 ## Desinstalar o desactivar
 
 | Quiero… | Cómo |

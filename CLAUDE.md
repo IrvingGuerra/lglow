@@ -11,6 +11,9 @@
 - **Nada personal:** ni la IP de la TV de Irving, ni su ciudad, ni su llave de TMDB, ni llaves SSH.
   `config.json` y `tools/tiles/` están en `.gitignore`.
 - Textos, comentarios y commits en español.
+- **Guías en dos idiomas:** `docs/*.md` (español) y `docs/en/*.md` (inglés, con nombres en inglés). Cada una enlaza
+  a la otra bajo el título. Si cambias una guía, cambia también su par; la web en inglés y `README.en.md` enlazan
+  a `docs/en/`.
 
 ## Flujo de cambios
 

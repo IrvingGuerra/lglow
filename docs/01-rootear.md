@@ -1,5 +1,7 @@
 # 1. Rootear la TV
 
+[English](en/01-root.md)
+
 Este proyecto no rootea la TV por sí mismo: usa el exploit **faultmanager** de
 [throwaway96/faultmanager-autoroot](https://github.com/throwaway96/faultmanager-autoroot), que instala
 [Homebrew Channel](https://github.com/webosbrew/webos-homebrew-channel). Aquí va el resumen de cómo se hizo
@@ -31,8 +33,8 @@ en la TV de prueba. **La fuente oficial es siempre el README de faultmanager-aut
    Espera el mensaje *Payload complete*. El script instala Homebrew Channel.
 4. **Antes de reiniciar, desinstala la app Developer Mode de LG.** El README del exploit lo dice claro:
    *no tengas la app Developer Mode instalada mientras la TV está rooteada*. Si por algo la reinstalas
-   (a nosotros nos pasó al intentar reparar un problema), **sigue el paso 2 de esta guía antes de reiniciar**.
-5. Reinicia la TV y abre **Homebrew Channel**. En su ajustes debe decir *Root status: ok*.
+   (a nosotros nos pasó al intentar reparar un problema), **sigue la [guía 2](02-trampa-developer-mode.md) antes de reiniciar**.
+5. Reinicia la TV y abre **Homebrew Channel**. En sus ajustes debe decir *Root status: ok*.
 
 ## Qué queda instalado
 

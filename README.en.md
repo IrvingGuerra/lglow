@@ -13,7 +13,7 @@ built on top of the stock one.
 > This requires a **rooted TV**. Use at your own risk. Everything in this repo is reversible and **never writes
 > to LG's read-only partitions**, but mistakes in other rooting steps (not this project) can brick a TV.
 
-The detailed guides are in Spanish (`docs/`). Commands and file paths are the same in any language.
+Step-by-step guides in English: [docs/en/](docs/en/01-root.md). Commands and file paths are the same in any language.
 
 ## Before and after
 
@@ -37,7 +37,7 @@ The detailed guides are in Spanish (`docs/`). Commands and file paths are the sa
 - **More free memory:** the old launcher bar stops running and LG stops preloading Netflix/YouTube/Prime.
   On the test TV, free RAM at idle went from ~106 MB to ~160–250 MB and swap in use from ~265 MB to ~30 MB.
 - **Root protection:** disables a Developer Mode trap that **wipes Homebrew Channel and root** on reboot when
-  the LG Developer Mode app is still installed ([details](docs/02-trampa-developer-mode.md)).
+  the LG Developer Mode app is still installed ([details](docs/en/02-developer-mode-trap.md)).
 
 ## What about Free My TV?
 
@@ -74,6 +74,17 @@ What matters isn't the year but how the home is built: LGlow patches the QML hom
 
 ## Install
 
+Step by step:
+
+1. **[Root the TV](docs/en/01-root.md):** faultmanager-autoroot + Homebrew Channel.
+2. **[Disarm the Developer Mode trap](docs/en/02-developer-mode-trap.md):** required if LG's Developer Mode app
+   is still installed. Without this, a reboot can wipe root.
+3. **[SSH access and blocking updates](docs/en/03-access-and-updates.md):** so an LG update can't take root away.
+4. **[Install the new home](docs/en/04-install-home.md):** one command from your computer.
+5. **[Cleanup and memory](docs/en/06-cleanup-and-memory.md):** optional. Turns off ads and preloads.
+
+More: [how it works](docs/en/05-how-it-works.md) · [troubleshooting and uninstall](docs/en/07-troubleshooting-and-uninstall.md).
+
 ### With your AI
 
 If you'd rather have an AI (ChatGPT, Claude, Gemini…) guide you, fill in your TV's details and paste this:
@@ -88,13 +99,13 @@ My TV:
 - My computer: [macOS / Windows / Linux]
 
 How to help me:
-1. Read the repo's README and the guides in docs/ first (they're in Spanish, translate them for me). Use them as the source of truth, not your memory.
+1. Read the repo's README.en.md and the English guides in docs/en/ first. Use them as the source of truth, not your memory.
 2. Check compatibility before anything else. LGlow is made for 2019 LG TVs on webOS 4.5 with the full-screen home (com.webos.app.fullhome, firmware 05.40.09 or newer). Tell me honestly if my TV fits, and have me check root status on https://cani.rootmy.tv.
 3. Walk me through the guides in order: 01 root, 02 Developer Mode trap, 03 SSH and update blocking, 04 install, 06 optional cleanup. One step at a time: wait for me to confirm or paste the output before moving on.
 4. Explain what each command does before I run it, and warn me clearly before anything risky.
 5. Never suggest writing to LG's read-only partitions, never tell me to open, reinstall or update LG's Developer Mode app, and don't update the TV's firmware.
-6. If the installer says the files don't match my firmware, don't force it: help me port the patches following docs/05-como-funciona.md ("Regenerar los parches para otro firmware").
-7. If something goes wrong, the way back is ./instalar.sh <TV IP> --quitar and a reboot (docs/07-problemas-y-desinstalar.md).
+6. If the installer says the files don't match my firmware, don't force it: help me port the patches following docs/en/05-how-it-works.md ("Regenerating the patches for another firmware").
+7. If something goes wrong, the way back is ./instalar.sh <TV IP> --quitar and a reboot (docs/en/07-troubleshooting-and-uninstall.md).
 ```
 
 ### Already rooted with SSH
@@ -109,7 +120,7 @@ python3 tools/make-tiles.py 192.168.1.50   # rectangular tiles from your TV's ap
 Uninstall: `./instalar.sh 192.168.1.50 --quitar`, then reboot the TV.
 
 If you're outside Mexico, add your country's TMDB provider ids to `config.json`
-(see [docs/04-instalar-home.md](docs/04-instalar-home.md#otros-países)). UI text is in Spanish.
+(see [docs/en/04-install-home.md](docs/en/04-install-home.md#other-countries)). UI text is in Spanish.
 
 ## How it works (short version)
 
@@ -121,7 +132,7 @@ If you're outside Mexico, add your country's TMDB provider ids to `config.json`
   empty folder so the home cold-starts and reads the mounted QML.
 - Root starts ~42 s after power-on, so the stock design is visible for the first ~45 s after a full boot.
 
-Full technical notes: [docs/05-como-funciona.md](docs/05-como-funciona.md).
+Full technical notes: [docs/en/05-how-it-works.md](docs/en/05-how-it-works.md).
 
 ## Credits
 

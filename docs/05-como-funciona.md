@@ -1,5 +1,7 @@
 # 5. Cómo funciona (por dentro)
 
+[English](en/05-how-it-works.md)
+
 Para quien quiera entenderlo, adaptarlo a otro modelo o contribuir.
 
 ## Dos homes en webOS 4.10

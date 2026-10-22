@@ -1,5 +1,7 @@
 # 3. Acceso por SSH y bloqueo de actualizaciones
 
+[English](en/03-access-and-updates.md)
+
 ## Acceso root
 
 Homebrew Channel abre dos accesos root en cada arranque (desde su `startup.sh`):
