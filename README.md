@@ -8,7 +8,7 @@ hecho sobre el home original.
 Tendencias de tus propias apps, el clima, tiles grandes y nada de banners de LG.
 Sin tocar las particiones del sistema: todo se monta encima y se quita con un comando.
 
-[Antes y después](#antes-y-después) · [Compatibilidad](#compatibilidad) · [Guía paso a paso](#guía-paso-a-paso) · [Cómo funciona](docs/05-como-funciona.md) · [Problemas](docs/07-problemas-y-desinstalar.md) · [English](README.en.md)
+[Antes y después](#antes-y-después) · [vs Free My TV](#y-free-my-tv) · [Compatibilidad](#compatibilidad) · [Guía paso a paso](#guía-paso-a-paso) · [Cómo funciona](docs/05-como-funciona.md) · [Problemas](docs/07-problemas-y-desinstalar.md) · [English](README.en.md)
 
 </div>
 
@@ -57,6 +57,23 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
   en uso, de **~265 MB a ~30 MB**.
 - **Root blindado:** se desactiva una trampa de la app Developer Mode que **borra el root** (y Homebrew
   Channel) en un reinicio. [Ver por qué](docs/02-trampa-developer-mode.md).
+
+## ¿Y Free My TV?
+
+[Free My TV](https://github.com/simbasjungles/free-my-tv) inspiró el diseño de LGlow, y en LG es una gran opción
+**si no quieres rootear**. Pero funciona distinto:
+
+| | Free My TV en LG | LGlow |
+| --- | --- | --- |
+| Qué es | **Una app más** (launcher) que se instala con Developer Mode | **Cambia el home del propio sistema**: el que abre el botón Home |
+| El home de LG | Se queda igual, con su publicidad. Free My TV se abre con una tecla numérica | **Desaparece**: el botón Home abre directamente el nuevo |
+| Root | No hace falta | Sí (faultmanager + Homebrew Channel) |
+| Developer Mode | Hay que renovarlo cada ~40 días, o la app se borra | No se usa. Además desactiva la trampa que borra el root |
+| Más allá del home | — | Oculta apps de sistema, apaga precargas y publicidad, libera RAM y bloquea las actualizaciones que quitan el root |
+| TVs | webOS 3 o más nuevo, Google TV, Samsung | LG webOS 4.x (probado en un modelo de 2019) |
+
+En corto: **Free My TV es una app que abres encima de la TV; LGlow cambia la TV desde la raíz.** Si tu TV ya está
+rooteada (o estás dispuesto a rootearla), LGlow te quita el home de LG de verdad.
 
 ## Compatibilidad
 

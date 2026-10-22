@@ -5,7 +5,7 @@
 **Bring your old LG TV back to life.** A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x,
 built on top of the stock one.
 
-[Español](README.md) · [Before and after](#before-and-after) · [Compatibility](#compatibility) · [Install](#install)
+[Español](README.md) · [Before and after](#before-and-after) · [vs Free My TV](#what-about-free-my-tv) · [Compatibility](#compatibility) · [Install](#install)
 
 </div>
 
@@ -38,6 +38,23 @@ The detailed guides are in Spanish (`docs/`). Commands and file paths are the sa
   On the test TV, free RAM at idle went from ~106 MB to ~160–250 MB and swap in use from ~265 MB to ~30 MB.
 - **Root protection:** disables a Developer Mode trap that **wipes Homebrew Channel and root** on reboot when
   the LG Developer Mode app is still installed ([details](docs/02-trampa-developer-mode.md)).
+
+## What about Free My TV?
+
+[Free My TV](https://github.com/simbasjungles/free-my-tv) inspired LGlow's design, and on LG it's a great choice
+**if you don't want to root**. But it works differently:
+
+| | Free My TV on LG | LGlow |
+| --- | --- | --- |
+| What it is | **Another app** (a launcher), installed through Developer Mode | **Replaces the system's own home**: the one the Home button opens |
+| LG's home | Stays as it is, ads included. Free My TV opens with a number key | **Gone**: the Home button opens the new one directly |
+| Root | Not needed | Required (faultmanager + Homebrew Channel) |
+| Developer Mode | Must be renewed every ~40 days or the app is removed | Not used. It also disables the trap that wipes root |
+| Beyond the home | — | Hides system apps, turns off preloads and ads, frees RAM, blocks the updates that remove root |
+| TVs | webOS 3+, Google TV, Samsung | LG webOS 4.x (tested on a 2019 model) |
+
+In short: **Free My TV is an app you open on top of your TV; LGlow changes the TV at the root.** If your TV is
+already rooted (or you're willing to root it), LGlow actually gets rid of LG's home.
 
 ## Compatibility
 
