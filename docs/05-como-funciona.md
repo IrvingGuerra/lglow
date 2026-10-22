@@ -57,9 +57,10 @@ SAM no encuentra imagen, lanza el home en limpio y lee el QML montado. Tampoco e
 | `Interfaces/AppInterfaces/AppInterfaces.qml` | `isDefaultShelf: true`: el modo sin conexión de LG, sin filas de contenido del servidor. |
 | `Model/ShelfList.js` | Deja solo `HOME_SH_TOP` y `HOME_SH_APPS`. |
 | `Containers/Main/Hero.qml`, `TopShelf.qml`, `AppInitializer/SystemProperties.qml` | Sin banners publicitarios, sin "Comience una nueva experiencia / Ir a Apps". |
-| `Containers/MainView.qml` | Fondo propio; fila de apps abajo (`appListHomeY`); "Para ti"; pantalla Apps; cadena de foco. |
+| `Containers/MainView.qml` | Fondo según el tema; fila de apps abajo (`appListHomeY`); "Para ti"; scroll a todas las apps (`appsScroll`); botones y menú de LGlow (la fila de íconos de LG queda oculta); cadena de foco. |
 | `GlobalStyle.qml`, `LaunchPoint.qml`, `AppTile.qml`, `TopGlobalAction.qml` | Tiles 5:3 sin borde, íconos de arriba oscuros. |
-| **Nuevos:** `AppGrid.qml`, `ParaTi.qml`, `AllAppsPage.qml` | La fila de apps (modos `pinned` y `all`), el encabezado con tendencias y la segunda pantalla. |
+| **Nuevos:** `AppGrid.qml`, `ParaTi.qml`, `AllAppsPage.qml` | La fila de apps (modos `pinned` y `all`), el encabezado con tendencias y la parte de abajo con todas las apps. |
+| **Nuevos:** `LglowTema.qml`, `LglowBarra.qml`, `LglowMenu.qml` | El tema (claro, oscuro o automático, guardado con LocalStorage), los botones de arriba (tema y engranaje) y el menú de tema. |
 
 La fila original de LG (`MainRibbon`) sigue cargada, invisible, porque mucho código del home depende de ella.
 En el modo edición (lápiz) se muestra la de LG.
@@ -71,7 +72,7 @@ En el modo edición (lápiz) se muestra la de LG.
   cuando el preloadmanager precarga el home en segundo plano.
 - **Atrás.** El compositor solo le pasa la tecla al home si su ventana tiene
   `_WEBOS_ACCESS_POLICY_KEYS_BACK = "true"`. Además, LG cierra el home al **soltar** Atrás
-  (`UIController.Keys.onReleased → goBack`). Por eso la pantalla Apps cierra al soltar: si cerrara al
+  (`UIController.Keys.onReleased → goBack`). Por eso la parte de todas las apps regresa al soltar: si cerrara al
   presionar, el soltar le llegaría a LG y haría un segundo "atrás".
 - **Navegación en `GridView`.** Con `interactive: false`, en Qt 5.6 el `GridView` ignora las flechas; se
   manejan a mano.

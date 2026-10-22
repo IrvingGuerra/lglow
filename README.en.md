@@ -21,7 +21,7 @@ Step-by-step guides in English: [docs/en/](docs/en/01-root.md). Commands and fil
 | --- | --- |
 | ![Stock LG home with banner and sponsored rows](docs/img/antes-home.jpg) | ![Refreshed home: For you, weather and one row of apps](docs/img/despues-home.jpg) |
 
-| Movies / Shows tabs | All apps screen |
+| Movies / Shows tabs | All apps (scroll down) |
 | --- | --- |
 | ![Movies tab with a title selected](docs/img/despues-titulo.jpg) | ![All apps screen](docs/img/despues-apps.jpg) |
 
@@ -31,8 +31,10 @@ Step-by-step guides in English: [docs/en/](docs/en/01-root.md). Commands and fil
 - **"Para ti" (For you):** three trending titles every hour, **only from apps you have** ([TMDB](https://www.themoviedb.org)),
   with Explore / Movies / Shows tabs. OK opens the app that has it.
 - **Weather, date and time** for your city ([Open-Meteo](https://open-meteo.com), no key needed).
-- **Big rectangular app tiles** in each brand's color, **one row** of 5 pinned apps, and an **Apps** screen with
-  the rest.
+- **Big rectangular app tiles** in each brand's color, **one row** of 6 pinned apps. The rest peeks out below,
+  and **↓ scrolls down** to all your apps.
+- **Light, dark or automatic theme** (light by day, dark by night, following your city's sunrise and sunset),
+  from the theme button at the top. Next to it, the **gear** goes straight to all of the TV's settings.
 - **Hide apps** you don't use, without uninstalling them.
 - **More free memory:** the old launcher bar stops running and LG stops preloading Netflix/YouTube/Prime.
   On the test TV, free RAM at idle went from ~106 MB to ~160–250 MB and swap in use from ~265 MB to ~30 MB.

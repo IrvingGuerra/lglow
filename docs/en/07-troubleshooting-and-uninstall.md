@@ -48,7 +48,7 @@ Run `python3 tools/make-tiles.py <ip-tv>` to generate its tile.
 ## Focus is lost / the remote doesn't respond on the home
 
 Press Home twice. If it happens again, open an issue describing what you did before (opening an app, edit
-mode, the Apps screen…) and attach `ssh tv tail -50 /var/log/fullhome`.
+mode, all apps…) and attach `ssh tv tail -50 /var/log/fullhome`.
 
 ## I lost root after restarting
 

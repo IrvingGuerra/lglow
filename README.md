@@ -27,7 +27,7 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 | Películas / Series | Todas las apps |
 | --- | --- |
 | ![Pestaña Películas con un título seleccionado](docs/img/despues-titulo.jpg) | ![Pantalla Apps con todas las apps](docs/img/despues-apps.jpg) |
-| Pestañas **Explorar · Películas · Series**. OK en un título abre la app donde está. | El tile **Apps** (o ↓) abre una segunda pantalla con todas tus apps. Atrás regresa. |
+| Pestañas **Explorar · Películas · Series**. OK en un título abre la app donde está. | Abajo de tu fila se asoma el resto: **↓ hace scroll** a todas tus apps. Atrás regresa. |
 
 <details>
 <summary>Más capturas: la barra vieja, los tiles y la pantalla de carga</summary>
@@ -49,8 +49,10 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 - **"Para ti":** cada hora, tres títulos en tendencia de esta semana, **solo de las apps que tienes** (datos de
   [TMDB](https://www.themoviedb.org)). Pestañas de Explorar, Películas y Series. OK en uno abre su app.
 - **Clima, fecha y hora** de tu ciudad ([Open-Meteo](https://open-meteo.com), sin llave).
-- **Apps grandes y rectangulares** con el color de cada marca, en **una sola fila** con tus 5 favoritas. El
-  resto, en una segunda pantalla.
+- **Apps grandes y rectangulares** con el color de cada marca, en **una sola fila** con tus 6 favoritas. Abajo se
+  asoma el resto y **↓ hace scroll** hasta todas tus apps.
+- **Modo claro, oscuro o automático** (claro de día y oscuro de noche, con el amanecer y el atardecer de tu
+  ciudad), desde el botón de tema de arriba. Al lado, el **engranaje** va directo a todos los ajustes de la TV.
 - **Oculta las apps que no usas** (navegador, tienda, música…) sin desinstalarlas.
 - **Más memoria libre:** la barra vieja deja de ocupar RAM y LG ya no precarga Netflix, YouTube ni Prime en
   segundo plano. En la TV de prueba, la RAM disponible en reposo pasó de **~106 MB a ~160–250 MB** y el swap
@@ -142,10 +144,10 @@ Para quitarlo todo: `./instalar.sh 192.168.1.50 --quitar` y reiniciar la TV.
 | En el home | |
 | --- | --- |
 | **← →** | Moverse entre apps, títulos o pestañas |
-| **↑ ↓** | Íconos de arriba ↔ pestañas ↔ títulos ↔ apps. **↓ desde las apps** abre la pantalla Apps |
+| **↑ ↓** | Botones de arriba ↔ pestañas ↔ títulos ↔ apps. **↓ desde la fila** hace scroll a todas las apps |
 | **OK** | Abrir la app o el título (abre la app donde está) |
-| **Atrás** | En la pantalla Apps, regresa al home |
-| **Lápiz (✎)** en la pantalla Apps | Modo edición de LG: las **5 primeras** son las fijadas del home |
+| **Atrás** (o ↑ desde la primera fila) | En todas las apps, regresa al home |
+| **Lápiz (✎)** al final de todas las apps | Modo edición de LG: las **6 primeras** son las fijadas del home |
 
 ## Limitaciones conocidas
 

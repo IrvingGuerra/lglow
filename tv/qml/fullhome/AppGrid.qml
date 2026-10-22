@@ -1,10 +1,11 @@
 import QtQuick 2.6
+import QtGraphicalEffects 1.0
 
 // [fullhome-custom] Apps estilo Free My TV, con tiles grandes 5:3. Dos modos:
-//   - "pinned" (home): una fila con las apps fijadas (las primeras 5 en el orden de LG)
-//     y un tile "Apps" al final que abre la pantalla de todas las apps (señal openAll).
-//   - "all" (pantalla Apps): todas las apps (4 filas visibles, se desliza si hay más) y
-//     el lápiz al final para reordenar. Atrás, o ↑ desde la primera fila, la cierra
+//   - "pinned" (home): una fila con las apps fijadas (las primeras 6 en el orden de LG).
+//     ↓ desde ella baja a todas las apps (señal openAll).
+//   - "all" (parte de abajo del home): todas las apps (4 filas visibles, se desliza si hay
+//     más) y el lápiz al final para reordenar. Atrás, o ↑ desde la primera fila, regresa
 //     (señal closeAll).
 // Usa el mismo modelo y la misma forma de lanzar apps que la fila original de LG (que
 // sigue cargada, oculta, y se muestra en el modo edición).
@@ -22,16 +23,15 @@ FocusScope {
     // Mientras la pantalla "Apps" está abierta encima, la fila del home no reclama el foco
     property bool suspended: false
     readonly property bool isAll: mode === "all"
-    readonly property int pinnedCount: columns - 1
+    readonly property int pinnedCount: columns
     readonly property int pinnedShown: Math.min(lpModel.count, pinnedCount)
 
     signal openAll()
     signal closeAll()
     // Lápiz: abre el modo edición de LG (reordenar = elegir cuáles van fijadas)
     property var editEntry: ({ "id": "edit", "launchPointId": "edit", "tileType": "edit", "title": "" })
-    property var appsEntry: ({ "id": "allapps", "launchPointId": "allapps", "tileType": "allapps", "title": "Apps" })
 
-    readonly property int cellCount: isAll ? lpModel.count + 1 : pinnedShown + 1
+    readonly property int cellCount: isAll ? lpModel.count + 1 : pinnedShown
     readonly property int rows: Math.ceil(cellCount / columns)
     property int visibleRows: isAll ? 4 : 1
     property int firstRow: 0
@@ -52,8 +52,6 @@ FocusScope {
     }
 
     function entryAt(i) {
-        if (!isAll && i === pinnedShown)
-            return appsEntry;
         return i < lpModel.count ? lpModel.get(i).entry : editEntry;
     }
 
@@ -66,6 +64,9 @@ FocusScope {
         grid.currentIndex = 0;
     }
 
+    // Entrada escalonada de los tiles (cada delegate escucha esta señal)
+    signal intro()
+
     function isBackKey(key) {
         // Atrás del control llega como Key_webOS_Back; las otras por si acaso
         return key === uiController.webOS.Key_webOS_Back || key === Qt.Key_Back
@@ -76,10 +77,6 @@ FocusScope {
         var obj = entryAt(i);
         if (!obj)
             return;
-        if (obj.tileType === "allapps") {
-            root.openAll();
-            return;
-        }
         if (obj.tileType === "edit") {
             // El modo edición de LG se dibuja en el home: primero cerrar la pantalla "Apps"
             // (que va encima de todo) para que no quede oculto debajo
@@ -116,8 +113,11 @@ FocusScope {
     Connections {
         target: uiController
         onHomeShownChanged: {
-            if (uiController.homeShown)
+            if (uiController.homeShown) {
                 showTimer.restart();
+                if (!root.isAll)
+                    root.intro();
+            }
         }
     }
 
@@ -225,8 +225,11 @@ FocusScope {
             property var obj: { root.revision; return root.entryAt(index); }
             property bool selected: GridView.isCurrentItem && root.activeFocus
             property bool isEdit: obj && obj.tileType === "edit"
-            property bool isApps: obj && obj.tileType === "allapps"
             property int row: Math.floor(index / root.columns)
+            property int col: index % root.columns
+            // 0 → 1 en la entrada escalonada
+            property real shown: 1
+            readonly property color glowColor: cell.obj && cell.obj.iconColor && !cell.isEdit ? cell.obj.iconColor : "#FF4F8B"
 
             width: root.tileW
             height: root.tileH
@@ -239,86 +242,93 @@ FocusScope {
             Behavior on scale { NumberAnimation { duration: 140; easing.type: Easing.OutQuad } }
             Behavior on opacity { NumberAnimation { duration: 160 } }
 
-            // Sombra suave del tile con foco
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: styleSheet.getRValue(14)
-                anchors.leftMargin: styleSheet.getRValue(6)
-                anchors.rightMargin: styleSheet.getRValue(6)
-                anchors.bottomMargin: -styleSheet.getRValue(10)
-                radius: styleSheet.getRValue(24)
-                color: "#38000000"
-                visible: cell.selected
-            }
-
-            // Respaldo para apps sin tile pre-renderado: color de la app + ícono
-            Rectangle {
-                anchors.fill: parent
-                radius: styleSheet.getRValue(22)
-                color: cell.isEdit || cell.isApps ? "#FFFFFF" : (cell.obj && cell.obj.iconColor ? cell.obj.iconColor : "#FFFFFF")
-                visible: tile.status !== Image.Ready
-            }
-
-            Image {
-                anchors.centerIn: parent
-                width: Math.round(root.tileH * 0.82)
-                height: width
-                fillMode: Image.PreserveAspectFit
-                asynchronous: true
-                source: !cell.obj || cell.isEdit || cell.isApps ? "" : (cell.obj.largeIcon || cell.obj.mediumLargeIcon || cell.obj.icon || "")
-                visible: !cell.isEdit && !cell.isApps && tile.status !== Image.Ready
-            }
-
-            Text {
-                anchors.centerIn: parent
-                text: "✎"
-                color: "#3A3D42"
-                font.pixelSize: styleSheet.getRValue(64)
-                visible: cell.isEdit
-            }
-
-            // Tile "Apps": cuadrícula de 3x3 puntos y el texto
-            Column {
-                anchors.centerIn: parent
-                spacing: styleSheet.getRValue(12)
-                visible: cell.isApps
-
-                Grid {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    columns: 3
-                    spacing: styleSheet.getRValue(7)
-
-                    Repeater {
-                        model: 9
-                        delegate: Rectangle {
-                            width: styleSheet.getRValue(15)
-                            height: width
-                            radius: styleSheet.getRValue(4)
-                            color: "#3A3D42"
-                        }
+            Connections {
+                target: root
+                onIntro: {
+                    // Solo las filas visibles; las demás ya quedan listas
+                    if (cell.row < root.firstRow || cell.row >= root.firstRow + root.visibleRows) {
+                        cell.shown = 1;
+                        return;
                     }
+                    cell.shown = 0;
+                    introAnim.restart();
+                }
+            }
+
+            SequentialAnimation {
+                id: introAnim
+                PauseAnimation { duration: 40 * cell.col + 70 * (cell.row - root.firstRow) }
+                NumberAnimation { target: cell; property: "shown"; to: 1; duration: 320; easing.type: Easing.OutCubic }
+            }
+
+            // Brillo del color de la app detrás del tile con foco
+            RectangularGlow {
+                anchors.fill: parent
+                glowRadius: styleSheet.getRValue(26)
+                spread: 0.15
+                cornerRadius: styleSheet.getRValue(22) + glowRadius
+                color: cell.glowColor
+                opacity: cell.selected ? 0.55 * cell.shown : 0
+                visible: opacity > 0
+                Behavior on opacity { NumberAnimation { duration: 180 } }
+            }
+
+            Item {
+
+                id: face
+                anchors.fill: parent
+                opacity: cell.shown
+                transform: Translate { y: (1 - cell.shown) * styleSheet.getRValue(28) }
+
+                // Sombra suave del tile con foco
+                Rectangle {
+                    anchors.fill: parent
+                    anchors.topMargin: styleSheet.getRValue(14)
+                    anchors.leftMargin: styleSheet.getRValue(6)
+                    anchors.rightMargin: styleSheet.getRValue(6)
+                    anchors.bottomMargin: -styleSheet.getRValue(10)
+                    radius: styleSheet.getRValue(24)
+                    color: "#38000000"
+                    visible: cell.selected
+                }
+
+                // Respaldo para apps sin tile pre-renderado: color de la app + ícono
+                Rectangle {
+                    anchors.fill: parent
+                    radius: styleSheet.getRValue(22)
+                    color: cell.isEdit ? lglowTema.tarjeta : (cell.obj && cell.obj.iconColor ? cell.obj.iconColor : "#FFFFFF")
+                    visible: tile.status !== Image.Ready
+                }
+
+                Image {
+                    anchors.centerIn: parent
+                    width: Math.round(root.tileH * 0.82)
+                    height: width
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                    source: !cell.obj || cell.isEdit ? "" : (cell.obj.largeIcon || cell.obj.mediumLargeIcon || cell.obj.icon || "")
+                    visible: !cell.isEdit && tile.status !== Image.Ready
                 }
 
                 Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Apps"
-                    color: "#3A3D42"
-                    font.family: fontManager.smart_SemiBold.family
-                    font.weight: fontManager.smart_SemiBold.weight
-                    font.pixelSize: styleSheet.getRValue(28)
+                    anchors.centerIn: parent
+                    text: "✎"
+                    color: lglowTema.icono
+                    font.pixelSize: styleSheet.getRValue(64)
+                    visible: cell.isEdit
                 }
-            }
 
-            // Tile pre-renderado (tools/make-tiles.py)
-            Image {
-                id: tile
-                anchors.fill: parent
-                source: cell.obj && !cell.isEdit && !cell.isApps ? "file:///var/lib/webosbrew/fullhomecustom/tiles/" + cell.obj.id + ".png" : ""
-                sourceSize: Qt.size(300, 180)
-                asynchronous: true
-                smooth: true
-                mipmap: true
-                visible: status === Image.Ready
+                // Tile pre-renderado (tools/make-tiles.py)
+                Image {
+                    id: tile
+                    anchors.fill: parent
+                    source: cell.obj && !cell.isEdit ? "file:///var/lib/webosbrew/fullhomecustom/tiles/" + cell.obj.id + ".png" : ""
+                    sourceSize: Qt.size(300, 180)
+                    asynchronous: true
+                    smooth: true
+                    mipmap: true
+                    visible: status === Image.Ready
+                }
             }
 
             MouseArea {

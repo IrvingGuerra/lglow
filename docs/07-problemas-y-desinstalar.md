@@ -49,7 +49,7 @@ Corre `python3 tools/make-tiles.py <ip-tv>` para generar su tile.
 ## Se perdió el foco / no responde el control en el home
 
 Presiona Home dos veces. Si se repite, abre un issue describiendo qué hiciste antes (abrir una app, el modo
-edición, la pantalla Apps…) y adjunta `ssh tv tail -50 /var/log/fullhome`.
+edición, todas las apps…) y adjunta `ssh tv tail -50 /var/log/fullhome`.
 
 ## Perdí el root después de reiniciar
 

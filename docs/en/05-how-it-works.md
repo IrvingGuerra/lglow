@@ -57,9 +57,10 @@ SAM finds no image, launches the home from scratch and reads the mounted QML. Th
 | `Interfaces/AppInterfaces/AppInterfaces.qml` | `isDefaultShelf: true`: LG's offline mode, with no content rows from the server. |
 | `Model/ShelfList.js` | Keeps only `HOME_SH_TOP` and `HOME_SH_APPS`. |
 | `Containers/Main/Hero.qml`, `TopShelf.qml`, `AppInitializer/SystemProperties.qml` | No ad banners, no "Comience una nueva experiencia / Ir a Apps" (Start a new experience / Go to Apps). |
-| `Containers/MainView.qml` | Custom background; app row at the bottom (`appListHomeY`); "Para ti" (For you); Apps screen; focus chain. |
+| `Containers/MainView.qml` | Background per theme; app row at the bottom (`appListHomeY`); "Para ti" (For you); scroll down to all apps (`appsScroll`); LGlow's buttons and menu (LG's icon row is hidden); focus chain. |
 | `GlobalStyle.qml`, `LaunchPoint.qml`, `AppTile.qml`, `TopGlobalAction.qml` | Borderless 5:3 tiles, dark top icons. |
-| **New:** `AppGrid.qml`, `ParaTi.qml`, `AllAppsPage.qml` | The app row (`pinned` and `all` modes), the header with trending content and the second screen. |
+| **New:** `AppGrid.qml`, `ParaTi.qml`, `AllAppsPage.qml` | The app row (`pinned` and `all` modes), the header with trending content and the bottom part with all apps. |
+| **New:** `LglowTema.qml`, `LglowBarra.qml`, `LglowMenu.qml` | The theme (light, dark or automatic, saved with LocalStorage), the top buttons (theme and gear) and the theme menu. |
 
 LG's original row (`MainRibbon`) stays loaded, invisible, because a lot of the home's code depends on it.
 In edit mode (pencil), LG's row is shown.
@@ -71,7 +72,7 @@ In edit mode (pencil), LG's row is shown.
   when the preloadmanager preloads the home in the background.
 - **Back.** The compositor only passes the key to the home if its window has
   `_WEBOS_ACCESS_POLICY_KEYS_BACK = "true"`. On top of that, LG closes the home on **release** of Back
-  (`UIController.Keys.onReleased → goBack`). That's why the Apps screen closes on release: if it closed on
+  (`UIController.Keys.onReleased → goBack`). That's why the all-apps part goes back on release: if it closed on
   press, the release would reach LG and trigger a second "back".
 - **Navigation in `GridView`.** With `interactive: false`, in Qt 5.6 the `GridView` ignores the arrow keys; they are
   handled manually.

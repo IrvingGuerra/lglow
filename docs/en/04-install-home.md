@@ -97,20 +97,22 @@ they just don't appear on the home. After editing it, run `./instalar.sh <ip-tv>
 
 ## Pin and reorder apps
 
-The home shows the **first 5 apps** in LG's order. To change them: ↓ (or the **Apps** tile) →
+The home pins the **first 6 apps** in LG's order. To change them: ↓ down to all apps →
 pencil **✎** at the end → LG's edit mode opens: select an app with OK, move it and confirm with OK.
 
 ## Background
 
-Two backgrounds are included: `fondo-perla.jpg` (light, the one in the screenshots) and `fondo-aurora.jpg` (dark). The home uses
-`fondo.jpg`. To change it:
+The home has a **light, dark or automatic theme** (light by day, dark by night, following your city's
+sunrise and sunset). Pick it with the theme button at the top (the half-filled circle); the TV remembers it.
+
+Each theme has its own background: light uses `fondo.jpg` (the light "pearl" one by default) and dark uses
+`fondo-aurora.jpg`. You can replace either with any 1920×1080 JPG, for example:
 
 ```bash
-ssh tv "cp /var/lib/webosbrew/fullhomecustom/fondo-aurora.jpg /var/lib/webosbrew/fullhomecustom/fondo.jpg"
+scp my-background.jpg root@<tv-ip>:/var/lib/webosbrew/fullhomecustom/fondo.jpg
 ```
 
-You can use any 1920×1080 JPG. Keep in mind that the text and icons at the top are dark,
-designed for a light background.
+Use a light image for `fondo.jpg` and a dark one for `fondo-aurora.jpg`: the text changes color with the theme.
 
 ## Update or uninstall
 

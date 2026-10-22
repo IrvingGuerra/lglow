@@ -1,5 +1,6 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.0
 
 // [fullhome-custom] Encabezado estilo Free My TV: "Para ti", pestañas Explorar /
 // Películas / Series, fecha, hora, clima y tres títulos en tendencia que están en
@@ -35,13 +36,13 @@ FocusScope {
     property int pickGap: styleSheet.getRValue(30)
     // Uno ancho (imagen de fondo) y dos pósters 2:3, todos de la misma altura, que
     // ocupan exactamente el ancho de la fila de apps
-    property int pickHeight: styleSheet.getRValue(460)
+    property int pickHeight: styleSheet.getRValue(390) // deja lugar para que se asome el resto de las apps
     property int posterWidth: Math.round(pickHeight * 2 / 3)
     property int wideWidth: width - 2 * posterWidth - 2 * pickGap
     readonly property bool canFocus: picks.length > 0 || !!config.tmdbKey
 
-    readonly property string textColor: "#1D1D1F"
-    readonly property string softColor: "#6E6E73"
+    readonly property color textColor: lglowTema.texto
+    readonly property color softColor: lglowTema.textoSuave
     readonly property string configPath: "file:///var/lib/webosbrew/fullhomecustom/config.json"
 
     // Proveedor de TMDB → [nombre visible, appId en la TV]. Se puede reemplazar con
@@ -112,11 +113,13 @@ FocusScope {
         if (config.latitude === undefined)
             return;
         get("https://api.open-meteo.com/v1/forecast?latitude=" + config.latitude + "&longitude=" + config.longitude
-            + "&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1",
+            + "&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto&forecast_days=1",
             function(r) {
                 if (!r || !r.current)
                     return;
                 var t = Math.round(r.current.temperature_2m) + "°  " + weatherName(r.current.weather_code);
+                if (r.daily && r.daily.sunrise)
+                    lglowTema.ponerSol(r.daily.sunrise[0], r.daily.sunset[0]); // para el tema automático
                 if (r.daily)
                     t += "  ·  " + Math.round(r.daily.temperature_2m_max[0]) + "° / " + Math.round(r.daily.temperature_2m_min[0]) + "°";
                 if (config.city)
@@ -261,7 +264,7 @@ FocusScope {
         font.pixelSize: styleSheet.getRValue(72)
     }
 
-    // Pestañas: la activa en oscuro; con foco, además, una píldora blanca
+    // Pestañas: la activa en una píldora con sombra; con foco, la píldora crece
     FocusScope {
 
         id: tabRow
@@ -311,11 +314,25 @@ FocusScope {
                     width: label.width + styleSheet.getRValue(36)
                     height: tabsLayout.height
 
+                    RectangularGlow {
+                        anchors.fill: pill
+                        anchors.topMargin: styleSheet.getRValue(4)
+                        glowRadius: styleSheet.getRValue(14)
+                        spread: 0.1
+                        cornerRadius: pill.radius + glowRadius
+                        color: lglowTema.sombra
+                        visible: pill.visible
+                        opacity: tabRow.activeFocus ? 1 : 0.7
+                    }
+
                     Rectangle {
+                        id: pill
                         anchors.fill: parent
                         radius: height / 2
-                        color: "#FFFFFF"
-                        visible: parent.current && tabRow.activeFocus
+                        color: lglowTema.pastilla
+                        visible: parent.current
+                        scale: tabRow.activeFocus ? 1.08 : 1
+                        Behavior on scale { NumberAnimation { duration: 140; easing.type: Easing.OutQuad } }
                     }
 
                     Text {
@@ -398,7 +415,7 @@ FocusScope {
                     width: index === 0 ? root.wideWidth : root.posterWidth
                     height: root.pickHeight
                     radius: styleSheet.getRValue(22)
-                    color: "#DADDE2"
+                    color: lglowTema.esqueleto
 
                     SequentialAnimation on opacity {
                         running: parent.visible
@@ -411,7 +428,20 @@ FocusScope {
         }
 
         Row {
+            id: picksShown
             spacing: root.pickGap
+
+            // Al cambiar de pestaña (o de hora) los títulos nuevos entran con un fundido
+            Connections {
+                target: root
+                onPicksChanged: picksIn.restart()
+            }
+
+            ParallelAnimation {
+                id: picksIn
+                NumberAnimation { target: picksShown; property: "opacity"; from: 0; to: 1; duration: 280; easing.type: Easing.OutQuad }
+                NumberAnimation { target: picksShown; property: "x"; from: styleSheet.getRValue(40); to: 0; duration: 380; easing.type: Easing.OutCubic }
+            }
 
             Repeater {
                 model: root.picks
@@ -458,7 +488,7 @@ FocusScope {
                             id: frame
                             anchors.fill: parent
                             radius: styleSheet.getRValue(22)
-                            color: "#D8DBE0"
+                            color: lglowTema.esqueletoSuave
                         }
 
                         Image {

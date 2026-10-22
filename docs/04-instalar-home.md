@@ -97,20 +97,22 @@ solo no aparecen en el home. Después de editarlo, vuelve a correr `./instalar.s
 
 ## Fijar apps y reordenarlas
 
-El home muestra las **5 primeras apps** según el orden de LG. Para cambiarlas: ↓ (o el tile **Apps**) →
+El home fija las **6 primeras apps** según el orden de LG. Para cambiarlas: ↓ hasta todas las apps →
 lápiz **✎** al final → se abre el modo edición de LG: selecciona una app con OK, muévela y confirma con OK.
 
 ## Fondo
 
-Vienen dos fondos: `fondo-perla.jpg` (claro, el de las capturas) y `fondo-aurora.jpg` (oscuro). El home usa
-`fondo.jpg`. Para cambiarlo:
+El home tiene **tema claro, oscuro o automático** (claro de día y oscuro de noche, según el amanecer y el
+atardecer de tu ciudad). Se elige con el botón de tema de arriba (el círculo mitad lleno) y se guarda en la TV.
+
+Cada tema usa su fondo: en claro, `fondo.jpg` (de inicio es la "perla" clara); en oscuro, `fondo-aurora.jpg`.
+Puedes reemplazar cualquiera de los dos con un JPG de 1920×1080, por ejemplo:
 
 ```bash
-ssh tv "cp /var/lib/webosbrew/fullhomecustom/fondo-aurora.jpg /var/lib/webosbrew/fullhomecustom/fondo.jpg"
+scp mi-fondo.jpg root@<ip-tv>:/var/lib/webosbrew/fullhomecustom/fondo.jpg
 ```
 
-Puedes poner cualquier JPG de 1920×1080. Ten en cuenta que los textos y los íconos de arriba son oscuros,
-pensados para un fondo claro.
+Usa un fondo claro para `fondo.jpg` y uno oscuro para `fondo-aurora.jpg`: los textos cambian de color con el tema.
 
 ## Actualizar o desinstalar
 

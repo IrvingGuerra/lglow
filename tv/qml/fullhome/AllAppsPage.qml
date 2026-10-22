@@ -1,17 +1,25 @@
 import QtQuick 2.6
+import QtGraphicalEffects 1.0
 
-// [fullhome-custom] Segunda "pantalla" del home: todas las apps. Se abre con el tile
-// "Apps" de la fila del home y se cierra con Atrás (o ↑ desde la primera fila).
+// [fullhome-custom] Parte de abajo del home: todas las apps. Con el home en reposo se asoma
+// la primera fila, cortada por el borde de la pantalla. Al bajar desde la fila de apps (o con
+// un clic en lo que se asoma), MainView desliza todo hacia arriba como un scroll; Atrás, o ↑
+// desde la primera fila, regresa.
 FocusScope {
 
     id: root
 
     property bool open: false
+    // 0 = asomada abajo del home, 1 = ocupa la pantalla. La anima MainView.
+    property real progress: 0
+    // Cuánto se asoma la primera fila con el home en reposo
+    property int peek: styleSheet.getRValue(64)
+    // Distancia del scroll: de asomada a pantalla completa
+    readonly property real restY: height - grid.y - peek
 
     signal closed()
 
-    visible: open
-    enabled: open
+    y: (1 - progress) * restY
 
     // El compositor solo le pasa la tecla Atrás al home si su ventana lo declara. El binario
     // del home ya lo declara por su cuenta; aquí solo nos aseguramos al abrir, y nunca lo
@@ -34,7 +42,7 @@ FocusScope {
         closed();
     }
 
-    // Si se abre una app (desde aquí o con un botón del control), esta pantalla se cierra
+    // Si se abre una app (desde aquí o con un botón del control), regresa al home
     Connections {
         target: uiController
         onHomeShownChanged: {
@@ -51,59 +59,64 @@ FocusScope {
         }
     }
 
-    // Fondo propio: tapa por completo la pantalla del home
-    Image {
-        anchors.fill: parent
-        source: "file:///var/lib/webosbrew/fullhomecustom/fondo.jpg"
-        fillMode: Image.PreserveAspectCrop
-        cache: false
-    }
-
-    // Que los clics del puntero no lleguen al home de abajo
+    // Sin fondo propio: el fondo del home se queda quieto y el contenido se desliza encima.
+    // Que los clics del puntero no lleguen al home de abajo (solo con la parte abierta).
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
+        enabled: root.open
     }
 
-    Text {
-        id: title
-        x: grid.x
-        y: styleSheet.getRValue(56)
-        text: "Apps"
-        color: "#1D1D1F"
-        font.family: fontManager.smart_Bold.family
-        font.weight: fontManager.smart_Bold.weight
-        font.pixelSize: styleSheet.getRValue(64)
+    // Repisa "de vidrio" detrás de la cuadrícula, con sombra
+    RectangularGlow {
+        anchors.fill: repisa
+        anchors.topMargin: styleSheet.getRValue(14)
+        glowRadius: styleSheet.getRValue(36)
+        spread: 0.05
+        cornerRadius: repisa.radius + glowRadius
+        color: lglowTema.sombra
     }
 
-    Text {
-        anchors.left: title.left
-        anchors.top: title.bottom
-        anchors.topMargin: styleSheet.getRValue(4)
-        text: grid.lpModel.count + " apps  ·  Atrás para regresar  ·  ✎ para reordenar"
-        color: "#6E6E73"
-        font.family: fontManager.smart_Regular.family
-        font.pixelSize: styleSheet.getRValue(26)
-    }
-
-    // Repisa "de vidrio" detrás de la cuadrícula
     Rectangle {
+        id: repisa
         anchors.left: grid.left
         anchors.right: grid.right
         anchors.top: grid.top
         anchors.bottom: grid.bottom
         anchors.margins: -styleSheet.getRValue(36)
         radius: styleSheet.getRValue(48)
-        color: "#80FFFFFF"
-        border.color: "#CCFFFFFF"
+        color: lglowTema.repisa
+        border.color: lglowTema.repisaBorde
         border.width: styleSheet.getRValue(2)
     }
 
+    // Arriba queda asomado el borde de la fila fijada: pista de que ↑ regresa
     AppGrid {
         id: grid
         mode: "all"
         anchors.horizontalCenter: parent.horizontalCenter
-        y: styleSheet.getRValue(250)
+        y: styleSheet.getRValue(130)
         onCloseAll: root.hide()
+    }
+
+    Text {
+        anchors.left: grid.left
+        anchors.top: grid.bottom
+        anchors.topMargin: styleSheet.getRValue(64)
+        opacity: root.progress
+        text: grid.lpModel.count + " apps  ·  ↑ o Atrás para regresar  ·  ✎ para reordenar"
+        color: lglowTema.textoSuave
+        font.family: fontManager.smart_Regular.family
+        font.pixelSize: styleSheet.getRValue(26)
+    }
+
+    // Con el home en reposo, un clic en lo que se asoma baja a las apps. También absorbe el
+    // hover, para que los tiles asomados no le roben el foco a la fila de arriba.
+    MouseArea {
+        anchors.fill: repisa
+        z: 10
+        enabled: !root.open
+        hoverEnabled: true
+        onClicked: root.show()
     }
 }
