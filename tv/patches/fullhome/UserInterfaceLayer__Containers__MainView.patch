@@ -107,12 +107,10 @@
                      }
  
                      onAllShelfListUpdate: {
-@@ -731,6 +780,35 @@
-                     }
-                 }
+@@ -733,6 +782,35 @@
              }
-+        }
-+
+         }
+ 
 +        // [fullhome-custom] "Para ti": fecha, hora, clima y tendencias de TMDB
 +        ParaTi {
 +            id: paraTi
@@ -140,9 +138,11 @@
 +            onExitDown: root.focusBelowTop()
 +            onAbrirTema: lglowMenu.abrir()
 +            onAbrirAjustes: lglowPanel.abrir()
-         }
- 
++        }
++
          Item {
+ 
+             id: appListArea
 @@ -740,10 +818,11 @@
              objectName: "appListArea"
  
@@ -189,7 +189,7 @@
                      if(systemProperties.isTopShelfGuide) {
                          shelfListContainer.state = "topShelfGuide";
                      } else {
-@@ -783,8 +870,81 @@
+@@ -783,8 +870,82 @@
                  NumberAnimation {
                      duration: 200
                  }
@@ -259,7 +259,8 @@
 +                id: appShelf
 +                anchors.horizontalCenter: parent.horizontalCenter
 +                y: -styleSheet.getRValue(32)
-+                width: parent.width - styleSheet.getRValue(48)
++                // Sobresale de las apps lo mismo que su relleno de arriba: queda casi alineada con "Para ti"
++                width: appGrid.width + 2 * styleSheet.getRValue(32)
 +                height: Math.max(restGrid.y + restGrid.height + styleSheet.getRValue(160), shelfListContainer.height)
 +                radius: styleSheet.getRValue(48)
 +                color: lglowTema.repisa
@@ -271,7 +272,7 @@
              Loader {
  
                  id: appListLoader
-@@ -802,7 +962,8 @@
+@@ -802,7 +963,8 @@
  
                  anchors.fill: parent
                  source: entry ? entry.component : ""
@@ -281,7 +282,7 @@
                  visible: root.isHalfMode ? true : topArea.topShelfLoaded
  
                  transformOrigin: Item.Left
-@@ -1777,7 +1938,7 @@
+@@ -1777,7 +1939,7 @@
  
      function wheelScroll(delta) {
          if(delta < 0) {
@@ -290,7 +291,7 @@
                  shelfListContainer.processingWheel = true;
                  shelfListContainer.state = "list";
  
-@@ -2107,7 +2268,7 @@
+@@ -2107,7 +2269,7 @@
                  ScriptAction {
                      script: {
                          if(shelfListContainer.state === "app" || shelfListContainer.state === "topShelfGuide") {
@@ -299,7 +300,7 @@
                          } else {
                              shelfListContainer.state = "app";
                          }
-@@ -2485,5 +2646,27 @@
+@@ -2485,5 +2647,27 @@
  
          interfaces.application.createAlert(params);
          appListArea.forceActiveFocus();
