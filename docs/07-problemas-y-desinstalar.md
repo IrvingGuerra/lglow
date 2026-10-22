@@ -47,7 +47,8 @@ pantalla está el home, una entrada HDMI o la TV en vivo. Revisa `/tmp/lglow-com
 - Si no quieres el reinicio (es un parpadeo de un par de segundos): `touch /var/lib/webosbrew/homecustom/SIN_COMPOSITOR`.
 
 Si alguna vez la pantalla se queda en negro después del reinicio del compositor, reinicia la TV: los montajes
-viven en memoria y todo vuelve a cargarse. Las apps con pantalla de carga propia muestran la suya.
+viven en memoria y todo vuelve a cargarse. Netflix, Prime Video y YouTube traen la gris de LG como pantalla de carga propia: corre `python3 tools/make-splash.py <ip-tv>`
+para que muestren la de LGlow (`tv/splash-apps.sh` la monta solo si el original es el genérico de LG).
 
 ## Una app nueva sale con ícono chico o cuadrado
 

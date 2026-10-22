@@ -1,6 +1,6 @@
 --- a/qml/UserInterfaceLayer/Containers/MainView.qml
 +++ b/qml/UserInterfaceLayer/Containers/MainView.qml
-@@ -27,6 +27,52 @@
+@@ -27,6 +27,61 @@
      property alias editMenu: editMenuLoader.item
      property alias settingPopup: settingPopup
      property alias appListArea: appListArea
@@ -43,6 +43,15 @@
 +        onIsAppForegroundChanged: if (!systemProperties.isAppForeground) root.appsOpen = false
 +    }
 +
++    // [fullhome-custom] el engranaje del control con el home en pantalla abre el panel aquí
++    // (el compositor relanza el home con activateType "lglowAjustes"); otra vez lo cierra
++    function abrirAjustesLglow() {
++        if (lglowPanel.open)
++            lglowPanel.cerrar();
++        else
++            lglowPanel.abrir();
++    }
++
 +    // [fullhome-custom] ↓ desde los íconos de arriba: a las pestañas de "Para ti" si hay
 +    function focusBelowTop() {
 +        if (paraTi.visible && paraTi.canFocus)
@@ -53,7 +62,7 @@
      property bool isHalfMode: false
      property alias editMenuLoaderStatus: editMenuLoader.status
      property bool showFooterButton: root.state === "main" && ((topArea.model.count + shelfList.model.count) > 2)
-@@ -193,13 +239,13 @@
+@@ -193,13 +248,13 @@
  
                      objectName: "topDefaultAppsBg"
  
@@ -72,7 +81,7 @@
                      visible: (!systemProperties.isTopShelfGuide && systemProperties.isNoAdvertisement && !uiController.isEditMode) === true && uiController.isFullHome && (shelfListContainer.state === "app" || interfaces.application.isDefaultShelfList)
  
                  }
-@@ -242,7 +288,7 @@
+@@ -242,7 +297,7 @@
                          script: {
                              topArea.contentY = 0;
                              topArea.opacity = 1;
@@ -81,7 +90,7 @@
                              shelfList.y = Qt.binding(function(){return shelfList.shelfListY;})
                              if (shelfList.clickedGoToTopButton) {
                                  topArea.currentIndex = 0;
-@@ -332,7 +378,7 @@
+@@ -332,7 +387,7 @@
                          script: {
                              topArea.contentY = 0;
                              topArea.opacity = 1;
@@ -90,7 +99,7 @@
                              shelfList.y = Qt.binding(function(){return shelfList.shelfListY;})
                              appListLoader.scale = 1;
                              appListArea.focus = true;
-@@ -369,6 +415,8 @@
+@@ -369,6 +424,8 @@
              height: (topArea.count === 1 && !interfaces.application.isDefaultShelfList) ? contentHeight + styleSheet.getRValue(65) : contentHeight + styleSheet.getRValue(30)
              anchors.top: parent.top
              anchors.topMargin: styleSheet.getRValue(22)
@@ -99,7 +108,7 @@
              anchors.horizontalCenter: parent.horizontalCenter
  
              contentY: 0
-@@ -682,6 +730,7 @@
+@@ -682,6 +739,7 @@
                              topAreaDelegateLoader.item.reset();
                          }
                          if (appListLoader.item && appListLoader.item.reset) appListLoader.item.reset();
@@ -107,10 +116,12 @@
                      }
  
                      onAllShelfListUpdate: {
-@@ -733,6 +782,35 @@
+@@ -731,6 +789,35 @@
+                     }
+                 }
              }
-         }
- 
++        }
++
 +        // [fullhome-custom] "Para ti": fecha, hora, clima y tendencias de TMDB
 +        ParaTi {
 +            id: paraTi
@@ -138,12 +149,10 @@
 +            onExitDown: root.focusBelowTop()
 +            onAbrirTema: lglowMenu.abrir()
 +            onAbrirAjustes: lglowPanel.abrir()
-+        }
-+
-         Item {
+         }
  
-             id: appListArea
-@@ -740,10 +818,11 @@
+         Item {
+@@ -740,10 +827,11 @@
              objectName: "appListArea"
  
              width: parent.width
@@ -157,7 +166,7 @@
  
              visible: uiController.isEditMode && editMenu.state === "appEditPage" || !uiController.isEditMode
              enabled: visible
-@@ -756,20 +835,28 @@
+@@ -756,20 +844,28 @@
  
              Keys.onUpPressed: {
                  systemProperties.lastKeyEvent = event.key;
@@ -189,12 +198,10 @@
                      if(systemProperties.isTopShelfGuide) {
                          shelfListContainer.state = "topShelfGuide";
                      } else {
-@@ -783,8 +870,82 @@
-                 NumberAnimation {
-                     duration: 200
+@@ -785,6 +881,80 @@
                  }
-+            }
-+
+             }
+ 
 +            // [fullhome-custom] cuadrícula de apps grande (2 filas) en lugar de la fila de LG
 +            AppGrid {
 +                id: appGrid
@@ -253,8 +260,8 @@
 +                cornerRadius: appShelf.radius + glowRadius
 +                color: lglowTema.sombra
 +                visible: appShelf.visible
-             }
- 
++            }
++
 +            Rectangle {
 +                id: appShelf
 +                anchors.horizontalCenter: parent.horizontalCenter
@@ -272,7 +279,7 @@
              Loader {
  
                  id: appListLoader
-@@ -802,7 +963,8 @@
+@@ -802,7 +972,8 @@
  
                  anchors.fill: parent
                  source: entry ? entry.component : ""
@@ -282,7 +289,7 @@
                  visible: root.isHalfMode ? true : topArea.topShelfLoaded
  
                  transformOrigin: Item.Left
-@@ -1777,7 +1939,7 @@
+@@ -1777,7 +1948,7 @@
  
      function wheelScroll(delta) {
          if(delta < 0) {
@@ -291,7 +298,7 @@
                  shelfListContainer.processingWheel = true;
                  shelfListContainer.state = "list";
  
-@@ -2107,7 +2269,7 @@
+@@ -2107,7 +2278,7 @@
                  ScriptAction {
                      script: {
                          if(shelfListContainer.state === "app" || shelfListContainer.state === "topShelfGuide") {
@@ -300,11 +307,10 @@
                          } else {
                              shelfListContainer.state = "app";
                          }
-@@ -2485,5 +2647,27 @@
- 
+@@ -2486,4 +2657,26 @@
          interfaces.application.createAlert(params);
          appListArea.forceActiveFocus();
-+    }
+     }
 +
 +    // [fullhome-custom] tema de LGlow (claro, oscuro o automático) y su menú
 +    LglowTema {
@@ -318,7 +324,7 @@
 +        derecha: lglowBarra.x + lglowBarra.width
 +        arriba: lglowBarra.y + lglowBarra.height + styleSheet.getRValue(20)
 +        onCerrado: lglowBarra.forceActiveFocus()
-     }
++    }
 +
 +    // [fullhome-custom] panel rápido de LGlow (imagen, sonido, apagado, tema, entradas)
 +    LglowPanel {

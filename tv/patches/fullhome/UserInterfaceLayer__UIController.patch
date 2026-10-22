@@ -1,0 +1,12 @@
+--- a/qml/UserInterfaceLayer/UIController.qml
++++ b/qml/UserInterfaceLayer/UIController.qml
+@@ -576,6 +576,9 @@
+             case "editMode":
+                 uiController.startEdit("appEditButton");
+                 return;
++            case "lglowAjustes": // [fullhome-custom] engranaje del control con el home en pantalla
++                root.mainView.abrirAjustesLglow();
++                return;
+             case "deleteApp":
+                 root.removeLaunchPoint(extraParam);
+                 return;

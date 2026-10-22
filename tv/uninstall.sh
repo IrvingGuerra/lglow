@@ -25,6 +25,10 @@ for f in /usr/lib/qt5/qml/SystemUIAssets/images/*/default_app_splash.png \
          /usr/lib/qt5/qml/QuickSettings/QuickSettings.qml; do
     umount "$f" 2>/dev/null
 done
+# Pantallas de carga de las apps (montadas por splash-apps.sh)
+mount | grep " /media/cryptofs/apps/" | grep -i splash | awk '{print $3}' | while read f; do
+    umount "$f" 2>/dev/null
+done
 
 echo "==> reactivando las precargas de LG"
 for app in netflix youtube.leanback.v4 amazon com.webos.app.browser com.webos.app.tips pooq com.webos.app.home; do
@@ -34,7 +38,7 @@ done
 
 echo "==> borrando archivos instalados"
 rm -rf "$FULL/qml" "$BAR/qml" "$BAR/apply.sh" "$BAR/splash"
-rm -f "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh"
+rm -f "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh" "$BASE/tools/splash-apps.sh"
 if [ "$1" != "--conservar" ]; then
     rm -rf "$FULL" "$BAR"
 fi

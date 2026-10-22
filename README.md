@@ -137,6 +137,7 @@ git clone https://github.com/IrvingGuerra/lglow && cd lglow
 ./instalar.sh 192.168.1.50                 # la IP de tu TV
 ssh root@192.168.1.50 vi /var/lib/webosbrew/fullhomecustom/config.json   # llave TMDB y ciudad
 python3 tools/make-tiles.py 192.168.1.50   # tiles rectangulares de tus apps
+python3 tools/make-splash.py 192.168.1.50  # pantallas de carga (Netflix, Prime, YouTube)
 ```
 
 Para quitarlo todo: `./instalar.sh 192.168.1.50 --quitar` y reiniciar la TV.

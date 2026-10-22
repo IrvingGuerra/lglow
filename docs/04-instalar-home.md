@@ -80,7 +80,11 @@ Los tiles grandes con el color de cada marca se generan desde los íconos que ya
 
 ```bash
 python3 tools/make-tiles.py 192.168.1.50
+python3 tools/make-splash.py 192.168.1.50   # después: pantallas de carga con el tile de cada app
 ```
+
+Netflix, Prime Video y YouTube traen como pantalla de carga la gris de LG (la de los cubos). `make-splash.py`
+les hace una con su tile y el brillo de LGlow; las apps con pantalla de carga propia con su marca se respetan.
 
 El script baja el ícono de cada app, detecta su color de fondo, compone un PNG de 300×180 con esquinas
 redondeadas y lo sube a `/var/lib/webosbrew/fullhomecustom/tiles/`. **Vuelve a correrlo cuando instales una

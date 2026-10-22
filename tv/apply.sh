@@ -31,6 +31,8 @@ if [ -f $NEW_SPLASH ]; then
         mount --bind $NEW_SPLASH "$f"
     done
 fi
+# Y las apps que traen como propia la gris de LG (Netflix, Prime, YouTube)
+[ -f $BASE/tools/splash-apps.sh ] && sh $BASE/tools/splash-apps.sh >> $LOG 2>&1
 
 # ¿El home está en pantalla ahora? (el compositor lo anota en el log del sistema)
 home_visible() {

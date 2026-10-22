@@ -26,6 +26,16 @@ StarfishSystemUIWindow {
                 panel.cerrar();
                 return;
             }
+            // Con el home de LGlow en pantalla, el panel se abre dentro del home: si este se
+            // mostrara, el compositor ocultaría el home (overlayView.onShown → homeView.close())
+            var conHome = false;
+            try { conHome = homeView && homeView.visible; } catch (e) {}
+            if (conHome && !(payload.params && payload.params.activateType)) {
+                panel.luna("com.webos.applicationManager", "launch",
+                           { "id": "com.webos.app.fullhome", "params": { "activateType": "lglowAjustes" } });
+                root.exit();
+                return;
+            }
             root.show();
             panel.abrir(payload.params);
         }

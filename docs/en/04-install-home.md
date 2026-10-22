@@ -80,7 +80,12 @@ The large tiles in each brand's color are generated from the icons already on yo
 
 ```bash
 python3 tools/make-tiles.py 192.168.1.50
+python3 tools/make-splash.py 192.168.1.50   # then: loading screens with each app's tile
 ```
+
+Netflix, Prime Video and YouTube ship LG's gray loading screen (the one with cubes) as their own.
+`make-splash.py` makes one for them with their tile and the LGlow glow; apps with their own branded loading
+screen are left alone.
 
 The script downloads each app's icon, detects its background color, builds a 300×180 PNG with rounded
 corners and uploads it to `/var/lib/webosbrew/fullhomecustom/tiles/`. **Run it again whenever you install a

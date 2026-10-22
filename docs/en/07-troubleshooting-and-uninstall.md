@@ -47,7 +47,8 @@ input or live TV is on screen. Check `/tmp/lglow-compositor.log`:
 - If you don't want the restart (a couple of seconds of flicker): `touch /var/lib/webosbrew/homecustom/SIN_COMPOSITOR`.
 
 If the screen ever stays black after the compositor restart, reboot the TV: the mounts live in memory and
-everything loads again. Apps with their own loading screen show theirs.
+everything loads again. Netflix, Prime Video and YouTube ship LG's gray screen as their own loading screen: run
+`python3 tools/make-splash.py <tv-ip>` so they show LGlow's (`tv/splash-apps.sh` only mounts it when the original is LG's generic one).
 
 ## A new app shows up with a small or square icon
 
