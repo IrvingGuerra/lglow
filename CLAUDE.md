@@ -1,6 +1,6 @@
-# lg-webos4-home
+# LGlow
 
-Home renovado para TVs LG con webOS 4.x rooteadas. Es el repo público que salió del proyecto local
+**LGlow** ("Tu vieja LG, como nueva" / "Bring your old LG TV back to life"): home renovado para TVs LG con webOS 4.x rooteadas. Es el repo público que salió del proyecto local
 `../lg-tv-cleanup` (bitácora completa en `../lg-tv-cleanup/STATUS.md`).
 
 ## Reglas de este repo
@@ -26,5 +26,5 @@ Home renovado para TVs LG con webOS 4.x rooteadas. Es el repo público que sali�
 
 ## Publicar
 
-El repo es para GitHub (`irvingguerra/lg-webos4-home`). **No crearlo ni hacer push sin el OK explícito de
+El repo es para GitHub (`IrvingGuerra/lglow`). **No crearlo ni hacer push sin el OK explícito de
 Irving.** Es la única excepción a su regla de "commit + push + deploy sin preguntar": publicarlo es público.

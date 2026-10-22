@@ -5,7 +5,7 @@
 | Quiero… | Cómo |
 | --- | --- |
 | Quitar todo y volver al home de LG | `./instalar.sh <ip-tv> --quitar` y reiniciar la TV |
-| Quitarlo pero conservar mi config, fondos y tiles | En la TV: `sh /tmp/lg-webos4-home/uninstall.sh --conservar` (después de un `./instalar.sh`) |
+| Quitarlo pero conservar mi config, fondos y tiles | En la TV: `sh /tmp/lglow/uninstall.sh --conservar` (después de un `./instalar.sh`) |
 | Desactivarlo sin borrar nada | `ssh tv touch /var/lib/webosbrew/homecustom/DESACTIVADO` y reiniciar. Para reactivar, borra ese archivo. |
 
 Como todo son montajes en memoria, **un reinicio siempre deja el home de LG intacto** si el script de arranque

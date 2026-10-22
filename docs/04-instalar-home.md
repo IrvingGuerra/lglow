@@ -6,7 +6,7 @@ Pillow (`pip install pillow`, solo para generar los tiles).
 ## Instalar
 
 ```bash
-git clone https://github.com/irvingguerra/lg-webos4-home && cd lg-webos4-home
+git clone https://github.com/IrvingGuerra/lglow && cd lglow
 ./instalar.sh 192.168.1.50        # la IP de tu TV (o un alias de ~/.ssh/config)
 ```
 

@@ -1,8 +1,9 @@
 <div align="center">
 
-# Home renovado para LG webOS 4.x
+# LGlow
 
-**Un home limpio, rápido y sin publicidad para TVs LG de 2019 (webOS 4.5), hecho sobre el home original.**
+**Tu vieja LG, como nueva.** Un home limpio, rápido y sin publicidad para TVs LG de 2019 con webOS 4.x,
+hecho sobre el home original.
 
 Tendencias de tus propias apps, el clima, tiles grandes y nada de banners de LG.
 Sin tocar las particiones del sistema: todo se monta encima y se quita con un comando.
@@ -83,7 +84,7 @@ salida de `md5sum` y tu versión de firmware. Los parches se pueden regenerar
 Resumen para quien ya tiene root y SSH:
 
 ```bash
-git clone https://github.com/irvingguerra/lg-webos4-home && cd lg-webos4-home
+git clone https://github.com/IrvingGuerra/lglow && cd lglow
 ./instalar.sh 192.168.1.50                 # la IP de tu TV
 ssh root@192.168.1.50 vi /var/lib/webosbrew/fullhomecustom/config.json   # llave TMDB y ciudad
 python3 tools/make-tiles.py 192.168.1.50   # tiles rectangulares de tus apps

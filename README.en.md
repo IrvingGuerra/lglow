@@ -1,8 +1,9 @@
 <div align="center">
 
-# A refreshed home screen for LG webOS 4.x
+# LGlow
 
-**A clean, fast, ad-free home screen for 2019 LG TVs (webOS 4.5), built on top of the stock one.**
+**Bring your old LG TV back to life.** A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.x,
+built on top of the stock one.
 
 [Español](README.md) · [Before and after](#before-and-after) · [Compatibility](#compatibility) · [Install](#install)
 
@@ -50,7 +51,7 @@ The detailed guides are in Spanish (`docs/`). Commands and file paths are the sa
 ## Install
 
 ```bash
-git clone https://github.com/irvingguerra/lg-webos4-home && cd lg-webos4-home
+git clone https://github.com/IrvingGuerra/lglow && cd lglow
 ./instalar.sh 192.168.1.50                 # your TV's IP
 ssh root@192.168.1.50 vi /var/lib/webosbrew/fullhomecustom/config.json   # TMDB key, city, coordinates
 python3 tools/make-tiles.py 192.168.1.50   # rectangular tiles from your TV's app icons

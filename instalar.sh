@@ -11,11 +11,11 @@ case "$HOST" in *@*) ;; *) HOST="root@$HOST" ;; esac
 cd "$(dirname "$0")"
 
 echo "==> copiando archivos a la TV"
-ssh "$HOST" 'rm -rf /tmp/lg-webos4-home && mkdir -p /tmp/lg-webos4-home'
-COPYFILE_DISABLE=1 tar cf - -C tv . | ssh "$HOST" 'tar xf - -C /tmp/lg-webos4-home 2>/dev/null'
+ssh "$HOST" 'rm -rf /tmp/lglow && mkdir -p /tmp/lglow'
+COPYFILE_DISABLE=1 tar cf - -C tv . | ssh "$HOST" 'tar xf - -C /tmp/lglow 2>/dev/null'
 
 if [ "$2" = "--quitar" ]; then
-    ssh "$HOST" 'sh /tmp/lg-webos4-home/uninstall.sh'
+    ssh "$HOST" 'sh /tmp/lglow/uninstall.sh'
 else
-    ssh "$HOST" 'sh /tmp/lg-webos4-home/install.sh'
+    ssh "$HOST" 'sh /tmp/lglow/install.sh'
 fi
