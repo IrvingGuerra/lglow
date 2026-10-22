@@ -1,0 +1,28 @@
+--- a/qml/Configurations/SystemServiceResponseProcessors.js
++++ b/qml/Configurations/SystemServiceResponseProcessors.js
+@@ -2,6 +2,10 @@
+ 
+ var systemProperties;
+ 
++// [fullhome-custom] apps que no se muestran en el home (install.sh reescribe esta línea
++// con el contenido de apps-ocultas.txt)
++var HIDDEN_IDS = ["com.webos.app.browser", "com.webos.app.discovery", "com.webos.app.photovideo", "com.webos.app.music", "com.webos.app.homeconnect", "com.palmdts.devmode", "com.olytt.freetv"];
++
+ function Processor() {
+ 
+     this.processList = {
+@@ -111,10 +115,12 @@
+                                 systemProperties.isResetCase = false;
+                             }
+ 
+-                            systemProperties.launchPoints = response.launchPoints;
++                            systemProperties.launchPoints = response.launchPoints.filter(function(lp) {
++                                return HIDDEN_IDS.indexOf(lp.id) === -1;
++                            });
+                         }
+ 
+-                        if(response.change !== undefined) {
++                        if(response.change !== undefined && HIDDEN_IDS.indexOf(response.id) === -1) {
+                             systemProperties.updatedAppObject = response;
+                         }
+                     },

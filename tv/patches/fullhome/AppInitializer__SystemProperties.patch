@@ -1,0 +1,11 @@
+--- a/qml/AppInitializer/SystemProperties.qml
++++ b/qml/AppInitializer/SystemProperties.qml
+@@ -86,7 +86,7 @@
+     property var uneditableTopShelfList: ["HOME_SH_TOP", "HOME_SH_RECOMMENDED", "HOME_SH_APPS"]
+     property var uneditableHalfTopShelfList: ["HOME_SH_TOP"]
+     property bool isCheckAdvertisement: false
+-    property bool isNoAdvertisement: false
++    property bool isNoAdvertisement: true // [fullhome-custom]
+     property bool isAdCountVisible: false
+     property bool keyCounter: false
+ 

@@ -1,0 +1,11 @@
+--- a/qml/UserInterfaceLayer/Containers/Main/LaunchPoint.qml
++++ b/qml/UserInterfaceLayer/Containers/Main/LaunchPoint.qml
+@@ -35,7 +35,7 @@
+     signal pressAndHold()
+ 
+     width: dynamicWidth
+-    height: width
++    height: Math.round(width * 0.6) // [fullhome-custom] 5:3 en vez de cuadrado
+ 
+     z: root.state === "pop-out" ? 1 : 0
+ 

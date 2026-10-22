@@ -1,0 +1,29 @@
+--- a/qml/UserInterfaceLayer/GlobalStyle.qml
++++ b/qml/UserInterfaceLayer/GlobalStyle.qml
+@@ -137,7 +137,7 @@
+     }
+ 
+     property QtObject appList: QtObject {
+-        property int width: screen.width * 0.965
++        property int width: screen.width * 0.93 // [fullhome-custom] margen dentro de la repisa (antes 0.965)
+         property int height: 176 * screen.scaleFactor
+         property int editLeftMargin: screen.width * 0.035 / 2
+     }
+@@ -285,7 +285,7 @@
+         property real promotionRatio: 156 * screen.scaleFactor/height
+ 
+         property int dividerWidth: 2 * screen.scaleFactor
+-        property int normalWidth: 126 * screen.scaleFactor
++        property int normalWidth: 200 * screen.scaleFactor // [fullhome-custom] antes 126
+         property int wideWidth: 360 * screen.scaleFactor
+         property int unifiedTileWidth: wideWidth
+         property int focusedUnifiedTileWidth: 390 * screen.scaleFactor
+@@ -352,7 +352,7 @@
+             case "cpAppTitle":
+                 return 80 * screen.scaleFactor;
+             default:
+-                return 115 * screen.scaleFactor;
++                return 100 * screen.scaleFactor; // [fullhome-custom] antes 115
+             }
+         }
+     }

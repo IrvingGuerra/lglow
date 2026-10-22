@@ -1,0 +1,11 @@
+--- a/qml/Interfaces/AppInterfaces/AppInterfaces.qml
++++ b/qml/Interfaces/AppInterfaces/AppInterfaces.qml
+@@ -31,7 +31,7 @@
+     property ListModel shelfModel: ListModel{dynamicRoles: true}//root.currentState === "half" ? halfModel : fullModel
+     property ListModel topListModel: ListModel{dynamicRoles: true}//root.currentState === "half" ? halfModel : fullModel
+ 
+-    property bool isDefaultShelf: !systemProperties.networkConnected || !(systemProperties.eulaStatus ? systemProperties.eulaStatus.generalTermsAllowed : false)
++    property bool isDefaultShelf: true // [fullhome-custom] sin recomendaciones
+ 
+     property bool isDefaultShelfList: shelfModel.count + topListModel.count + 1 === 3
+     property bool shelfModelReady: false

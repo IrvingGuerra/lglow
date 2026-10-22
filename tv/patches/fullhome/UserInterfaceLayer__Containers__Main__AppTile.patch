@@ -1,0 +1,45 @@
+--- a/qml/UserInterfaceLayer/Containers/Main/AppTile.qml
++++ b/qml/UserInterfaceLayer/Containers/Main/AppTile.qml
+@@ -67,16 +67,29 @@
+         id: bg
+ 
+         anchors.fill: parent
+-        radius: styleSheet.selectable.radiusValue
++        radius: styleSheet.getRValue(18) // [fullhome-custom]
+         color: root.backgroundColor//"transparent"
+-        border.color: "#707070"
+-        border.width: styleSheet.getRValue(1)
++        border.width: 0
+         smooth: true
+-        visible: !systemProperties.isWEE
++        visible: !systemProperties.isWEE && customTile.status !== Image.Ready
+     }
+ 
++    // [fullhome-custom] tile rectangular pre-renderado (tools/make-tiles.py)
+     Image {
+ 
++        id: customTile
++
++        anchors.fill: parent
++        source: entry && entry.id ? "file:///var/lib/webosbrew/fullhomecustom/tiles/" + entry.id + ".png" : ""
++        sourceSize: Qt.size(300, 180)
++        asynchronous: true
++        smooth: true
++        mipmap: true
++        visible: status === Image.Ready
++    }
++
++    Image {
++
+         id: appIcon
+ 
+         property bool checkImageSource: root.onScreen && uiController.mainRibbonReady && (systemProperties.lifeCycleStatus !=="background" || !uiController.isHiddenMode)
+@@ -85,7 +98,7 @@
+         height: entry ? styleSheet.tile.getAppIconSize(entry.tileType) : 0
+         asynchronous: true
+         fillMode: Image.PreserveAspectFit
+-        visible: (!hasBG || !root.hasFocus)
++        visible: (!hasBG || !root.hasFocus) && customTile.status !== Image.Ready // [fullhome-custom]
+         anchors.centerIn: parent
+         cache: false
+         scale: 1 / root.scale - (0.25 * (1 - root.scale))

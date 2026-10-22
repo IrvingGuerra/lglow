@@ -1,0 +1,18 @@
+--- a/qml/AppInitializer/SystemServices.qml
++++ b/qml/AppInitializer/SystemServices.qml
+@@ -103,10 +103,13 @@
+                         systemProperties.isResetCase = false;
+                     }
+ 
+-                    systemProperties.launchPoints = response.launchPoints;
++                    // [home-custom] apps ocultas de la barra
++                    systemProperties.launchPoints = response.launchPoints.filter(function(lp) {
++                        return systemProperties.hiddenAppIds.indexOf(lp.id) === -1;
++                    });
+                 }
+ 
+-                if(response.change !== undefined) {
++                if(response.change !== undefined && systemProperties.hiddenAppIds.indexOf(response.id) === -1) {
+                     systemProperties.updatedAppObject = response;
+                 }
+ 

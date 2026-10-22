@@ -1,0 +1,15 @@
+--- a/qml/AppInitializer/SystemProperties.qml
++++ b/qml/AppInitializer/SystemProperties.qml
+@@ -96,6 +96,12 @@
+     property string youTubeAppPlayIconDefault: Qt.resolvedUrl("../Components/images/ic_add_youtube_channel.png")
+     property string youTubeAppPlayIcon: youTubeAppPlayIconDefault
+     property int appStartIndex: 1
++
++    // [home-custom] apps que no se muestran en la barra del home (install.sh reescribe esta
++    // línea con el contenido de apps-ocultas.txt)
++    property var hiddenAppIds: ["com.webos.app.browser", "com.webos.app.discovery", "com.webos.app.photovideo", "com.webos.app.music", "com.webos.app.homeconnect", "com.palmdts.devmode", "com.olytt.freetv"]
++    // [home-custom] tipos de tile que sí muestran fila de preview
++    property var previewTileTypes: ["recent", "connections"]
+     property bool isResetCase: false
+     property bool readSmartHome: false
+     property bool readRecents: false

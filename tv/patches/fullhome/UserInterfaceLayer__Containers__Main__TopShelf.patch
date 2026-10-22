@@ -1,0 +1,29 @@
+--- a/qml/UserInterfaceLayer/Containers/Main/TopShelf.qml
++++ b/qml/UserInterfaceLayer/Containers/Main/TopShelf.qml
+@@ -87,7 +87,7 @@
+         anchors.top: parent.top
+         anchors.left: parent.left
+         enabled: visible
+-        visible: !topShelfGuide.visible && hero.noAdvertisement
++        visible: false // [fullhome-custom] sin "Comience una nueva experiencia" / "Ir a Apps"
+ 
+         onActiveFocusChanged: {
+             if(activeFocus) {
+@@ -103,7 +103,7 @@
+             if(uiController.mainView.topArea.model.count > 1) {
+                 uiController.mainView.topArea.currentIndex = 1;
+             } else {
+-                uiController.mainView.appListArea.forceActiveFocus();
++                uiController.mainView.focusBelowTop(); // [fullhome-custom]
+             }
+         }
+     }
+@@ -134,7 +134,7 @@
+                     } else if (topDefaultAppsGuide.visible && (hero.isCheckAdvertisement || !systemProperties.homePromotionOn)) {
+                         topDefaultAppsGuide.forceActiveFocus();
+                     } else {
+-                        uiController.mainView.appListArea.forceActiveFocus();
++                        uiController.mainView.focusBelowTop(); // [fullhome-custom]
+                     }
+                 }
+             } else {

@@ -1,0 +1,205 @@
+--- a/qml/UserInterfaceLayer/Containers/MainView.qml
++++ b/qml/UserInterfaceLayer/Containers/MainView.qml
+@@ -27,6 +27,17 @@
+     property alias editMenu: editMenuLoader.item
+     property alias settingPopup: settingPopup
+     property alias appListArea: appListArea
++    property alias paraTi: paraTi // [fullhome-custom]
++    // [fullhome-custom] la fila de apps va pegada abajo de la pantalla
++    property real appListHomeY: shelfListContainer.height - appListArea.height - styleSheet.getRValue(86)
++
++    // [fullhome-custom] ↓ desde los íconos de arriba: a las pestañas de "Para ti" si hay
++    function focusBelowTop() {
++        if (paraTi.visible && paraTi.canFocus)
++            paraTi.focusTabs();
++        else
++            appListArea.forceActiveFocus();
++    }
+     property bool isHalfMode: false
+     property alias editMenuLoaderStatus: editMenuLoader.status
+     property bool showFooterButton: root.state === "main" && ((topArea.model.count + shelfList.model.count) > 2)
+@@ -193,13 +204,13 @@
+ 
+                     objectName: "topDefaultAppsBg"
+ 
+-                    anchors.top: parent.top
+-                    anchors.left: parent.left
+-                    fillMode: Image.PreserveAspectFit
++                    // [fullhome-custom] fondo propio a pantalla completa
++                    anchors.fill: parent
++                    fillMode: Image.PreserveAspectCrop
+                     sourceSize: Qt.size(width, height)
+-                    source: systemProperties.isRTLLocale ? systemProperties.getImageUrl("banner_image_02_rtl.png") :systemProperties.getImageUrl("banner_image_02.png")
++                    source: "file:///var/lib/webosbrew/fullhomecustom/fondo.jpg"
+                     cache: false
+-                    opacity: (systemProperties.isCheckAdvertisement || !systemProperties.homePromotionOn || !systemProperties.networkConnected) ? 1 : 0.7
++                    opacity: 1
+                     visible: (!systemProperties.isTopShelfGuide && systemProperties.isNoAdvertisement && !uiController.isEditMode) === true && uiController.isFullHome && (shelfListContainer.state === "app" || interfaces.application.isDefaultShelfList)
+ 
+                 }
+@@ -242,7 +253,7 @@
+                         script: {
+                             topArea.contentY = 0;
+                             topArea.opacity = 1;
+-                            appListArea.y = Qt.binding(function(){return topArea.y + topArea.height;})
++                            appListArea.y = Qt.binding(function(){return root.appListHomeY;}) // [fullhome-custom]
+                             shelfList.y = Qt.binding(function(){return shelfList.shelfListY;})
+                             if (shelfList.clickedGoToTopButton) {
+                                 topArea.currentIndex = 0;
+@@ -332,7 +343,7 @@
+                         script: {
+                             topArea.contentY = 0;
+                             topArea.opacity = 1;
+-                            appListArea.y = Qt.binding(function(){return topArea.y + topArea.height;})
++                            appListArea.y = Qt.binding(function(){return root.appListHomeY;}) // [fullhome-custom]
+                             shelfList.y = Qt.binding(function(){return shelfList.shelfListY;})
+                             appListLoader.scale = 1;
+                             appListArea.focus = true;
+@@ -682,6 +693,7 @@
+                             topAreaDelegateLoader.item.reset();
+                         }
+                         if (appListLoader.item && appListLoader.item.reset) appListLoader.item.reset();
++                        appGrid.reset(); // [fullhome-custom]
+                     }
+ 
+                     onAllShelfListUpdate: {
+@@ -733,6 +745,22 @@
+             }
+         }
+ 
++        // [fullhome-custom] "Para ti": fecha, hora, clima y tendencias de TMDB
++        ParaTi {
++            id: paraTi
++            x: appListArea.x + (appListArea.width - appGrid.width) / 2
++            y: styleSheet.getRValue(56)
++            width: appGrid.width
++            z: 1
++            visible: !uiController.isEditMode && shelfListContainer.state === "app"
++
++            onExitUp: {
++                topArea.currentIndex = topArea.model.count - 1;
++                topArea.forceActiveFocus();
++            }
++            onExitDown: appListArea.forceActiveFocus()
++        }
++
+         Item {
+ 
+             id: appListArea
+@@ -740,9 +768,9 @@
+             objectName: "appListArea"
+ 
+             width: parent.width
+-            height: uiController.isEditMode && editMenu.state === "appEditPage" ? styleSheet.getShelfContentsSize("HOME_SH_APPS", "").height : styleSheet.getRValue(126)
++            height: uiController.isEditMode && editMenu.state === "appEditPage" ? styleSheet.getShelfContentsSize("HOME_SH_APPS", "").height : appGrid.height // [fullhome-custom]
+             x: 0
+-            y: topArea.y + topArea.height
++            y: root.appListHomeY // [fullhome-custom] antes: topArea.y + topArea.height
+             z: 1
+ 
+             visible: uiController.isEditMode && editMenu.state === "appEditPage" || !uiController.isEditMode
+@@ -756,20 +784,26 @@
+ 
+             Keys.onUpPressed: {
+                 systemProperties.lastKeyEvent = event.key;
+-                if(topArea.count > 0) {
++                if(paraTi.visible && paraTi.canFocus && !uiController.isEditMode) { // [fullhome-custom]
++                    paraTi.focusPicks();
++                } else if(topArea.count > 0) {
+                     topArea.currentIndex = topArea.model.count - 1;
+                     topArea.forceActiveFocus();
+                 }
+             }
+             Keys.onDownPressed: {
+                 systemProperties.lastKeyEvent = event.key;
+-                if(!root.isHalfMode && !uiController.isEditMode) {
++                if(!root.isHalfMode && !uiController.isEditMode && shelfList.count > 0) { // [fullhome-custom]
+                     shelfList.forceActiveFocus();
+                 }
+             }
+             onActiveFocusChanged: {
+                 if(activeFocus) {
+-                    appListLoader.forceActiveFocus();
++                    // [fullhome-custom] la cuadrícula propia; la fila de LG solo en modo edición
++                    if(uiController.isEditMode)
++                        appListLoader.forceActiveFocus();
++                    else
++                        appGrid.forceActiveFocus();
+                     if(systemProperties.isTopShelfGuide) {
+                         shelfListContainer.state = "topShelfGuide";
+                     } else {
+@@ -783,6 +817,30 @@
+                 NumberAnimation {
+                     duration: 200
+                 }
++            }
++
++            // [fullhome-custom] cuadrícula de apps grande (2 filas) en lugar de la fila de LG
++            AppGrid {
++                id: appGrid
++                anchors.horizontalCenter: parent.horizontalCenter
++                anchors.top: parent.top
++                z: 1
++                visible: !uiController.isEditMode
++                enabled: visible
++                suspended: allApps.open
++                onOpenAll: allApps.show()
++            }
++
++            // [fullhome-custom] repisa "de vidrio" detrás de la fila de apps
++            Rectangle {
++                anchors.centerIn: parent
++                width: parent.width - styleSheet.getRValue(48)
++                height: parent.height + styleSheet.getRValue(64)
++                radius: styleSheet.getRValue(48)
++                color: "#80FFFFFF"
++                border.color: "#CCFFFFFF"
++                border.width: styleSheet.getRValue(2)
++                visible: !uiController.isEditMode
+             }
+ 
+             Loader {
+@@ -802,7 +860,8 @@
+ 
+                 anchors.fill: parent
+                 source: entry ? entry.component : ""
+-                enabled: true
++                enabled: uiController.isEditMode // [fullhome-custom] oculta salvo en modo edición
++                opacity: uiController.isEditMode ? 1 : 0
+                 visible: root.isHalfMode ? true : topArea.topShelfLoaded
+ 
+                 transformOrigin: Item.Left
+@@ -1777,7 +1836,7 @@
+ 
+     function wheelScroll(delta) {
+         if(delta < 0) {
+-            if(shelfListContainer.state === "app") {
++            if(shelfListContainer.state === "app" && shelfList.count > 0) { // [fullhome-custom]
+                 shelfListContainer.processingWheel = true;
+                 shelfListContainer.state = "list";
+ 
+@@ -2107,7 +2166,7 @@
+                 ScriptAction {
+                     script: {
+                         if(shelfListContainer.state === "app" || shelfListContainer.state === "topShelfGuide") {
+-                            appListArea.y = Qt.binding(function(){return topArea.y + topArea.height;})
++                            appListArea.y = Qt.binding(function(){return root.appListHomeY;}) // [fullhome-custom]
+                         } else {
+                             shelfListContainer.state = "app";
+                         }
+@@ -2486,4 +2545,15 @@
+         interfaces.application.createAlert(params);
+         appListArea.forceActiveFocus();
+     }
++
++    // [fullhome-custom] segunda pantalla: todas las apps
++    AllAppsPage {
++        id: allApps
++        anchors.fill: parent
++        z: 1000
++        onClosed: {
++            appGrid.focusLast();
++            appListArea.forceActiveFocus();
++        }
++    }
+ }

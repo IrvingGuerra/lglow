@@ -1,0 +1,11 @@
+--- a/qml/Model/ShelfList.js
++++ b/qml/Model/ShelfList.js
+@@ -322,6 +322,8 @@
+                 });
+             } else {
+                 return this._shelfData.filter(function (item) {
++                    // [fullhome-custom] solo banner y fila de apps
++                    if (item.shelfId !== "HOME_SH_TOP" && item.shelfId !== "HOME_SH_APPS") return false;
+                     if (self.appInterfaces.isDefaultShelf || self.appInterfaces.sdxNotReady) {
+ 
+                         if (systemProperties.isWEE) {

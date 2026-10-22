@@ -1,0 +1,46 @@
+#!/bin/sh
+# Quita el home renovado y deja el de LG tal como venía. Se ejecuta EN LA TV, como root:
+#   sh uninstall.sh            → quita todo
+#   sh uninstall.sh --conservar → quita los montajes y scripts, pero conserva tu
+#                                 config.json, apps-ocultas.txt, fondos y tiles
+# Al terminar, reinicia la TV para que todo vuelva a cargarse limpio.
+
+BASE=/var/lib/webosbrew
+FULL=$BASE/fullhomecustom
+BAR=$BASE/homecustom
+
+[ "$(id -u)" = 0 ] || { echo "ERROR: hay que correrlo como root." >&2; exit 1; }
+
+echo "==> quitando scripts de arranque"
+rm -f "$BASE/init.d/10-homecustom" "$BASE/init.d/60-sinprecarga"
+
+echo "==> quitando montajes"
+for app in com.webos.app.fullhome com.webos.app.home; do
+    umount "/usr/palm/applications/$app/qml" 2>/dev/null
+    umount "/tmp/checkpoint/$app" 2>/dev/null
+    umount "/mnt/lg/cmn_data/checkpoint/$app" 2>/dev/null
+done
+for f in /usr/lib/qt5/qml/SystemUIAssets/images/*/default_app_splash.png \
+         /usr/lib/qt5/qml/YSM/images/default_app_splash.png; do
+    umount "$f" 2>/dev/null
+done
+
+echo "==> reactivando las precargas de LG"
+for app in netflix youtube.leanback.v4 amazon com.webos.app.browser com.webos.app.tips pooq com.webos.app.home; do
+    luna-send -n 1 luna://com.webos.service.preloadmanager/setPreloadPolicy \
+        "{\"application\":{\"id\":\"$app\",\"isEnabled\":true}}" >/dev/null 2>&1
+done
+
+echo "==> borrando archivos instalados"
+rm -rf "$FULL/qml" "$BAR/qml" "$BAR/apply.sh" "$BAR/splash"
+rm -f "$BASE/tools/sin-precarga.sh"
+if [ "$1" != "--conservar" ]; then
+    rm -rf "$FULL" "$BAR"
+fi
+
+for app in com.webos.app.fullhome com.webos.app.home; do
+    pid=$(pidof $app)
+    [ -n "$pid" ] && kill -9 $pid
+done
+
+echo "==> listo. Reinicia la TV (reboot) para volver al home original de LG."

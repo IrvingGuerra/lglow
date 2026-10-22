@@ -1,0 +1,11 @@
+# Apps que NO se muestran en el home (no se desinstalan; siguen en el sistema).
+# Una por línea, con su id. Para ver los ids de tu TV:
+#   luna-send -n 1 luna://com.webos.applicationManager/listLaunchPoints '{}'
+# Después de editar este archivo (en la TV: /var/lib/webosbrew/fullhomecustom/apps-ocultas.txt),
+# vuelve a correr install.sh.
+com.webos.app.browser
+com.webos.app.discovery
+com.webos.app.photovideo
+com.webos.app.music
+com.webos.app.homeconnect
+com.palmdts.devmode

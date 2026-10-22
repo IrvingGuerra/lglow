@@ -1,0 +1,15 @@
+--- a/qml/UserInterfaceLayer/Containers/Main/Hero.qml
++++ b/qml/UserInterfaceLayer/Containers/Main/Hero.qml
+@@ -730,10 +730,8 @@
+     function initialize() {
+         root.isCheckAdvertisement = false;
+         root.currentState = "default";
+-        interfaces.promotion.requestBigBannerInfoWithoutContextIndex(root.adSlotName, root.adSize, function(promotionData) {
+-            processBigBannerPromotionRequest(promotionData);
+-        });
+-        interfaces.promotion.requestRecommendedSponsoredAdData();
++        // [fullhome-custom] sin banners publicitarios del servidor
++        processBigBannerPromotionRequest([]);
+     }
+ 
+     function processBigBannerPromotionRequest(promotions) {

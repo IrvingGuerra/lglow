@@ -1,0 +1,9 @@
+# Tiles generados a partir de los íconos de tu TV
+tools/tiles/
+# Tu configuración personal (llave de TMDB, ciudad)
+config.json
+# QML de LG que copies para portar a otro firmware (no se redistribuye)
+original/
+mod/
+__pycache__/
+.DS_Store

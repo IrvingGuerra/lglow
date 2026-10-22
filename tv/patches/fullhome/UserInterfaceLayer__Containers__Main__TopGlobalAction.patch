@@ -1,0 +1,10 @@
+--- a/qml/UserInterfaceLayer/Containers/Main/TopGlobalAction.qml
++++ b/qml/UserInterfaceLayer/Containers/Main/TopGlobalAction.qml
+@@ -124,6 +124,7 @@
+ 
+                 mouseActivated: rootWindow.cursorVisible
+                 buttonType: s_type
++                textNormalColor: "#3A3D42" // [fullhome-custom] íconos oscuros sobre fondo claro
+                 bClickEffect: true
+ 
+                 text: barDelegate.dataObj.buttonText
