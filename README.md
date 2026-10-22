@@ -2,8 +2,8 @@
 
 # LGlow
 
-**Tu vieja LG, como nueva.** Un home limpio, rápido y sin publicidad para TVs LG de 2019 con webOS 4.x,
-hecho sobre el home original.
+**¿Tu vieja LG necesita un glow up?** Un home limpio, rápido y sin publicidad para TVs LG de 2019 con
+webOS 4.x, hecho sobre el home original.
 
 Tendencias de tus propias apps, el clima, tiles grandes y nada de banners de LG.
 Sin tocar las particiones del sistema: todo se monta encima y se quita con un comando.

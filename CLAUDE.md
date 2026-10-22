@@ -1,6 +1,6 @@
 # LGlow
 
-**LGlow** ("Tu vieja LG, como nueva" / "Bring your old LG TV back to life"): home renovado para TVs LG con webOS 4.x rooteadas. Es el repo público que salió del proyecto local
+**LGlow** ("¿Tu vieja LG necesita un glow up?" / "Your old LG TV needs a glow up"): home renovado para TVs LG con webOS 4.x rooteadas. Es el repo público que salió del proyecto local
 `../lg-tv-cleanup` (bitácora completa en `../lg-tv-cleanup/STATUS.md`).
 
 ## Reglas de este repo
