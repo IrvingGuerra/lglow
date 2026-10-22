@@ -26,5 +26,5 @@
 
 ## Publicar
 
-El repo es para GitHub (`IrvingGuerra/lglow`). **No crearlo ni hacer push sin el OK explícito de
-Irving.** Es la única excepción a su regla de "commit + push + deploy sin preguntar": publicarlo es público.
+Publicado en github.com/IrvingGuerra/lglow (público). Como es público, revisar que ningún cambio meta datos
+personales (IP, ciudad, llaves) antes de cada push.
