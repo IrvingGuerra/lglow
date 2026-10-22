@@ -23,9 +23,10 @@ if len(sys.argv) < 2:
 HOST = sys.argv[1] if "@" in sys.argv[1] else "root@" + sys.argv[1]
 TILES = "/var/lib/webosbrew/fullhomecustom/tiles"
 DESTINO = "/var/lib/webosbrew/fullhomecustom/splash"
-W, H = 1280, 720                 # el tamaño de los splash de las apps
+# Pantalla completa de la TV: si se hace en 1280x720, la TV la estira 1.5x y el logo se pixelea
+W, H = 1920, 1080
 FONDO = (16, 16, 22)
-TILE_W = 384                     # el tile de 300x180 escalado al centro
+TILE_W = 450                     # el tile de make-tiles.py a su tamaño real, sin agrandarlo
 
 
 def fondo():
@@ -33,26 +34,29 @@ def fondo():
     img = Image.new("RGB", (W, H), FONDO)
     luz = Image.new("RGB", (W, H), FONDO)
     d = ImageDraw.Draw(luz)
-    for r, c in [(520, (139, 92, 246)), (380, (255, 79, 139)), (240, (255, 154, 61))]:
-        d.ellipse((W // 2 - r, H + 120 - r, W // 2 + r, H + 120 + r), fill=c)
-    return Image.blend(img, luz.filter(ImageFilter.GaussianBlur(140)), 0.45)
+    for r, c in [(780, (139, 92, 246)), (570, (255, 79, 139)), (360, (255, 154, 61))]:
+        d.ellipse((W // 2 - r, H + 180 - r, W // 2 + r, H + 180 + r), fill=c)
+    return Image.blend(img, luz.filter(ImageFilter.GaussianBlur(210)), 0.45)
 
 
 def splash(tile):
     img = fondo().convert("RGBA")
-    t = tile.convert("RGBA").resize((TILE_W, round(TILE_W * tile.height / tile.width)), Image.LANCZOS)
-    x, y = (W - t.width) // 2, (H - t.height) // 2 - 30
+    t = tile.convert("RGBA")
+    if t.width != TILE_W:   # tiles viejos de 300x180
+        t = t.resize((TILE_W, round(TILE_W * t.height / t.width)), Image.LANCZOS)
+    x, y = (W - t.width) // 2, (H - t.height) // 2 - 45
     sombra = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(sombra).rounded_rectangle((x, y + 18, x + t.width, y + t.height + 18), 34, fill=(0, 0, 0, 150))
-    img = Image.alpha_composite(img, sombra.filter(ImageFilter.GaussianBlur(26)))
+    ImageDraw.Draw(sombra).rounded_rectangle((x, y + 27, x + t.width, y + t.height + 27), 40, fill=(0, 0, 0, 150))
+    img = Image.alpha_composite(img, sombra.filter(ImageFilter.GaussianBlur(39)))
     img.paste(t, (x, y), t)
-    # Tres puntos de "cargando"
-    d = ImageDraw.Draw(img)
-    cy = y + t.height + 70
+    # Tres puntos de "cargando", cada uno más tenue (Pillow solo mezcla la transparencia sobre RGB)
+    img = img.convert("RGB")
+    d = ImageDraw.Draw(img, "RGBA")
+    cy = y + t.height + 105
     for i, a in enumerate((230, 150, 90)):
-        cx = W // 2 + (i - 1) * 28
-        d.ellipse((cx - 6, cy - 6, cx + 6, cy + 6), fill=(255, 255, 255, a))
-    return img.convert("RGB")
+        cx = W // 2 + (i - 1) * 42
+        d.ellipse((cx - 9, cy - 9, cx + 9, cy + 9), fill=(255, 255, 255, a))
+    return img
 
 
 def main():

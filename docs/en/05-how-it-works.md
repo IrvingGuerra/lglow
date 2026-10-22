@@ -91,6 +91,12 @@ The compositor keeps both in memory from power-on, so `init.d/20-compositor` (`t
 once (`initctl restart surface-manager`) when the home, an input or live TV is on screen. Whatever input was on
 screen comes back by itself. Can be turned off with `homecustom/SIN_COMPOSITOR`.
 
+Netflix, Prime Video and YouTube ship LG's gray loading screen as their own. `tv/splash-apps.sh` mounts the one
+from `tools/make-splash.py` on top (only if the original is the generic one, by md5). All three are *squashfs*
+apps: SAM mounts their image (`data/images/<app>/data.img`) as an overlay on their folder the first time they
+open after power-on, and that overlay would hide the mount. So the script mounts the image and the overlay first,
+the same way SAM does; when the app opens, SAM finds them in `/proc/mounts` and doesn't mount them again.
+
 ## Debugging tools
 
 - `tv/key.js` (on the TV, `/var/lib/webosbrew/tools/key.js`): simulates the remote by writing events to

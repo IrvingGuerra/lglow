@@ -24,8 +24,8 @@
 3. Probar en la TV de Irving con `./instalar.sh tv` (alias SSH `tv` en `~/.ssh/config`, root en el puerto 22) y
    comprobar en vivo: capturas con `luna://com.webos.service.tv.capture/executeOneShot` y teclas con
    `node /var/lib/webosbrew/tools/key.js`. Ver `docs/05-como-funciona.md`.
-4. **No tocar la TV mientras Irving la está viendo.** Las capturas y teclas simuladas se ven en pantalla.
-   Preguntar antes.
+4. **Control total de la TV sin preguntar** (capturas, teclas, relanzar el home, abrir apps, reiniciar), salvo
+   que Irving diga que la está usando. Al terminar, cerrar las apps abiertas y dejarla en el home.
 
 ## Sitio web
 

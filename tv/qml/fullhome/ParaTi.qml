@@ -133,6 +133,28 @@ FocusScope {
         get("https://api.themoviedb.org/3" + path + sep + "api_key=" + config.tmdbKey, done);
     }
 
+    // Letras que no son latinas: griego, cirílico, árabe, hindi, tailandés, coreano, chino, japonés…
+    function foreignScript(s) {
+        return /[\u0370-\u1DFF\u2E80-\uD7FF\uF900-\uFFEF]/.test(s);
+    }
+
+    // Sin traducción al idioma pedido, TMDB devuelve el título original (嫁金钗, 인턴…).
+    // Busca el mismo idioma de otro país (es-ES) y, si tampoco hay, el de inglés.
+    function translatedTitle(type, id, lang, done) {
+        tmdb("/" + type + "/" + id + "/translations", function(r) {
+            var list = (r && r.translations) || [], parts = lang.split("-");
+            var wanted = [[parts[0], parts[1]], [parts[0], ""], ["en", "US"], ["en", ""]];
+            for (var w = 0; w < wanted.length; w++) {
+                for (var k = 0; k < list.length; k++) {
+                    var t = list[k], d = t.data || {}, name = d.title || d.name;
+                    if (name && t.iso_639_1 === wanted[w][0] && (!wanted[w][1] || t.iso_3166_1 === wanted[w][1]))
+                        return done(name);
+                }
+            }
+            done("");
+        });
+    }
+
     // Revisa los títulos en orden y guarda los que están en alguna app de la TV
     function loadPool(kind, force) {
         if (!config.tmdbKey)
@@ -169,15 +191,24 @@ FocusScope {
                         for (var k = 0; k < flat.length; k++) {
                             var app = providers[String(flat[k].provider_id)];
                             if (app) {
-                                found.push({
+                                var pick = {
                                     "title": it.title || it.name,
                                     "backdrop": "https://image.tmdb.org/t/p/w1280" + it.backdrop_path,
                                     "poster": "https://image.tmdb.org/t/p/w342" + it.poster_path,
                                     "kind": type === "tv" ? "Serie" : "Película",
                                     "app": app[0],
                                     "appId": app[1]
+                                };
+                                if (!foreignScript(pick.title)) {
+                                    found.push(pick);
+                                    break;
+                                }
+                                return translatedTitle(type, it.id, lang, function(t) {
+                                    if (t)
+                                        pick.title = t;
+                                    found.push(pick);
+                                    next(i + 1);
                                 });
-                                break;
                             }
                         }
                         next(i + 1);

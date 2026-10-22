@@ -91,6 +91,12 @@ El compositor guarda ambos en memoria desde que enciende, así que `init.d/20-co
 lo reinicia una vez (`initctl restart surface-manager`) cuando en pantalla está el home, una entrada o la TV en
 vivo. La entrada que estaba en pantalla regresa sola. Desactivable con `homecustom/SIN_COMPOSITOR`.
 
+Netflix, Prime Video y YouTube traen la gris de LG como pantalla de carga propia. `tv/splash-apps.sh` les monta
+encima la de `tools/make-splash.py` (solo si la original es la genérica, por md5). Las tres son apps *squashfs*:
+SAM monta su imagen (`data/images/<app>/data.img`) como overlay sobre su carpeta la primera vez que se abren
+después de encender, y ese overlay taparía el montaje. Por eso el script monta antes la imagen y el overlay igual
+que SAM, que al abrir la app los ve en `/proc/mounts` y no los repite.
+
 ## Herramientas para depurar
 
 - `tv/key.js` (en la TV, `/var/lib/webosbrew/tools/key.js`): simula el control escribiendo eventos en
