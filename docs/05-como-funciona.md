@@ -79,6 +79,18 @@ En el modo edición (lápiz) se muestra la de LG.
 - **Tecla Home del control** = `Qt.Key_Super_L` (evdev `KEY_LEFTMETA`, 125). El compositor hace
   `applicationManager.launch(defaultApp, {"launchType": "homeKey"})`.
 
+## El panel del engranaje y la pantalla de carga (el compositor)
+
+El botón de engranaje del control no llega a ninguna app: lo atrapa el compositor (`surface-manager`) en
+`/usr/lib/qt5/qml/KeyFilters/appLaunch.js` y abre `com.webos.app.quicksettings`, que no es una app sino QML
+(`/usr/lib/qt5/qml/QuickSettings/QuickSettings.qml`) cargado dentro del propio compositor. LGlow monta encima su
+propio `QuickSettings.qml` (`tv/quicksettings/`, mismo contrato: `StarfishSystemUIWindow`, `onLaunch` con
+`preload` → `exit()`), igual que la pantalla de carga (`default_app_splash.png`).
+
+El compositor guarda ambos en memoria desde que enciende, así que `init.d/20-compositor` (`tv/compositor.sh`)
+lo reinicia una vez (`initctl restart surface-manager`) cuando en pantalla está el home, una entrada o la TV en
+vivo. La entrada que estaba en pantalla regresa sola. Desactivable con `homecustom/SIN_COMPOSITOR`.
+
 ## Herramientas para depurar
 
 - `tv/key.js` (en la TV, `/var/lib/webosbrew/tools/key.js`): simula el control escribiendo eventos en

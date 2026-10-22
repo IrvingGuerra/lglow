@@ -84,15 +84,19 @@ chmod 600 "$FULL/config.json"
 cp "$HERE/fondos/perla.jpg" "$FULL/fondo-perla.jpg"
 cp "$HERE/fondos/aurora.jpg" "$FULL/fondo-aurora.jpg"
 cp "$HERE/splash/default_app_splash.png" "$BAR/splash/default_app_splash.png"
+mkdir -p "$FULL/quicksettings"
+cp "$HERE/quicksettings/QuickSettings.qml" "$FULL/quicksettings/QuickSettings.qml"
 
 say "instalando scripts de arranque"
 cp "$HERE/apply.sh" "$BAR/apply.sh"
 cp "$HERE/sin-precarga.sh" "$BASE/tools/sin-precarga.sh"
 cp "$HERE/key.js" "$BASE/tools/key.js"
-chmod +x "$BAR/apply.sh" "$BASE/tools/sin-precarga.sh"
+cp "$HERE/compositor.sh" "$BASE/tools/compositor.sh"
+chmod +x "$BAR/apply.sh" "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh"
 rm -f "$BAR/DESACTIVADO"
 # Sin punto en el nombre: busybox run-parts ignora los archivos con "."
 ln -sf "$BAR/apply.sh" "$BASE/init.d/10-homecustom"
+ln -sf "$BASE/tools/compositor.sh" "$BASE/init.d/20-compositor"
 ln -sf "$BASE/tools/sin-precarga.sh" "$BASE/init.d/60-sinprecarga"
 chown -R 0:0 "$FULL" "$BAR" "$BASE/tools"
 
@@ -100,4 +104,9 @@ say "aplicando ahora"
 sh "$BAR/apply.sh"
 # Si el home no estaba en pantalla, se abre en limpio la próxima vez que se presione Home
 
-say "listo. La pantalla de carga nueva se ve después del próximo reinicio."
+# El panel rápido y la pantalla de carga nuevos necesitan reiniciar el compositor: la pantalla
+# parpadea un par de segundos (si existe homecustom/SIN_COMPOSITOR, no se hace)
+say "reiniciando el compositor para el panel rápido y la pantalla de carga (parpadea un momento)"
+sh "$BASE/tools/compositor.sh" --ahora
+
+say "listo."

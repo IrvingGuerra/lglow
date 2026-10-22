@@ -14,9 +14,9 @@ FocusScope {
     id: root
 
     property int columns: 6
-    property int tileW: styleSheet.getRValue(268)
+    property int tileW: styleSheet.getRValue(256)
     property int tileH: Math.round(tileW * 0.6)
-    property int gap: styleSheet.getRValue(26)
+    property int gap: styleSheet.getRValue(40)
     property var lpModel: interfaces.launchPoints.launchPointsModel
 
     property string mode: "pinned"
@@ -75,7 +75,8 @@ FocusScope {
     function isBackKey(key) {
         // Atrás del control llega como Key_webOS_Back; las otras por si acaso
         return key === uiController.webOS.Key_webOS_Back || key === Qt.Key_Back
-            || key === Qt.Key_Escape || key === Qt.Key_Backspace;
+            || key === Qt.Key_Escape || key === Qt.Key_Backspace
+            || key === 18874371; // Atrás físico del control (Key_webOS_Back)
     }
 
     function launch(i) {
@@ -239,7 +240,7 @@ FocusScope {
             width: root.tileW
             height: root.tileH
             z: selected ? 2 : 1
-            scale: selected ? 1.12 : 1
+            scale: selected ? 1.08 : 1
             // Solo se ven las filas dentro de la ventana visible
             opacity: row >= root.firstRow && row < root.firstRow + root.visibleRows ? 1 : 0
             enabled: opacity === 1

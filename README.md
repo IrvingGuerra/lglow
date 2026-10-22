@@ -53,7 +53,8 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
   asoma el resto y **↓ hace scroll** hasta todas tus apps.
 - **Modo claro, oscuro o automático** (claro de día y oscuro de noche, con el amanecer y el atardecer de tu
   ciudad), desde el botón de tema de arriba. Al lado, el **engranaje** abre el **panel rápido de LGlow**: modo de imagen y de sonido,
-  apagado automático, tema, entradas (TV, HDMI) y un acceso a todos los ajustes de la TV, sin submenús.
+  apagado automático, tema, entradas (TV, HDMI) y un acceso a todos los ajustes de la TV, sin submenús. El
+  **botón de engranaje del control** abre el mismo panel sobre cualquier entrada, en lugar del menú de LG.
 - **Oculta las apps que no usas** (navegador, tienda, música…) sin desinstalarlas.
 - **Más memoria libre:** la barra vieja deja de ocupar RAM y LG ya no precarga Netflix, YouTube ni Prime en
   segundo plano. En la TV de prueba, la RAM disponible en reposo pasó de **~106 MB a ~160–250 MB** y el swap
@@ -156,9 +157,11 @@ Para quitarlo todo: `./instalar.sh 192.168.1.50 --quitar` y reiniciar la TV.
   código antes de que arranque el root. Si presionas Home en ese lapso, el home cambia solo al nuevo en cuanto
   el script corre. Con **Quick Start+** encendido la TV se suspende en vez de apagarse, y el diseño se conserva
   entre encendidos.
-- **La pantalla de carga genérica** a veces sigue siendo la de LG. El compositor de webOS vuelve desde un
-  snapshot de fábrica en cada arranque, con esa imagen ya en caché. Cambiarla de verdad requeriría modificar el
-  compositor, y no vale el riesgo. Las apps con splash propio (Netflix, Disney+, Max…) muestran el suyo.
+- **Un parpadeo después de encender:** el compositor de webOS guarda en memoria la pantalla de carga y el panel
+  de ajustes rápidos de LG. Para usar los de LGlow, `init.d/20-compositor` lo reinicia una vez por encendido,
+  solo cuando en pantalla está el home, una entrada HDMI o la TV en vivo (nunca a media película). Se ve como un
+  parpadeo de un par de segundos. Para no hacerlo: `touch /var/lib/webosbrew/homecustom/SIN_COMPOSITOR` (se
+  queda el panel y la pantalla de carga de LG).
 - **La velocidad al abrir o cambiar de app** mejora poco: la TV tiene 674 MB de RAM y las apps de streaming
   son web apps pesadas. Ver [mediciones](docs/06-limpieza-y-memoria.md#qué-tanto-mejora-la-velocidad).
 - Textos en español. Los ids de proveedores de "Para ti" vienen para México; para otro país,

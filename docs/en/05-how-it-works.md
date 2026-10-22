@@ -79,6 +79,18 @@ In edit mode (pencil), LG's row is shown.
 - **Remote's Home key** = `Qt.Key_Super_L` (evdev `KEY_LEFTMETA`, 125). The compositor does
   `applicationManager.launch(defaultApp, {"launchType": "homeKey"})`.
 
+## The settings panel and the loading screen (the compositor)
+
+The remote's settings button never reaches an app: the compositor (`surface-manager`) catches it in
+`/usr/lib/qt5/qml/KeyFilters/appLaunch.js` and opens `com.webos.app.quicksettings`, which isn't an app but QML
+(`/usr/lib/qt5/qml/QuickSettings/QuickSettings.qml`) loaded inside the compositor itself. LGlow mounts its own
+`QuickSettings.qml` on top (`tv/quicksettings/`, same contract: `StarfishSystemUIWindow`, `onLaunch` with
+`preload` → `exit()`), just like the loading screen (`default_app_splash.png`).
+
+The compositor keeps both in memory from power-on, so `init.d/20-compositor` (`tv/compositor.sh`) restarts it
+once (`initctl restart surface-manager`) when the home, an input or live TV is on screen. Whatever input was on
+screen comes back by itself. Can be turned off with `homecustom/SIN_COMPOSITOR`.
+
 ## Debugging tools
 
 - `tv/key.js` (on the TV, `/var/lib/webosbrew/tools/key.js`): simulates the remote by writing events to

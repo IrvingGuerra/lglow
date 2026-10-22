@@ -33,10 +33,10 @@ FocusScope {
     property var pools: ({})        // tipo → títulos válidos de la semana
     property bool loading: false    // se están consultando las tendencias de la pestaña actual
     property var picks: []          // [{title, backdrop, poster, kind, app, appId}]
-    property int pickGap: styleSheet.getRValue(30)
+    property int pickGap: styleSheet.getRValue(40)
     // Uno ancho (imagen de fondo) y dos pósters 2:3, todos de la misma altura, que
     // ocupan exactamente el ancho de la fila de apps
-    property int pickHeight: styleSheet.getRValue(460)
+    property int pickHeight: styleSheet.getRValue(424)
     property int posterWidth: Math.round(pickHeight * 2 / 3)
     property int wideWidth: width - 2 * posterWidth - 2 * pickGap
     readonly property bool canFocus: picks.length > 0 || !!config.tmdbKey
@@ -373,7 +373,7 @@ FocusScope {
 
         anchors.left: parent.left
         anchors.top: tabRow.bottom
-        anchors.topMargin: styleSheet.getRValue(22)
+        anchors.topMargin: styleSheet.getRValue(56) // aire para que el título con foco no toque las pestañas
         width: parent.width
         height: root.pickHeight + styleSheet.getRValue(84)
 

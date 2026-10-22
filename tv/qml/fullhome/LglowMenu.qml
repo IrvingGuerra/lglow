@@ -37,9 +37,21 @@ FocusScope {
         cerrado();
     }
 
+    // Si se sale del home (Home, otra entrada o una app), se cierra; al volver no queda abierto
+    Connections {
+        target: uiController
+        onHomeShownChanged: if (!uiController.homeShown) root.cerrar()
+    }
+
+    Connections {
+        target: systemProperties
+        onIsAppForegroundChanged: if (!systemProperties.isAppForeground) root.cerrar()
+    }
+
     function esAtras(key) {
         return key === uiController.webOS.Key_webOS_Back || key === Qt.Key_Back
-            || key === Qt.Key_Escape || key === Qt.Key_Backspace;
+            || key === Qt.Key_Escape || key === Qt.Key_Backspace
+            || key === 18874371; // Atrás físico del control (Key_webOS_Back)
     }
 
     Keys.onPressed: {

@@ -35,12 +35,19 @@ ssh tv "cat /tmp/homecustom.log; ls /var/lib/webosbrew/init.d/; mount | grep -c 
   abre la app Homebrew Channel una vez y revisa *Root status*.
 - `init.d` debe tener `10-homecustom` **sin punto ni extensión**.
 
-## La pantalla de carga sigue siendo la gris de LG
+## La pantalla de carga o el panel del engranaje siguen siendo los de LG
 
-El compositor de webOS regresa en cada arranque desde un snapshot de fábrica que ya trae en caché la imagen
-de carga original. El repo reemplaza el archivo (`default_app_splash.png`), pero en varios casos se sigue
-viendo la imagen de la caché. Es una limitación conocida. Las apps con pantalla de carga propia muestran la
-suya.
+El compositor de webOS (`surface-manager`) guarda en memoria, desde que enciende la TV, la imagen de carga y el
+panel de ajustes rápidos de LG. `init.d/20-compositor` monta los de LGlow y lo reinicia una vez, en cuanto en
+pantalla está el home, una entrada HDMI o la TV en vivo. Revisa `/tmp/lglow-compositor.log`:
+
+- `panel montado` y `compositor reiniciado`: todo bien.
+- `sin buen momento en 30 min`: estuviste en una app todo ese tiempo; se aplica en el siguiente encendido, o al
+  momento con `sh /var/lib/webosbrew/tools/compositor.sh --ahora`.
+- Si no quieres el reinicio (es un parpadeo de un par de segundos): `touch /var/lib/webosbrew/homecustom/SIN_COMPOSITOR`.
+
+Si alguna vez la pantalla se queda en negro después del reinicio del compositor, reinicia la TV: los montajes
+viven en memoria y todo vuelve a cargarse. Las apps con pantalla de carga propia muestran la suya.
 
 ## Una app nueva sale con ícono chico o cuadrado
 

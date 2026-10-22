@@ -12,7 +12,7 @@ BAR=$BASE/homecustom
 [ "$(id -u)" = 0 ] || { echo "ERROR: hay que correrlo como root." >&2; exit 1; }
 
 echo "==> quitando scripts de arranque"
-rm -f "$BASE/init.d/10-homecustom" "$BASE/init.d/60-sinprecarga"
+rm -f "$BASE/init.d/10-homecustom" "$BASE/init.d/20-compositor" "$BASE/init.d/60-sinprecarga"
 
 echo "==> quitando montajes"
 for app in com.webos.app.fullhome com.webos.app.home; do
@@ -21,7 +21,8 @@ for app in com.webos.app.fullhome com.webos.app.home; do
     umount "/mnt/lg/cmn_data/checkpoint/$app" 2>/dev/null
 done
 for f in /usr/lib/qt5/qml/SystemUIAssets/images/*/default_app_splash.png \
-         /usr/lib/qt5/qml/YSM/images/default_app_splash.png; do
+         /usr/lib/qt5/qml/YSM/images/default_app_splash.png \
+         /usr/lib/qt5/qml/QuickSettings/QuickSettings.qml; do
     umount "$f" 2>/dev/null
 done
 
@@ -33,7 +34,7 @@ done
 
 echo "==> borrando archivos instalados"
 rm -rf "$FULL/qml" "$BAR/qml" "$BAR/apply.sh" "$BAR/splash"
-rm -f "$BASE/tools/sin-precarga.sh"
+rm -f "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh"
 if [ "$1" != "--conservar" ]; then
     rm -rf "$FULL" "$BAR"
 fi

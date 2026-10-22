@@ -35,11 +35,19 @@ ssh tv "cat /tmp/homecustom.log; ls /var/lib/webosbrew/init.d/; mount | grep -c 
   open the Homebrew Channel app once and check *Root status*.
 - `init.d` should contain `10-homecustom` **with no dot or extension**.
 
-## The loading screen is still LG's gray one
+## The loading screen or the settings panel are still LG's
 
-The webOS compositor comes back on every boot from a factory snapshot that already has the original loading
-image cached. The repo replaces the file (`default_app_splash.png`), but in several cases the cached image is
-still shown. This is a known limitation. Apps with their own loading screen show theirs.
+The webOS compositor (`surface-manager`) keeps LG's loading image and quick settings panel in memory from the
+moment the TV turns on. `init.d/20-compositor` mounts LGlow's and restarts it once, as soon as the home, an HDMI
+input or live TV is on screen. Check `/tmp/lglow-compositor.log`:
+
+- `panel montado` and `compositor reiniciado`: all good.
+- `sin buen momento en 30 min`: you were in an app the whole time; it applies on the next power-on, or right
+  away with `sh /var/lib/webosbrew/tools/compositor.sh --ahora`.
+- If you don't want the restart (a couple of seconds of flicker): `touch /var/lib/webosbrew/homecustom/SIN_COMPOSITOR`.
+
+If the screen ever stays black after the compositor restart, reboot the TV: the mounts live in memory and
+everything loads again. Apps with their own loading screen show theirs.
 
 ## A new app shows up with a small or square icon
 

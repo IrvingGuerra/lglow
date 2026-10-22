@@ -51,9 +51,21 @@ FocusScope {
         cerrado();
     }
 
+    // Si se sale del home (Home, otra entrada o una app), se cierra; al volver no queda abierto
+    Connections {
+        target: uiController
+        onHomeShownChanged: if (!uiController.homeShown) root.cerrar()
+    }
+
+    Connections {
+        target: systemProperties
+        onIsAppForegroundChanged: if (!systemProperties.isAppForeground) root.cerrar()
+    }
+
     function esAtras(key) {
         return key === uiController.webOS.Key_webOS_Back || key === Qt.Key_Back
-            || key === Qt.Key_Escape || key === Qt.Key_Backspace;
+            || key === Qt.Key_Escape || key === Qt.Key_Backspace
+            || key === 18874371; // Atrás físico del control (Key_webOS_Back)
     }
 
     // --- Servicios de la TV ---------------------------------------------------------------
@@ -259,6 +271,16 @@ FocusScope {
             font.family: fontManager.smart_Bold.family
             font.weight: fontManager.smart_Bold.weight
             font.pixelSize: styleSheet.getRValue(44)
+        }
+
+        Text {
+            anchors.left: titulo.left
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: styleSheet.getRValue(36)
+            text: "← → cambia  ·  OK elige  ·  Atrás cierra"
+            color: lglowTema.textoSuave
+            font.family: fontManager.smart_Regular.family
+            font.pixelSize: styleSheet.getRValue(24)
         }
 
         Column {
