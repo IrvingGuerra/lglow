@@ -40,6 +40,14 @@ genera con `python3 tools/sitio-es.py`, que traduce texto por texto y se detiene
 botón EN/ES guarda la elección en `localStorage`. Las imágenes para compartir (`og.jpg`, `og-es.jpg`) salen de
 `python3 tools/og.py`. El prompt para IA vive en la web y en los dos README: si cambia, cambiarlo en los cuatro.
 
+## Logo
+
+"Amanecer en la pantalla": TV oscura con un sol naranja→rosa→morado que sale desde abajo. Archivos en
+`docs/img/marca/` (icono, logo horizontal claro/oscuro, ícono de app, `social-preview.png` para
+GitHub → Settings → Social preview). Los SVG salen de `python3 tools/logo.py <inter-800.ttf>` (letras convertidas
+a trazos, Inter OFL); `site/favicon.svg` también. Los PNG se exportaron con un navegador (WebKit/Playwright).
+**No usar el logo de LG**: es marca registrada y LGlow no está afiliado a LG.
+
 ## Publicar
 
 Publicado en github.com/IrvingGuerra/lglow (público). Como es público, revisar que ningún cambio meta datos

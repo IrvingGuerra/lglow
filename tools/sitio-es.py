@@ -30,6 +30,7 @@ T = [
     ('lglow/og.jpg', 'lglow/og-es.jpg'),
     ('lglow/og.jpg', 'lglow/og-es.jpg'),
     ('href="favicon.svg"', 'href="../favicon.svg"'),
+    ('href="apple-touch-icon.png"', 'href="../apple-touch-icon.png"'),
     ('src="favicon.svg"', 'src="../favicon.svg"'),
     ('href="styles.css"', 'href="../styles.css"'),
     ('src="app.js"', 'src="../app.js"'),

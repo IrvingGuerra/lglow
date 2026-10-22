@@ -1,6 +1,6 @@
 <div align="center">
 
-# LGlow
+<h1><a href="https://irvingguerra.github.io/lglow/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/img/marca/lglow-logo-oscuro.svg"><img src="docs/img/marca/lglow-logo.svg" alt="LGlow" width="300"></picture></a></h1>
 
 **Your old LG TV needs a glow up.** A clean, fast, ad-free home screen for 2019 LG TVs on webOS 4.5,
 built on top of the stock one.

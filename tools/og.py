@@ -27,8 +27,10 @@ def generar(nombre, l1, l2, l3, l4):
         d.ellipse((x - r, y - r, x + r, y + r), fill=c)
     fondo = Image.blend(fondo, luz.filter(ImageFilter.GaussianBlur(120)), 0.6)
 
+    logo = Image.open(os.path.join(RAIZ, "docs/img/marca/lglow-logo.png")).convert("RGBA")
+    logo = logo.resize((440, round(440 * logo.height / logo.width)), Image.LANCZOS)
+    fondo.paste(logo, (52, 255 - logo.height), logo)
     d = ImageDraw.Draw(fondo)
-    d.text((70, 140), "LGlow", font=fuente(120, 1), fill=(22, 22, 29))
     d.text((74, 290), l1, font=fuente(46, 0), fill=(58, 58, 68))
     d.text((74, 346), l2, font=fuente(46, 0), fill=(58, 58, 68))
     d.text((74, 450), l3, font=fuente(26, 0), fill=(107, 107, 120))

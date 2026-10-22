@@ -1,6 +1,6 @@
 <div align="center">
 
-# LGlow
+<h1><a href="https://irvingguerra.github.io/lglow/es/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/img/marca/lglow-logo-oscuro.svg"><img src="docs/img/marca/lglow-logo.svg" alt="LGlow" width="300"></picture></a></h1>
 
 **¿Tu vieja LG necesita un glow up?** Un home limpio, rápido y sin publicidad para TVs LG de 2019 con
 webOS 4.5, hecho sobre el home original.

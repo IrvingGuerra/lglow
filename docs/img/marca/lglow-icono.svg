@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="LGlow"><title>LGlow</title><defs>
+<radialGradient id="lglow-sol" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff4e2"/><stop offset=".38" stop-color="#ffb35c"/><stop offset=".72" stop-color="#ff4f8b"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
+<radialGradient id="lglow-halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4f8b" stop-opacity=".75"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
+<linearGradient id="lglow-pie" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff9a3d"/><stop offset=".5" stop-color="#ff4f8b"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+<clipPath id="lglow-pantalla"><rect x="56" y="92" width="400" height="276" rx="46"/></clipPath>
+</defs>
+<rect x="56" y="92" width="400" height="276" rx="46" fill="#16161d"/>
+<g clip-path="url(#lglow-pantalla)"><circle cx="256" cy="372" r="230" fill="url(#lglow-halo)"/><circle cx="256" cy="372" r="150" fill="url(#lglow-sol)"/></g>
+<rect x="196" y="398" width="120" height="20" rx="10" fill="url(#lglow-pie)"/></svg>
