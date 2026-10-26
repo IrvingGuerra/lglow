@@ -48,7 +48,15 @@ input or live TV is on screen. Check `/tmp/lglow-compositor.log`:
 
 If the screen ever stays black after the compositor restart, reboot the TV: the mounts live in memory and
 everything loads again. Netflix, Prime Video and YouTube ship LG's gray screen as their own loading screen: run
-`python3 tools/make-splash.py <tv-ip>` so they show LGlow's (`tv/splash-apps.sh` only mounts it when the original is LG's generic one).
+`python3 tools/make-splash.py <tv-ip>` so they show LGlow's (`tv/splash-apps.sh` only puts it in when the original is LG's generic one).
+
+## Netflix, Prime Video or YouTube won't update
+
+This happened with LGlow versions before Oct 26, 2026: the loading screen was mounted inside the app's folder and
+the LG store couldn't unmount it (`grep NL_APP_INSTALL_FAILED /var/log/messages` says `Failed to umount`).
+Reinstall LGlow (`./instalar.sh <tv-ip>`); to update right away without restarting, remove the old mount:
+`umount /media/cryptofs/apps/usr/palm/applications/amazon/amazon_splash.png` (or the `netflix` one) and hit
+Update in the store again.
 
 ## A new app shows up with a small or square icon
 

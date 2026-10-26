@@ -4,7 +4,7 @@
 Algunas apps (Netflix, Prime Video, YouTube…) traen como pantalla de carga la imagen gris genérica
 de LG (la de los cubos). Este script compone, para cada app que ya tiene tile (tools/make-tiles.py),
 una pantalla de carga con fondo oscuro, el brillo de LGlow y el tile de la app al centro, y la sube a
-/var/lib/webosbrew/fullhomecustom/splash/<appId>.png. Al encender, tv/splash-apps.sh la monta encima
+/var/lib/webosbrew/fullhomecustom/splash/<appId>.png. Al encender, tv/splash-apps.sh la copia encima
 del original **solo** si el de la app es uno de los genéricos de LG; las que traen su propia pantalla
 con su marca (ViX, Disney+, Max…) se quedan con la suya.
 
@@ -77,7 +77,7 @@ def main():
             sys.exit("No hay tiles en la TV: corre antes tools/make-tiles.py")
         subprocess.run(["ssh", HOST, f"mkdir -p {DESTINO}"], check=True)
         subprocess.run(["scp", "-q"] + hechos + [f"{HOST}:{DESTINO}/"], check=True)
-    # Montar ya los que aplican; el compositor las lee después de reiniciarse
+    # Aplicar ya los que corresponden; el compositor las lee después de reiniciarse
     subprocess.run(["ssh", HOST, "sh /var/lib/webosbrew/tools/splash-apps.sh && "
                     "sh /var/lib/webosbrew/tools/compositor.sh --ahora"], check=True)
     print("Subidos a", DESTINO, "y aplicados (la pantalla parpadea un momento).")

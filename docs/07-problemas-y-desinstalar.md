@@ -48,7 +48,15 @@ pantalla está el home, una entrada HDMI o la TV en vivo. Revisa `/tmp/lglow-com
 
 Si alguna vez la pantalla se queda en negro después del reinicio del compositor, reinicia la TV: los montajes
 viven en memoria y todo vuelve a cargarse. Netflix, Prime Video y YouTube traen la gris de LG como pantalla de carga propia: corre `python3 tools/make-splash.py <ip-tv>`
-para que muestren la de LGlow (`tv/splash-apps.sh` la monta solo si el original es el genérico de LG).
+para que muestren la de LGlow (`tv/splash-apps.sh` la pone solo si el original es el genérico de LG).
+
+## No deja actualizar Netflix, Prime Video o YouTube
+
+Pasaba con versiones de LGlow anteriores al 26 oct 2026: la pantalla de carga iba montada dentro de la carpeta de
+la app y la tienda de LG no podía desmontarla (`grep NL_APP_INSTALL_FAILED /var/log/messages` dice `Failed to
+umount`). Reinstala LGlow (`./instalar.sh <ip-tv>`); para actualizar ya sin reiniciar, quita el montaje viejo:
+`umount /media/cryptofs/apps/usr/palm/applications/amazon/amazon_splash.png` (o el de `netflix`) y vuelve a darle
+Actualizar en la tienda.
 
 ## Una app nueva sale con ícono chico o cuadrado
 

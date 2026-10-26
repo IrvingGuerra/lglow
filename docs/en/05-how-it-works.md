@@ -91,11 +91,14 @@ The compositor keeps both in memory from power-on, so `init.d/20-compositor` (`t
 once (`initctl restart surface-manager`) when the home, an input or live TV is on screen. Whatever input was on
 screen comes back by itself. Can be turned off with `homecustom/SIN_COMPOSITOR`.
 
-Netflix, Prime Video and YouTube ship LG's gray loading screen as their own. `tv/splash-apps.sh` mounts the one
-from `tools/make-splash.py` on top (only if the original is the generic one, by md5). All three are *squashfs*
-apps: SAM mounts their image (`data/images/<app>/data.img`) as an overlay on their folder the first time they
-open after power-on, and that overlay would hide the mount. So the script mounts the image and the overlay first,
-the same way SAM does; when the app opens, SAM finds them in `/proc/mounts` and doesn't mount them again.
+Netflix, Prime Video and YouTube ship LG's gray loading screen as their own. `tv/splash-apps.sh` copies the one
+from `tools/make-splash.py` over it (only if the original is the generic one, by md5) and keeps the original in
+`fullhomecustom/splash/orig/`. All three are *squashfs* apps: SAM mounts their image (`data/images/<app>/data.img`)
+as an overlay on their folder the first time they open after power-on. The script mounts the image and the overlay
+first, the same way SAM does (when the app opens, SAM finds them in `/proc/mounts` and doesn't mount them again),
+and copies through the overlay. **It's not a `mount --bind`:** a mount inside the app's folder stops the LG store
+from unmounting it, and the update fails with `Failed to umount` (shown in `/var/log/messages`). If an update brings
+the gray one back, the next power-on replaces it again.
 
 The remote's Movies button reaches the compositor as `WebOS.Key_webOS_USP` (in the log, `NL_RCU_CONTROL_USE`
 with `key_code` 1083). LG treats it as a server-driven shortcut (`handleCPHotkeys` in `appLaunch.js`): depending on

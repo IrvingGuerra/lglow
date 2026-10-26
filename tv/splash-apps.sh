@@ -2,9 +2,11 @@
 # splash-apps: pantallas de carga de LGlow para las apps que traen la gris genérica de LG.
 # Netflix, Prime Video y YouTube vienen con la imagen gris de cubos (o gris lisa) como su propia
 # pantalla de carga. Si existe /var/lib/webosbrew/fullhomecustom/splash/<appId>.png (lo genera
-# tools/make-splash.py), se monta encima del original, pero solo si el original es uno de esos
-# genéricos (por md5): si la app se actualiza y trae su propia pantalla con su marca, se respeta.
-# No escribe en las apps: son montajes que se pierden al reiniciar.
+# tools/make-splash.py), se copia sobre el original, pero solo si el original es uno de esos
+# genéricos (por md5) o la copia anterior de LGlow: si la app se actualiza y trae su propia pantalla
+# con su marca, se respeta. El original se guarda en splash/orig/<appId>.png (uninstall.sh lo regresa).
+# Antes era un mount --bind, pero un montaje dentro de la carpeta de la app no deja que la tienda de
+# LG la desmonte para actualizarla ("Failed to umount", la actualización fallaba).
 #
 # Lo llama apply.sh al encender (antes de que 20-compositor reinicie el compositor, que es
 # cuando lee las imágenes) y tools/make-splash.py al generar nuevas.
@@ -15,9 +17,10 @@ IMAGES=/media/cryptofs/apps/usr/palm/data/images
 GENERICOS="f29e4726373c5b4c0569024120948baa 7d4ccc5583b13e6066e060b36d9a1bf1 78edfd48e7d7673778cb20dd5b812330"
 
 # Netflix, Prime Video y YouTube son apps "squashfs": su código vive en una imagen que SAM monta
-# como overlay sobre su carpeta la primera vez que se abren después de encender, y ese overlay
-# tapa la pantalla de carga montada antes (salía la gris en la primera apertura). Se monta aquí
-# igual que SAM; al abrir la app, SAM lo ve en /proc/mounts y no lo repite.
+# como overlay sobre su carpeta la primera vez que se abren después de encender. Se monta aquí
+# igual que SAM para ver el original y para que la copia caiga en la capa de escritura del
+# overlay (la carpeta real de la app); al abrir la app, SAM lo ve en /proc/mounts y no lo repite.
+# La tienda sí puede desmontar este overlay al actualizar.
 montar_squashfs() {
     id=$1
     dir=$2
@@ -44,16 +47,22 @@ for info in $APPS/*/appinfo.json; do
     dir=${info%/appinfo.json}
     id=${dir##*/}
     [ -f "$SPLASH/$id.png" ] || continue
+    montar_squashfs "$id" "$dir" || echo "splash: $id sin overlay"
     rel=$(sed -n 's/.*"splashBackground" *: *"\([^"]*\)".*/\1/p' "$info" | head -1)
     [ -n "$rel" ] || continue
     orig="$dir/$rel"
     [ -f "$orig" ] || continue
+    # Montaje de versiones anteriores de LGlow
     umount "$orig" 2>/dev/null
+    nuestro=$(md5sum "$SPLASH/$id.png" | cut -d' ' -f1)
     sum=$(md5sum "$orig" | cut -d' ' -f1)
-    case " $GENERICOS " in
+    [ "$sum" = "$nuestro" ] && continue
+    anterior=$(cat "$SPLASH/orig/$id.md5" 2>/dev/null)
+    case " $GENERICOS $anterior " in
         *" $sum "*)
-            montar_squashfs "$id" "$dir" || echo "splash: $id sin overlay (puede salir la gris la primera vez)"
-            mount --bind "$SPLASH/$id.png" "$orig" && echo "splash: $id" ;;
+            mkdir -p "$SPLASH/orig"
+            [ "$sum" = "$anterior" ] || cp "$orig" "$SPLASH/orig/$id.png"
+            cp "$SPLASH/$id.png" "$orig" && echo "$nuestro" > "$SPLASH/orig/$id.md5" && echo "splash: $id" ;;
     esac
 done
 exit 0

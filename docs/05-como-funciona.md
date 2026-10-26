@@ -91,11 +91,14 @@ El compositor guarda ambos en memoria desde que enciende, así que `init.d/20-co
 lo reinicia una vez (`initctl restart surface-manager`) cuando en pantalla está el home, una entrada o la TV en
 vivo. La entrada que estaba en pantalla regresa sola. Desactivable con `homecustom/SIN_COMPOSITOR`.
 
-Netflix, Prime Video y YouTube traen la gris de LG como pantalla de carga propia. `tv/splash-apps.sh` les monta
-encima la de `tools/make-splash.py` (solo si la original es la genérica, por md5). Las tres son apps *squashfs*:
-SAM monta su imagen (`data/images/<app>/data.img`) como overlay sobre su carpeta la primera vez que se abren
-después de encender, y ese overlay taparía el montaje. Por eso el script monta antes la imagen y el overlay igual
-que SAM, que al abrir la app los ve en `/proc/mounts` y no los repite.
+Netflix, Prime Video y YouTube traen la gris de LG como pantalla de carga propia. `tv/splash-apps.sh` copia
+encima la de `tools/make-splash.py` (solo si la original es la genérica, por md5) y guarda la original en
+`fullhomecustom/splash/orig/`. Las tres son apps *squashfs*: SAM monta su imagen (`data/images/<app>/data.img`)
+como overlay sobre su carpeta la primera vez que se abren después de encender. El script monta antes la imagen y
+el overlay igual que SAM (que al abrir la app los ve en `/proc/mounts` y no los repite) y copia a través del
+overlay. **No es un `mount --bind`:** un montaje dentro de la carpeta de la app impide que la tienda de LG la
+desmonte y la actualización falla con `Failed to umount` (se ve en `/var/log/messages`). Si una actualización
+trae otra vez la gris, el siguiente encendido la vuelve a cambiar.
 
 El botón Movies del control llega al compositor como `WebOS.Key_webOS_USP` (en el log, `NL_RCU_CONTROL_USE`
 con `key_code` 1083). LG lo trata como acceso directo de su servidor (`handleCPHotkeys` en `appLaunch.js`): según el
