@@ -10,6 +10,8 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 
 [Sitio web](https://irvingguerra.github.io/lglow/es/) · [Antes y después](#antes-y-después) · [vs Free My TV](#y-free-my-tv) · [Compatibilidad](#compatibilidad) · [Guía paso a paso](#guía-paso-a-paso) · [Cómo funciona](docs/05-como-funciona.md) · [Problemas](docs/07-problemas-y-desinstalar.md) · [English](README.en.md) ([guides](docs/en/01-root.md))
 
+<a href="https://ko-fi.com/irvingguerradev"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Apóyame en Ko-fi"></a>
+
 </div>
 
 > [!WARNING]

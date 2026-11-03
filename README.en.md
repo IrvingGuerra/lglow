@@ -7,6 +7,8 @@ built on top of the stock one.
 
 [Website](https://irvingguerra.github.io/lglow/) · [Español](README.md) · [Before and after](#before-and-after) · [vs Free My TV](#what-about-free-my-tv) · [Compatibility](#compatibility) · [Install](#install)
 
+<a href="https://ko-fi.com/irvingguerradev"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-fi"></a>
+
 </div>
 
 > [!WARNING]
