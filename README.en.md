@@ -33,7 +33,8 @@ Step-by-step guides in English: [docs/en/](docs/en/01-root.md). Commands and fil
 
 ## What you get
 
-- **No LG ads on the home screen:** no banner, no sponsored content rows, no screensaver ads.
+- **No LG ads on the home screen:** no banner, no sponsored content rows, no screensaver ads. On top of that, LG's
+  ad and telemetry domains are blocked on the TV itself via `/etc/hosts` ([guide 6](docs/en/06-cleanup-and-memory.md#lg-ads-and-telemetry-out-etchosts)).
 - **"Para ti" (For you):** three trending titles every hour, **only from apps you have** ([TMDB](https://www.themoviedb.org)),
   with Explore / Movies / Shows tabs. OK opens the app that has it.
 - **Weather, date and time** for your city ([Open-Meteo](https://open-meteo.com), no key needed).

@@ -48,8 +48,10 @@ ssh root@<ip-tv> sh /tmp/bloquear-actualizaciones.sh
 
 After the next reboot, `tail -3 /etc/hosts` on the TV should show those lines.
 
-> This change to `/etc/hosts` is safe: it only blocks those four domains. If you want to block ads with
-> large lists, do it via DNS on your router (Pi-hole, AdGuard Home, NextDNS) rather than on the TV.
+> This change to `/etc/hosts` is safe: it only blocks those four domains. LGlow already blocks LG's ad and
+> telemetry domains with a short, tested list
+> ([guide 6](06-cleanup-and-memory.md#lg-ads-and-telemetry-out-etchosts)). If you want large third-party lists,
+> do it via DNS on your router (Pi-hole, AdGuard Home, NextDNS) rather than on the TV.
 
 Apps from the LG store can also update themselves. On the test TV they were already set to manual.
 To check:

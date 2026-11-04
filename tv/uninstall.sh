@@ -12,7 +12,10 @@ BAR=$BASE/homecustom
 [ "$(id -u)" = 0 ] || { echo "ERROR: hay que correrlo como root." >&2; exit 1; }
 
 echo "==> quitando scripts de arranque"
-rm -f "$BASE/init.d/10-homecustom" "$BASE/init.d/20-compositor" "$BASE/init.d/60-sinprecarga"
+rm -f "$BASE/init.d/10-homecustom" "$BASE/init.d/15-bloqueo" "$BASE/init.d/20-compositor" "$BASE/init.d/60-sinprecarga"
+
+echo "==> quitando el bloqueo de anuncios de /etc/hosts"
+[ -f "$BASE/tools/bloqueo.sh" ] && sh "$BASE/tools/bloqueo.sh" --quitar
 
 echo "==> quitando montajes"
 for app in com.webos.app.fullhome com.webos.app.home; do
@@ -49,7 +52,8 @@ done
 
 echo "==> borrando archivos instalados"
 rm -rf "$FULL/qml" "$BAR/qml" "$BAR/apply.sh" "$BAR/splash"
-rm -f "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh" "$BASE/tools/splash-apps.sh"
+rm -f "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh" "$BASE/tools/splash-apps.sh" \
+      "$BASE/tools/bloqueo.sh" "$BASE/tools/bloqueo-dominios.txt"
 if [ "$1" != "--conservar" ]; then
     rm -rf "$FULL" "$BAR"
 fi

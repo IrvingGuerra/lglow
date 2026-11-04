@@ -52,7 +52,8 @@ Sin tocar las particiones del sistema: todo se monta encima y se quita con un co
 ## Qué obtienes
 
 - **Sin publicidad de LG en el home:** fuera el banner, la fila de recomendaciones patrocinadas, los anuncios
-  del protector de pantalla y la cookie publicitaria.
+  del protector de pantalla y la cookie publicitaria. Además, los dominios de anuncios y telemetría de LG se
+  bloquean en la propia TV por `/etc/hosts` ([guía 6](docs/06-limpieza-y-memoria.md#anuncios-y-telemetría-de-lg-fuera-etchosts)).
 - **"Para ti":** cada hora, tres títulos en tendencia de esta semana, **solo de las apps que tienes** (datos de
   [TMDB](https://www.themoviedb.org)). Pestañas de Explorar, Películas y Series. OK en uno abre su app.
 - **Clima, fecha y hora** de tu ciudad ([Open-Meteo](https://open-meteo.com), sin llave).

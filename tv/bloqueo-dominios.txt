@@ -1,0 +1,27 @@
+# Dominios de anuncios y telemetría de LG que LGlow bloquea por /etc/hosts (uno por línea).
+# {pais} = código de país de la TV en minúsculas (mx, us, es…), tomado de smartServiceCountryCode2.
+# {region} = aic, eic y kic (los tres centros de datos de LG: América, Europa, Corea/Asia).
+# Las líneas que empiezan con # se ignoran. Si editas este archivo en la TV
+# (/var/lib/webosbrew/tools/bloqueo-dominios.txt), reinicia o corre bloqueo.sh.
+#
+# NO está en la lista, a propósito, lo que la tienda de LG necesita para funcionar:
+# {pais}.lgtvsdp.com (servicios y tienda), ngfts.lge.com / {region}-ngfts.lge.com (imágenes
+# de la tienda) ni {region}.imagesvc.lgtvcommon.com.
+
+# --- Anuncios (LG Smart Ad y banners de la tienda) ---
+{pais}.ad.lgsmartad.com
+{pais}.info.lgsmartad.com
+{pais}.lgsmartad.com
+lgsmartad.com
+ad.lgappstv.com
+{pais}.ibs.lgappstv.com
+{pais}.ibsstat.lgappstv.com
+
+# --- Telemetría: qué ves, reportes de uso y promociones ---
+{pais}.rdx2.lgtvsdp.com
+{region}.cdpbeacon.lgtvcommon.com
+{region}.cdpsvc.lgtvcommon.com
+{region}.homeprv.lgtvcommon.com
+{region}.nudge.lgtvcommon.com
+{region}.recommend.lgtvcommon.com
+{region}.rdl.lgtvcommon.com

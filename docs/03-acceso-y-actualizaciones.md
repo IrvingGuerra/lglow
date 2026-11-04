@@ -48,8 +48,10 @@ ssh root@<ip-tv> sh /tmp/bloquear-actualizaciones.sh
 
 Después del siguiente reinicio, `tail -3 /etc/hosts` en la TV debe mostrar esas líneas.
 
-> Este cambio a `/etc/hosts` es seguro: solo bloquea esos cuatro dominios. Si quieres bloquear anuncios con
-> listas grandes, mejor hazlo por DNS en tu router (Pi-hole, AdGuard Home, NextDNS) y no en la TV.
+> Este cambio a `/etc/hosts` es seguro: solo bloquea esos cuatro dominios. LGlow ya bloquea los dominios de
+> anuncios y telemetría de LG con una lista corta y probada
+> ([guía 6](06-limpieza-y-memoria.md#anuncios-y-telemetría-de-lg-fuera-etchosts)). Si quieres listas grandes de
+> terceros, mejor hazlo por DNS en tu router (Pi-hole, AdGuard Home, NextDNS) y no en la TV.
 
 Desde la tienda de LG, las apps también pueden actualizarse solas. En la TV de prueba ya estaban en manual.
 Para revisarlo:

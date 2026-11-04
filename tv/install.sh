@@ -112,16 +112,21 @@ cp "$HERE/sin-precarga.sh" "$BASE/tools/sin-precarga.sh"
 cp "$HERE/key.js" "$BASE/tools/key.js"
 cp "$HERE/compositor.sh" "$BASE/tools/compositor.sh"
 cp "$HERE/splash-apps.sh" "$BASE/tools/splash-apps.sh"
-chmod +x "$BAR/apply.sh" "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh"
+cp "$HERE/bloqueo.sh" "$BASE/tools/bloqueo.sh"
+cp "$HERE/bloqueo-dominios.txt" "$BASE/tools/bloqueo-dominios.txt"
+chmod +x "$BAR/apply.sh" "$BASE/tools/sin-precarga.sh" "$BASE/tools/compositor.sh" "$BASE/tools/bloqueo.sh"
 rm -f "$BAR/DESACTIVADO"
 # Sin punto en el nombre: busybox run-parts ignora los archivos con "."
 ln -sf "$BAR/apply.sh" "$BASE/init.d/10-homecustom"
+ln -sf "$BASE/tools/bloqueo.sh" "$BASE/init.d/15-bloqueo"
 ln -sf "$BASE/tools/compositor.sh" "$BASE/init.d/20-compositor"
 ln -sf "$BASE/tools/sin-precarga.sh" "$BASE/init.d/60-sinprecarga"
 chown -R 0:0 "$FULL" "$BAR" "$BASE/tools"
 
 say "aplicando ahora"
 sh "$BAR/apply.sh"
+# Anuncios y telemetría de LG fuera (bloqueo.sh, en cada encendido desde init.d/15-bloqueo)
+sh "$BASE/tools/bloqueo.sh"
 # Si el home no estaba en pantalla, se abre en limpio la próxima vez que se presione Home
 
 # El panel rápido y la pantalla de carga nuevos necesitan reiniciar el compositor: la pantalla
